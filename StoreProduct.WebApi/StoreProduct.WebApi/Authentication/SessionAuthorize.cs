@@ -21,7 +21,7 @@ namespace StoreProduct.WebApi.Authentication
             var ip = GetClientIpAddress(actionContext.Request);
             try
             {
-                if (ConfigurationManager.AppSettings["DevWriteLists"].Contains(ip))
+                if (ConfigurationManager.AppSettings["HiddenError"].Equals("false") && ConfigurationManager.AppSettings["DevWriteLists"].Contains(ip))
                     return true;
             }
             catch (Exception) { }
@@ -52,7 +52,8 @@ namespace StoreProduct.WebApi.Authentication
                 if (authen_cookie != null)
                 {
                     var session_id = authen_cookie["StoreProduct"].Value.Substring(0, 20);
-                    return IsTokenValid(session_id);
+                    var test = IsTokenValid(session_id);
+                    return test;
                 }
             }
             catch (Exception) { }
@@ -79,7 +80,7 @@ namespace StoreProduct.WebApi.Authentication
                     e.SessionId == session_id
                 );
                 if (user != null)
-                    return user.Username == HttpContext.Current.User.Identity.Name;
+                    return user.Username.Trim() == HttpContext.Current.User.Identity.Name;
 
                 return false;
             }

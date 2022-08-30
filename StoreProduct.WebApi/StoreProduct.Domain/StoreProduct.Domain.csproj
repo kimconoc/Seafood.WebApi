@@ -43,6 +43,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Common\Constant\Message.cs" />
+    <Compile Include="Common\FileLog\FileHelper.cs" />
     <Compile Include="Models\Account\LoginParameterModel.cs" />
     <Compile Include="Models\BaseModel\IEntiy.cs" />
     <Compile Include="Models\BaseModel\VBaseModel.cs" />
