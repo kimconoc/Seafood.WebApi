@@ -28,7 +28,7 @@ namespace StoreProduct.WebApi
             app.UseCookieAuthentication(new CookieAuthenticationOptions()
             {
                 AuthenticationType = "ApplicationCookie",
-                CookieName = "EFormED",
+                CookieName = "StoreProduct",
                 SlidingExpiration = true,
                 ExpireTimeSpan = TimeSpan.FromMinutes(session_timeout),
                 Provider = new CookieAuthenticationProvider
@@ -43,7 +43,7 @@ namespace StoreProduct.WebApi
                     }
                 }
             });
-            //Log middleware
+            //Log middleware, vị trí này được chạy đầu tiên
             app.Use(typeof(LogChangeMiddleware));
 
             HttpConfiguration config = new HttpConfiguration();
@@ -56,11 +56,11 @@ namespace StoreProduct.WebApi
 
             foreach (var cookie in cookies)
             {
-                var cookieKeyIndex = cookie.IndexOf("EFormED");
+                var cookieKeyIndex = cookie.IndexOf("StoreProduct");
                 if (cookieKeyIndex != -1)
                 {
                     // Add extra character for '='
-                    cookieValue = cookie.Substring("EFormED".Length + 1);
+                    cookieValue = cookie.Substring("StoreProduct".Length + 1);
                     break;
                 }
             }

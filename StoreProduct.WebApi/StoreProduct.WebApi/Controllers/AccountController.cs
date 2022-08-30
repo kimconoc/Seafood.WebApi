@@ -33,6 +33,7 @@ namespace StoreProduct.WebApi.Controllers
                 return Content(HttpStatusCode.BadRequest, new { ViMessage = "Tài khoản đã bị khóa" });
             }
 
+            // Đăng ký cookieValue nhảy vào starup
             ClaimsIdentity identity = CreateIdentity(user);
             Request.GetOwinContext().Authentication.SignIn(identity);
             return Content(HttpStatusCode.OK, new { Token = "a" });
@@ -72,6 +73,5 @@ namespace StoreProduct.WebApi.Controllers
             var identity = new ClaimsIdentity(claims, "ApplicationCookie");
             return identity;
         }
-
     }
 }
