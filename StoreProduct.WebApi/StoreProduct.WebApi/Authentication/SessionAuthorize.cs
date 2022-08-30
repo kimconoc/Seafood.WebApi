@@ -42,6 +42,7 @@ namespace StoreProduct.WebApi.Authentication
                 }
             }
 
+            // kiểm tra token có tồn tại không, hoặc token hết hạn chưa ?
             if (!base.IsAuthorized(actionContext))
                 return false;
 
