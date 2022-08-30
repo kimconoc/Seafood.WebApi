@@ -12,6 +12,14 @@ namespace StoreProduct.WebApi.Controllers
     public class BaseApiController : ApiController
     {
         protected IUnitOfWork unitOfWork = new EfUnitOfWork();
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                unitOfWork.Dispose();
+            }
+            base.Dispose(disposing);
+        }
         protected string GetIp()
         {
             if (Request.Properties.ContainsKey("MS_HttpContext"))

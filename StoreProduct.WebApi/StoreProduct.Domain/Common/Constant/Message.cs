@@ -9,6 +9,11 @@ namespace StoreProduct.Domain.Common.Constant
     public class Message
     {
         #region General
+        public readonly static dynamic Un_Au_Thorized = new 
+        { 
+            ViMessage = "Bạn chưa đăng nhập", 
+            EnMessage = "Please login" 
+        };
         public readonly static dynamic Successful = new
         {
             ViMessage = "Thành công",

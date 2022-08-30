@@ -20,8 +20,8 @@ namespace StoreProduct.WebApi
         public void Configuration(IAppBuilder app)
         {
             // Enable CORS (cross origin resource sharing) for making request using browser from different domains
-            //if (ConfigurationManager.AppSettings["HiddenError"].Equals("false"))
-            //    app.UseCors(Microsoft.Owin.Cors.CorsOptions.AllowAll);
+            if (ConfigurationManager.AppSettings["HiddenError"].Equals("false"))
+                app.UseCors(Microsoft.Owin.Cors.CorsOptions.AllowAll);
 
             //Cookie authenicate
             var session_timeout = Int32.Parse(System.Configuration.ConfigurationManager.AppSettings["SessionTimeout"]);
