@@ -85,11 +85,12 @@ namespace StoreProduct.WebApi.Controllers
             var resp = new HttpResponseMessage();
             try
             {
-                CookieHeaderValue cookie = Request.Headers.GetCookies("StoreProduct").FirstOrDefault();
+                var keyCookieName = System.Configuration.ConfigurationManager.AppSettings["KeyCookieName"];
+                CookieHeaderValue cookie = Request.Headers.GetCookies(keyCookieName).FirstOrDefault();
                 if (cookie != null)
                 {
-                    RemoveSession(cookie["StoreProduct"].Value);
-                    var new_cookie = new CookieHeaderValue("StoreProduct", "")
+                    RemoveSession(cookie[keyCookieName].Value);
+                    var new_cookie = new CookieHeaderValue(keyCookieName, "")
                     {
                         Expires = DateTime.Now.AddDays(-1),
                         Domain = cookie.Domain,

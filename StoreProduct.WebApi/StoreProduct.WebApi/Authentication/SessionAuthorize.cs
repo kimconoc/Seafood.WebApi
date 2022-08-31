@@ -49,10 +49,11 @@ namespace StoreProduct.WebApi.Authentication
             dynamic authen_cookie;
             try
             {
-                authen_cookie = actionContext.Request.Headers.GetCookies("StoreProduct").FirstOrDefault();
+                var keyCookieName = System.Configuration.ConfigurationManager.AppSettings["KeyCookieName"];
+                authen_cookie = actionContext.Request.Headers.GetCookies(keyCookieName).FirstOrDefault();
                 if (authen_cookie != null)
                 {
-                    var session_id = authen_cookie["StoreProduct"].Value.Substring(0, 20);
+                    var session_id = authen_cookie[keyCookieName].Value.Substring(0, 20);
                     var test = IsTokenValid(session_id);
                     return test;
                 }

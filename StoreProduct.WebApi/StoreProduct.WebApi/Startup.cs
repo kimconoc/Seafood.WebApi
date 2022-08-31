@@ -25,10 +25,11 @@ namespace StoreProduct.WebApi
 
             //Cookie authenicate
             var session_timeout = Int32.Parse(System.Configuration.ConfigurationManager.AppSettings["SessionTimeout"]);
+            var keyCookieName = System.Configuration.ConfigurationManager.AppSettings["KeyCookieName"];
             app.UseCookieAuthentication(new CookieAuthenticationOptions()
             {
                 AuthenticationType = "ApplicationCookie",
-                CookieName = "StoreProduct",
+                CookieName = keyCookieName,
                 SlidingExpiration = true,
                 ExpireTimeSpan = TimeSpan.FromMinutes(session_timeout),
                 Provider = new CookieAuthenticationProvider
