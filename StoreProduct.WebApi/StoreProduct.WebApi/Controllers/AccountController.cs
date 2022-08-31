@@ -64,13 +64,13 @@ namespace StoreProduct.WebApi.Controllers
         private ClaimsIdentity CreateIdentity(User user)
         {
             string username = string.IsNullOrEmpty(user.Username) ? "" : user.Username;
-            string roles = "roles";
-            string role = "role";
+            string roles = string.IsNullOrEmpty(user.Roles) ? "" : user.Roles;
+            string isAdminUser = user.IsAdminUser? "true" : "false";
             var claims = new[]
             {
                 new Claim(ClaimTypes.Name, username.Trim()),
-                new Claim(ClaimTypes.Role, roles),
-                new Claim("Roles", role),
+                new Claim("Roles", roles.Trim()),
+                new Claim("IsAdminUser", isAdminUser),
             };
             var identity = new ClaimsIdentity(claims, Constant.AuthenticationType);
             return identity;

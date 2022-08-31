@@ -14,6 +14,12 @@ namespace StoreProduct.Domain.Common.Constant
             ViMessage = "Bạn chưa đăng nhập", 
             EnMessage = "Please login" 
         };
+        public readonly static dynamic Forbidden = new
+        {
+            ViMessage = "Bạn không có quyền truy cập",
+            EnMessage = "You do not have permission to access",
+            ActionCode = ""
+        };
         public readonly static dynamic Successful = new
         {
             ViMessage = "Thành công",

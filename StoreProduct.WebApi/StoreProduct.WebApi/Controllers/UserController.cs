@@ -15,7 +15,7 @@ namespace StoreProduct.WebApi.Controllers
     {
         [HttpGet]
         [Route("api/User/Info")]
-        //[Permission(Code = "GUSER1")]
+        [Permission(Code = "XEM_USER")]
         public IHttpActionResult GetUser()
         {
             try
