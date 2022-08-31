@@ -72,8 +72,7 @@ namespace StoreProduct.WebApi.Controllers
                 new Claim(ClaimTypes.Role, roles),
                 new Claim("Roles", role),
             };
-
-            var identity = new ClaimsIdentity(claims, "ApplicationCookie");
+            var identity = new ClaimsIdentity(claims, Constant.AuthenticationType);
             return identity;
         }
         #endregion Login

@@ -1,6 +1,7 @@
 ﻿using Microsoft.Owin;
 using Microsoft.Owin.Security.Cookies;
 using Owin;
+using StoreProduct.Domain.Common.Constant;
 using StoreProduct.Repository.EntityFamework;
 using StoreProduct.WebApi.App_Start;
 using StoreProduct.WebApi.Middlewares;
@@ -28,7 +29,7 @@ namespace StoreProduct.WebApi
             var keyCookieName = System.Configuration.ConfigurationManager.AppSettings["KeyCookieName"];
             app.UseCookieAuthentication(new CookieAuthenticationOptions()
             {
-                AuthenticationType = "ApplicationCookie",
+                AuthenticationType = Constant.AuthenticationType,
                 CookieName = keyCookieName,
                 SlidingExpiration = true,
                 ExpireTimeSpan = TimeSpan.FromMinutes(session_timeout),

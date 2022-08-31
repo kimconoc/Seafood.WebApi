@@ -54,8 +54,7 @@ namespace StoreProduct.WebApi.Authentication
                 if (authen_cookie != null)
                 {
                     var session_id = authen_cookie[keyCookieName].Value.Substring(0, 20);
-                    var test = IsTokenValid(session_id);
-                    return test;
+                    return IsTokenValid(session_id);
                 }
             }
             catch (Exception) { }

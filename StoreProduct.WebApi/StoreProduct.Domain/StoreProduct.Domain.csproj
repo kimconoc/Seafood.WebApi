@@ -42,6 +42,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Common\Constant\Constant.cs" />
     <Compile Include="Common\Constant\Message.cs" />
     <Compile Include="Common\FileLog\FileHelper.cs" />
     <Compile Include="Models\Account\LoginParameterModel.cs" />
