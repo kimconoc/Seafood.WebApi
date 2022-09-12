@@ -1,11 +1,9 @@
-﻿using StoreProduct.Repository.EntityFamework;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using StoreProduct.Domain.Models.BaseModel;
+using StoreProduct.Repository.EntityFamework;
+using System.Net;
 using System.ServiceModel.Channels;
 using System.Web;
 using System.Web.Http;
-using System.Web.Mvc;
 
 namespace StoreProduct.WebApi.Controllers
 {
@@ -39,6 +37,43 @@ namespace StoreProduct.WebApi.Controllers
             {
                 return null;
             }
+        }
+        protected RequestBase<TRequest> RequestOK<TRequest>(TRequest data)
+        {
+            return new RequestBase<TRequest>()
+            {
+                Data = data,
+                Success = true,
+                StatusCode = (int)HttpStatusCode.OK,
+                Message = Domain.Common.Constant.Message.Successful
+            };
+        }
+        protected RequestBaseNoData BadRequest()
+        {
+            return new RequestBaseNoData()
+            {
+                Success = false,
+                StatusCode = (int)HttpStatusCode.BadRequest,
+                Message = Domain.Common.Constant.Message.Bad_Request
+            };
+        }
+        protected RequestBaseNoData NotFound()
+        {
+            return new RequestBaseNoData()
+            {
+                Success = true,
+                StatusCode = (int)HttpStatusCode.NotFound,
+                Message = Domain.Common.Constant.Message.DATA_NOT_FOUND
+            };
+        }
+        protected RequestBaseNoData ServerError()
+        {
+            return new RequestBaseNoData()
+            {
+                Success = false,
+                StatusCode = (int)HttpStatusCode.InternalServerError,
+                Message = Domain.Common.Constant.Message.INTERAL_SERVER_ERROR
+            };
         }
     }
 }

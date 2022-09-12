@@ -1,7 +1,7 @@
 ﻿using Scrypt;
 using StoreProduct.Domain.Common.Constant;
-using StoreProduct.Domain.Models.Account;
-using StoreProduct.Domain.Models.User;
+using StoreProduct.Domain.Models.ParameterModel;
+using StoreProduct.Domain.Models.DataAccessModel;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -24,22 +24,42 @@ namespace StoreProduct.WebApi.Controllers
         public IHttpActionResult LoginAPI([FromBody] LoginParameterModel request)
         {
             if (!request.Validate())
-                return Content(HttpStatusCode.BadRequest, Message.LOGIN_ERROR);
+                return Ok(BadRequest());
 
             var user = ValidateUser(request.Username, request.Password);
             if (user == null)
             {
-                return Content(HttpStatusCode.BadRequest, Message.LOGIN_ERROR);
+                var result = BadRequest();
+                result.Message = Message.LOGIN_ERROR;
+                return Ok(result);
             }
             if (user.IsLocked)
             {
-                return Content(HttpStatusCode.BadRequest, new { ViMessage = "Tài khoản đã bị khóa" });
+                var result = BadRequest();
+                result.Message = Message.Account_LOCKED;
+                return Ok(result);
             }
 
             // Đăng ký cookieValue nhảy vào starup
             ClaimsIdentity identity = CreateIdentity(user);
             Request.GetOwinContext().Authentication.SignIn(identity);
-            return Content(HttpStatusCode.OK, new { Token = "a" });
+            //
+            dynamic data = new
+            {
+                Id = user.Id,
+                Username = user.Username,
+                Roles = user.Roles,
+                Fullname = user.Fullname,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                MiddleName = user.MiddleName,
+                DisplayName = user.DisplayName,
+                Mobile = user.Mobile,
+                EmailAddress = user.EmailAddress,
+                IsAdminUser = user.IsAdminUser,
+                IsLocked = user.IsLocked
+            };
+            return Ok(RequestOK<dynamic>(data));
         }
 
         private User ValidateUser(string username, string password)

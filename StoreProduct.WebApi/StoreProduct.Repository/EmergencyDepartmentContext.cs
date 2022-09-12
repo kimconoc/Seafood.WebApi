@@ -1,4 +1,4 @@
-﻿using StoreProduct.Domain.Models.User;
+﻿using StoreProduct.Domain.Models.DataAccessModel;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;

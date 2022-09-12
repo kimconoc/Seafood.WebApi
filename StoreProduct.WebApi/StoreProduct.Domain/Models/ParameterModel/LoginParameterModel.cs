@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace StoreProduct.Domain.Models.Account
+namespace StoreProduct.Domain.Models.ParameterModel
 {
     public class LoginParameterModel
     {

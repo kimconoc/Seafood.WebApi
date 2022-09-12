@@ -45,10 +45,11 @@
     <Compile Include="Common\Constant\Constant.cs" />
     <Compile Include="Common\Constant\Message.cs" />
     <Compile Include="Common\FileLog\FileHelper.cs" />
-    <Compile Include="Models\Account\LoginParameterModel.cs" />
+    <Compile Include="Models\ParameterModel\LoginParameterModel.cs" />
     <Compile Include="Models\BaseModel\IEntiy.cs" />
+    <Compile Include="Models\BaseModel\RequestBase.cs" />
     <Compile Include="Models\BaseModel\VBaseModel.cs" />
-    <Compile Include="Models\User\User.cs" />
+    <Compile Include="Models\DataAccessModel\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />

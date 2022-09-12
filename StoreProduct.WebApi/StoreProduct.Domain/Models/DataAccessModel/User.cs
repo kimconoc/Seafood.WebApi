@@ -6,7 +6,7 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace StoreProduct.Domain.Models.User
+namespace StoreProduct.Domain.Models.DataAccessModel
 {
     public class User : VBaseModel
     {

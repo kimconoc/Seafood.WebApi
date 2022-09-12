@@ -1,6 +1,6 @@
 ﻿using StoreProduct.Domain.Common.Constant;
 using StoreProduct.Domain.Common.FileLog;
-using StoreProduct.Domain.Models.User;
+using StoreProduct.Domain.Models.DataAccessModel;
 using StoreProduct.WebApi.Authentication;
 using System;
 using System.Linq;
