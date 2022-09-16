@@ -184,12 +184,12 @@ namespace StoreProduct.WebApi.Controllers
                 var passwordHash = encoder.Encode(request.Password);
                 User userCreate = new User()
                 {
-                    Username = request.NumberPhone,
-                    PasswordHash = passwordHash,
-                    Fullname = request.FirstName + request.LastName,
-                    DisplayName = request.FirstName + request.LastName,
-                    Mobile = request.NumberPhone,
-                    EmailAddress = request.Email,
+                    Username = request.NumberPhone.Trim(),
+                    PasswordHash = passwordHash.Trim(),
+                    Fullname = request.FirstName.Trim() + " " + request.LastName.Trim(),
+                    DisplayName = request.FirstName.Trim() + " " + request.LastName.Trim(),
+                    Mobile = request.NumberPhone.Trim(),
+                    EmailAddress = request.Email.Trim(),
                 };
                 unitOfWork.UserRepository.Add(userCreate);
                 unitOfWork.Commit();
