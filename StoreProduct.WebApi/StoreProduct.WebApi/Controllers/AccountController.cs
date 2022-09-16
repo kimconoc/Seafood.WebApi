@@ -13,6 +13,8 @@ using System.Net.Http.Headers;
 using System.Security.Claims;
 using System.Web;
 using System.Web.Http;
+using System.Reflection;
+using StoreProduct.Domain.Common.FileLog;
 
 namespace StoreProduct.WebApi.Controllers
 {
@@ -155,5 +157,52 @@ namespace StoreProduct.WebApi.Controllers
             }
         }
         #endregion Logout
+        #region CreateAccount
+        [HttpPost]
+        [Route("api/Account/Create")]
+        public IHttpActionResult CreateAccount([FromBody] CreateAccountParameter request)
+        {
+            if (request == null)
+                return Ok(BadRequest());
+            if (!Helper.ValidPhoneNumer(request.NumberPhone) || !Helper.IsValidEmail(request.Email)
+                || string.IsNullOrEmpty(request.FirstName) || string.IsNullOrEmpty(request.LastName) || string.IsNullOrEmpty(request.Password))
+                return Ok(BadRequest());
+
+            try
+            {
+                var user = unitOfWork.UserRepository.FirstOrDefault(s => s.Username.Trim().ToLower().Equals(request.NumberPhone.Trim().ToLower()));
+                if (user != null)
+                {
+                    var result = BadRequest();
+                    result.Message = new
+                    {
+                        ViMessage = "Số điện thoại đã được đăng ký",
+                    };
+                    return Ok(result);
+                }
+                ScryptEncoder encoder = new ScryptEncoder();
+                var passwordHash = encoder.Encode(request.Password);
+                User userCreate = new User()
+                {
+                    Username = request.NumberPhone,
+                    PasswordHash = passwordHash,
+                    Fullname = request.FirstName + request.LastName,
+                    DisplayName = request.FirstName + request.LastName,
+                    Mobile = request.NumberPhone,
+                    EmailAddress = request.Email,
+                };
+                unitOfWork.UserRepository.Add(userCreate);
+                unitOfWork.Commit();
+                //
+                bool data = true;
+                return Ok(RequestOK<bool>(data));
+            }
+            catch(Exception ex)
+            {
+                FileHelper.GeneratorFileByDay(ex.ToString(), MethodBase.GetCurrentMethod().Name);
+                return Ok(ServerError());
+            }
+        }
+        #endregion CreateAccount
     }
 }
