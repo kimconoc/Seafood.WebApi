@@ -10,6 +10,7 @@ namespace StoreProduct.Repository.EntityFamework
     public interface IUnitOfWork : IDisposable
     {
         IGenericRepository<User> UserRepository { get; }
+        IGenericRepository<Product> ProductRepository { get; }
         void Commit(string request_id = "");
     }
 }

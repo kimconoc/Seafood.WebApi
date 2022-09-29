@@ -1,4 +1,4 @@
-USE [StoreProduct]
+USE [Seefood]
 
 CREATE TABLE [dbo].[Users](
 	[Id] [uniqueidentifier] NOT NULL,
