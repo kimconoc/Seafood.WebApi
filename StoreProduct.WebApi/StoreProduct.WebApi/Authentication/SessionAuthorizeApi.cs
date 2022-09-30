@@ -14,7 +14,7 @@ using System.Web.Http.Controllers;
 
 namespace StoreProduct.WebApi.Authentication
 {
-    public class SessionAuthorize : AuthorizeAttribute
+    public class SessionAuthorizeApi : AuthorizeAttribute
     {
         protected override bool IsAuthorized(HttpActionContext actionContext)
         {
@@ -75,13 +75,13 @@ namespace StoreProduct.WebApi.Authentication
         {
             using (IUnitOfWork unitOfWork = new EfUnitOfWork())
             {
-                var user = unitOfWork.UserRepository.FirstOrDefault(
+                var sessionAuthorize = unitOfWork.SessionAuthorizeRepository.FirstOrDefault(
                     e => !e.IsDeleted &&
                     !string.IsNullOrEmpty(e.SessionId) &&
                     e.SessionId == session_id
                 );
-                if (user != null)
-                    return user.Username.Trim() == HttpContext.Current.User.Identity.Name;
+                if (sessionAuthorize != null)
+                    return sessionAuthorize.Username.Trim() == HttpContext.Current.User.Identity.Name;
 
                 return false;
             }

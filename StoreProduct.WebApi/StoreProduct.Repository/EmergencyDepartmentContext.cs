@@ -31,6 +31,7 @@ namespace StoreProduct.Repository
         // public virtual DbSet<MyEntity> MyEntities { get; set; }
 
         public DbSet<User> Users { get; set; }
+        public DbSet<SessionAuthorize> SessionAuthorizes { get; set; }
         public DbSet<Product> Products { get; set; }
     }
 }

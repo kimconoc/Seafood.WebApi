@@ -101,7 +101,7 @@ namespace StoreProduct.WebApi.Controllers
         #region Logout
         [HttpGet]
         [Route("api/Account/Logout")]
-        public HttpResponseMessage GetLogout()
+        public HttpResponseMessage LogoutAPI()
         {
             var resp = new HttpResponseMessage();
             try
@@ -143,16 +143,16 @@ namespace StoreProduct.WebApi.Controllers
         private void RemoveSession(string session)
         {
             var session_id = session.Substring(0, 20);
-            var user = unitOfWork.UserRepository.FirstOrDefault(
+            var sessionAuthorize = unitOfWork.SessionAuthorizeRepository.FirstOrDefault(
                 e => !e.IsDeleted &&
                 !string.IsNullOrEmpty(e.SessionId) &&
                 e.SessionId == session_id
             );
-            if (user != null)
+            if (sessionAuthorize != null)
             {
-                user.Session = null;
-                user.SessionId = null;
-                unitOfWork.UserRepository.Update(user);
+                sessionAuthorize.Session = null;
+                sessionAuthorize.SessionId = null;
+                unitOfWork.SessionAuthorizeRepository.Update(sessionAuthorize);
                 unitOfWork.Commit();
             }
         }

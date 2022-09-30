@@ -10,7 +10,7 @@ using System.Web.Http;
 
 namespace StoreProduct.WebApi.Controllers
 {
-    [SessionAuthorize]
+    [SessionAuthorizeApi]
     public class UserController : BaseApiController
     {
         [HttpGet]

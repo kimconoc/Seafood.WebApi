@@ -2,6 +2,7 @@
 using Microsoft.Owin.Security.Cookies;
 using Owin;
 using StoreProduct.Domain.Common.Constant;
+using StoreProduct.Domain.Models.DataAccessModel;
 using StoreProduct.Repository.EntityFamework;
 using StoreProduct.WebApi.App_Start;
 using StoreProduct.WebApi.Middlewares;
@@ -58,11 +59,11 @@ namespace StoreProduct.WebApi
 
             foreach (var cookie in cookies)
             {
-                var cookieKeyIndex = cookie.IndexOf("StoreProduct");
+                var cookieKeyIndex = cookie.IndexOf(ConfigurationManager.AppSettings["KeyCookieName"]);
                 if (cookieKeyIndex != -1)
                 {
                     // Add extra character for '='
-                    cookieValue = cookie.Substring("StoreProduct".Length + 1);
+                    cookieValue = cookie.Substring(ConfigurationManager.AppSettings["KeyCookieName"].Length + 1);
                     break;
                 }
             }
@@ -74,10 +75,13 @@ namespace StoreProduct.WebApi
             {
                 using (var unitOfWork = new EfUnitOfWork())
                 {
-                    var user = unitOfWork.UserRepository.FirstOrDefault(m => !m.IsDeleted && m.Username == username);
-                    user.SessionId = cookieValue.Substring(0, 20);
-                    user.Session = cookieValue;
-                    unitOfWork.UserRepository.Update(user);
+                    SessionAuthorize sessionAuthorize = new SessionAuthorize()
+                    {
+                        Username = username,
+                        SessionId = cookieValue.Substring(0, 20),
+                        Session = cookieValue
+                    };
+                    unitOfWork.SessionAuthorizeRepository.Add(sessionAuthorize);
                     unitOfWork.Commit();
                 }
             }
