@@ -15,11 +15,31 @@ using System.Web;
 using System.Web.Http;
 using System.Reflection;
 using StoreProduct.Domain.Common.FileLog;
+using StoreProduct.Domain.Models.BaseModel;
+using StoreProduct.WebApi.Authentication;
 
 namespace StoreProduct.WebApi.Controllers
 {
     public class AccountController : BaseApiController
     {
+        #region IsAuthori
+        [HttpGet]
+        [Route("api/Account/IsAuthori")]
+        [SessionAuthorizeApi]
+        public HttpResponseMessage IsAuthoriAPI()
+        {
+            var resp = new HttpResponseMessage();
+            var objIsAuthori = new RequestBase<bool>()
+            {
+                Data = true,
+                Success = false,
+                StatusCode = (int)HttpStatusCode.OK,
+                Message = Domain.Common.Constant.Message.Successful
+            };
+            resp.Content = new ObjectContent<RequestBase<bool>>(objIsAuthori, new JsonMediaTypeFormatter());
+            return resp;
+        }
+        #endregion IsAuthori
         #region Login
         [HttpPost]
         [Route("api/Account/Login")]
@@ -135,8 +155,15 @@ namespace StoreProduct.WebApi.Controllers
                 resp.Headers.AddCookies(new[] { new_cookie_token });
             }
             catch (Exception) { }
-            resp.StatusCode = HttpStatusCode.OK;
-            resp.Content = new ObjectContent<dynamic>(Message.Successful, new JsonMediaTypeFormatter());
+
+            var objLogout = new RequestBase<bool>()
+            {
+                Data = true,
+                Success = false,
+                StatusCode = (int)HttpStatusCode.OK,
+                Message = Domain.Common.Constant.Message.Successful
+            };
+            resp.Content = new ObjectContent<RequestBase<bool>>(objLogout, new JsonMediaTypeFormatter());
             return resp;
         }
 

@@ -1,5 +1,6 @@
 ﻿using Microsoft.Owin;
 using StoreProduct.Domain.Common.Constant;
+using StoreProduct.Domain.Models.BaseModel;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -48,10 +49,15 @@ namespace StoreProduct.WebApi.Authentication
         protected override void HandleUnauthorizedRequest(HttpActionContext actionContext)
         {
             base.HandleUnauthorizedRequest(actionContext);
+            var objForbidden = new RequestBaseNoData()
+            {
+                Success = false,
+                StatusCode = (int)HttpStatusCode.Forbidden,
+                Message = Domain.Common.Constant.Message.Un_Au_Thorized
+            };
             actionContext.Response = new HttpResponseMessage
             {
-                StatusCode = HttpStatusCode.Forbidden,
-                Content = new ObjectContent<dynamic>(Message.Forbidden, new JsonMediaTypeFormatter())
+                Content = new ObjectContent<RequestBaseNoData>(objForbidden, new JsonMediaTypeFormatter())
             };
         }
 

@@ -1,5 +1,6 @@
 ﻿using Microsoft.Owin;
 using StoreProduct.Domain.Common.Constant;
+using StoreProduct.Domain.Models.BaseModel;
 using StoreProduct.Repository.EntityFamework;
 using System;
 using System.Collections.Generic;
@@ -64,10 +65,15 @@ namespace StoreProduct.WebApi.Authentication
         protected override void HandleUnauthorizedRequest(HttpActionContext actionContext)
         {
             base.HandleUnauthorizedRequest(actionContext);
+            var objUnauthorized = new RequestBaseNoData()
+            {
+                Success = false,
+                StatusCode = (int)HttpStatusCode.Unauthorized,
+                Message = Domain.Common.Constant.Message.Un_Au_Thorized
+            };
             actionContext.Response = new HttpResponseMessage
             {
-                StatusCode = HttpStatusCode.Unauthorized,
-                Content = new ObjectContent<dynamic>(Message.Un_Au_Thorized, new JsonMediaTypeFormatter())
+                Content = new ObjectContent<RequestBaseNoData>(objUnauthorized, new JsonMediaTypeFormatter())
             };
         }
 
