@@ -33,5 +33,6 @@ namespace StoreProduct.Repository
         public DbSet<User> Users { get; set; }
         public DbSet<SessionAuthorize> SessionAuthorizes { get; set; }
         public DbSet<Product> Products { get; set; }
+        public DbSet<FavouriteProd> FavouriteProds { get; set; }
     }
 }

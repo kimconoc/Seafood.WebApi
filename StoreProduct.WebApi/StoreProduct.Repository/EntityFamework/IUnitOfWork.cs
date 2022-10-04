@@ -12,6 +12,7 @@ namespace StoreProduct.Repository.EntityFamework
         IGenericRepository<User> UserRepository { get; }
         IGenericRepository<SessionAuthorize> SessionAuthorizeRepository { get; }
         IGenericRepository<Product> ProductRepository { get; }
+        IGenericRepository<FavouriteProd> FavouriteProdRepository { get; }
         void Commit(string request_id = "");
     }
 }

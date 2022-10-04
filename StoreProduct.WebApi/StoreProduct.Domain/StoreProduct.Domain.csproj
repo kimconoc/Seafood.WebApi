@@ -46,6 +46,7 @@
     <Compile Include="Common\Constant\Constant.cs" />
     <Compile Include="Common\Constant\Message.cs" />
     <Compile Include="Common\FileLog\FileHelper.cs" />
+    <Compile Include="Models\DataAccessModel\FavouriteProd.cs" />
     <Compile Include="Models\DataAccessModel\Product.cs" />
     <Compile Include="Models\DataAccessModel\SessionAuthorize.cs" />
     <Compile Include="Models\ParameterModel\CreateAccountParameter.cs" />
