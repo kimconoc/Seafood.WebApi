@@ -7,9 +7,10 @@ GO
 CREATE TABLE [dbo].[FavouriteProds](
 	[Id] [uniqueidentifier] NOT NULL,
 	[UserId] [uniqueidentifier] NULL,
+	[ProductId] [uniqueidentifier] NULL,
 	[ProdBasketId] [uniqueidentifier] NULL,
-	[IpRequest] nvarchar(100) NULL,
-	[Note] [nvarchar](max) NULL,
+	[IpRequest] [nvarchar](100) NULL,
+	[ClassName] [nvarchar](max) NULL,
 	[IsDeleted] [bit] NULL,
 	[DeletedAt] [datetime] NULL,
 	[DeletedBy] [nvarchar](100) NULL,

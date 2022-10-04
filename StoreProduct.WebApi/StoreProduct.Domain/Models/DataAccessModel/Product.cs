@@ -16,6 +16,7 @@ namespace StoreProduct.Domain.Models.DataAccessModel
         public string DescPromotion { get; set; }
         public string Description { get; set; }
         public string Outstanding { get; set; }
+        public string Favourite { get; set; }
         public double? ReviewProd { get; set; }
         public int? Price { get; set; }
         public int? PriceSale { get; set; }

@@ -9,9 +9,10 @@ namespace StoreProduct.Domain.Models.DataAccessModel
 {
     public class FavouriteProd : VBaseModel
     {
-        public Guid UserId { get; set; }
-        public Guid ProdBasketId { get; set; }
+        public Guid? UserId { get; set; }
+        public Guid? ProductId { get; set; }
+        public Guid? ProdBasketId { get; set; }
         public string IpRequest { get; set; }
-        public string Note { get; set; }
+        public string ClassName { get; set; }
     }
 }
