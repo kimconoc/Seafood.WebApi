@@ -36,14 +36,14 @@ namespace StoreProduct.WebApi.Controllers
                                     Price = prod.Price,
                                     PriceSale = prod.PriceSale,
                                     Amount = prod.Amount
-                                }).ToList();
+                                });
 
                 if (products == null || products.Count() == 0)
                 {
                     return Ok(NotFound());
                 }
 
-                dynamic data = products.ToList();
+                dynamic data = products.ToList().OrderBy(fa => fa.Favourite).Reverse();
                 return Ok(RequestOK<dynamic>(data));
             }
             catch(Exception ex)
