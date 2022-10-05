@@ -60,14 +60,32 @@ namespace StoreProduct.WebApi.Controllers
         {
             try
             {
-                var products = unitOfWork.ProductRepository.AsQueryable();
+                var ipRequest = GetIp();
+                var products = (from prod in unitOfWork.ProductRepository.AsQueryable().Where(e => !e.IsDeleted && e.CategoryCode.Equals(code))
+                                join favourite in unitOfWork.FavouriteProdRepository.AsQueryable().Where(e => !e.IsDeleted && e.IpRequest.Equals(ipRequest))
+                                on prod.Id equals favourite.ProductId into res
+                                from x in res.DefaultIfEmpty()
+                                select new
+                                {
+                                    Id = prod.Id,
+                                    CategoryCode = prod.CategoryCode,
+                                    ImgeProdId = prod.ImgeProdId,
+                                    Name = prod.Name,
+                                    DescPromotion = prod.DescPromotion,
+                                    Description = prod.Description,
+                                    Outstanding = prod.Outstanding,
+                                    Favourite = x.ClassName,
+                                    Price = prod.Price,
+                                    PriceSale = prod.PriceSale,
+                                    Amount = prod.Amount
+                                });
 
                 if (products == null || products.Count() == 0)
                 {
                     return Ok(NotFound());
                 }
 
-                dynamic data = products.Where(x => x.CategoryCode == code).ToList();
+                dynamic data = products.ToList().OrderBy(fa => fa.Favourite).Reverse();
                 return Ok(RequestOK<dynamic>(data));
             }
             catch(Exception ex)
@@ -83,10 +101,12 @@ namespace StoreProduct.WebApi.Controllers
         {
             try
             {
-                var obj = unitOfWork.FavouriteProdRepository.FirstOrDefault(x => x.Id.Equals(prodId));
+                var obj = unitOfWork.FavouriteProdRepository.FirstOrDefault(x => x.ProductId == prodId);
                 if(obj != null)
                 {
                     obj.ClassName = className;
+                    unitOfWork.FavouriteProdRepository.Update(obj);
+                    unitOfWork.Commit();
                 }    
                 else
                 {
