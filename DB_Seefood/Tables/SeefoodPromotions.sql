@@ -1,15 +1,15 @@
-
-
 USE [Seefood]
+GO
 
-CREATE TABLE [dbo].[Images](
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[SeefoodPromotions](
 	[Id] [uniqueidentifier] NOT NULL,
-	[ProductId] [uniqueidentifier] NULL,
-	[ShopSeefoodId] [uniqueidentifier] NULL,
-	[MoreImgId] [uniqueidentifier] NULL,
-	[UrlPath] [nvarchar](100) NULL,
-	[Base64Str] [nvarchar](max) NULL,
-	[IsImageMain] [bit] NULL,
+	[RegionId] [uniqueidentifier] NULL,
+	[RegionDistrictId] [uniqueidentifier] NULL,
+	[Content] nvarchar(MAX) NULL,
+	[Note] nvarchar(MAX) NULL,
 	[IsDeleted] [bit] NULL,
 	[DeletedAt] [datetime] NULL,
 	[DeletedBy] [nvarchar](100) NULL,
@@ -17,7 +17,6 @@ CREATE TABLE [dbo].[Images](
 	[CreatedBy] [nvarchar](100) NULL,
 	[UpdatedAt] [datetime] NULL,
 	[UpdatedBy] [nvarchar](100) NULL,
-
 PRIMARY KEY CLUSTERED 
 (
 	[Id] ASC
@@ -26,6 +25,4 @@ PRIMARY KEY CLUSTERED
 
 GO
 
-SET ANSI_PADDING OFF
-GO
 

@@ -27,11 +27,8 @@ namespace Seefood.WebApi.Controllers
                                 {
                                     Id = prod.Id,
                                     CategoryCode = prod.CategoryCode,
-                                    ImgeProdId = prod.ImgeProdId,
                                     Name = prod.Name,
-                                    DescPromotion = prod.DescPromotion,
                                     Description = prod.Description,
-                                    Outstanding = prod.Outstanding,
                                     ReviewProd = prod.ReviewProd,
                                     Favourite = x.ClassName,
                                     Price = prod.Price,
@@ -70,11 +67,8 @@ namespace Seefood.WebApi.Controllers
                                 {
                                     Id = prod.Id,
                                     CategoryCode = prod.CategoryCode,
-                                    ImgeProdId = prod.ImgeProdId,
                                     Name = prod.Name,
-                                    DescPromotion = prod.DescPromotion,
                                     Description = prod.Description,
-                                    Outstanding = prod.Outstanding,
                                     ReviewProd = prod.ReviewProd,
                                     Favourite = x.ClassName,
                                     Price = prod.Price,
