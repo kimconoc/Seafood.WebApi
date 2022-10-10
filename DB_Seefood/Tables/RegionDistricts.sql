@@ -4,9 +4,10 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 
-CREATE TABLE [dbo].[RegionDistricts](
+
+CREATE TABLE [dbo].[ RegionDistricts](
 	[Id] [uniqueidentifier] NOT NULL,
-	[RegionId]  [uniqueidentifier] NULL,
+	[RegionCode] [nvarchar](100) NULL,
 	[Name] [nvarchar](100) NULL,
 	[Description] [nvarchar](max) NULL,
 	[Note] [nvarchar](max) NULL,

@@ -10,7 +10,7 @@ namespace Seefood.Domain.Models.DataAccessModel
     public class Product : VBaseModel
     {
         public string CategoryCode { get; set; }
-        public string RegionCode { get; set; }
+        public string ShopCode { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public string Favourite { get; set; }

@@ -10,7 +10,7 @@ namespace Seefood.Domain.Models.DataAccessModel
     public class SeefoodPromotion : VBaseModel
     {
         public Guid? RegionId { get; set; }
-        public Guid? RegionDistrictId { get; set; }
+        public string RegionDistrictCode { get; set; }
         public string Content { get; set; }
         public string Note { get; set; }
     }

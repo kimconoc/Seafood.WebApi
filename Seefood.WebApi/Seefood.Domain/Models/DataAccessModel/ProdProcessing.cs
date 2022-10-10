@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Seefood.Domain.Models.DataAccessModel
 {
-    public class ProdProcessings : VBaseModel
+    public class ProdProcessing : VBaseModel
     {
         public Guid? ProductId { get; set; }
         public string Name { get; set; }

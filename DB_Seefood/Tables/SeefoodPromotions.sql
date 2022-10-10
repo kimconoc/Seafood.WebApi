@@ -7,9 +7,9 @@ GO
 CREATE TABLE [dbo].[SeefoodPromotions](
 	[Id] [uniqueidentifier] NOT NULL,
 	[RegionId] [uniqueidentifier] NULL,
-	[RegionDistrictId] [uniqueidentifier] NULL,
-	[Content] nvarchar(MAX) NULL,
-	[Note] nvarchar(MAX) NULL,
+	[RegionDistrictCode] [nvarchar](100) NULL,
+	[Content] [nvarchar](max) NULL,
+	[Note] [nvarchar](max) NULL,
 	[IsDeleted] [bit] NULL,
 	[DeletedAt] [datetime] NULL,
 	[DeletedBy] [nvarchar](100) NULL,

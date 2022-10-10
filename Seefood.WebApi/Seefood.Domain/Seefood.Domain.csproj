@@ -47,8 +47,15 @@
     <Compile Include="Common\Constant\Message.cs" />
     <Compile Include="Common\FileLog\FileHelper.cs" />
     <Compile Include="Models\DataAccessModel\FavouriteProd.cs" />
+    <Compile Include="Models\DataAccessModel\ProdInfo.cs" />
+    <Compile Include="Models\DataAccessModel\ProdProcessing.cs" />
+    <Compile Include="Models\DataAccessModel\ProdPromotion.cs" />
     <Compile Include="Models\DataAccessModel\Product.cs" />
+    <Compile Include="Models\DataAccessModel\Region.cs" />
+    <Compile Include="Models\DataAccessModel\RegionDistrict.cs" />
+    <Compile Include="Models\DataAccessModel\SeefoodPromotion.cs" />
     <Compile Include="Models\DataAccessModel\SessionAuthorize.cs" />
+    <Compile Include="Models\DataAccessModel\ShopSeefood.cs" />
     <Compile Include="Models\ParameterModel\CreateAccountParameter.cs" />
     <Compile Include="Models\ParameterModel\LoginParameterModel.cs" />
     <Compile Include="Models\BaseModel\IEntiy.cs" />
