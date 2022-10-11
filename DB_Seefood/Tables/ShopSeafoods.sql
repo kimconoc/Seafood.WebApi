@@ -5,7 +5,7 @@ SET QUOTED_IDENTIFIER ON
 GO
 
 
-CREATE TABLE [dbo].[ShopSeefoods](
+CREATE TABLE [dbo].[ShopSeafoods](
 	[Id] [uniqueidentifier] NOT NULL,
 	[RegionDistrictCode] [nvarchar](100) NULL,
 	[Name] [nvarchar](max) NULL,

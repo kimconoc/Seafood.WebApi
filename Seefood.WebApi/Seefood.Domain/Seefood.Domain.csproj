@@ -54,9 +54,9 @@
     <Compile Include="Models\DataAccessModel\Product.cs" />
     <Compile Include="Models\DataAccessModel\Region.cs" />
     <Compile Include="Models\DataAccessModel\RegionDistrict.cs" />
-    <Compile Include="Models\DataAccessModel\SeefoodPromotion.cs" />
+    <Compile Include="Models\DataAccessModel\SeafoodPromotion.cs" />
     <Compile Include="Models\DataAccessModel\SessionAuthorize.cs" />
-    <Compile Include="Models\DataAccessModel\ShopSeefood.cs" />
+    <Compile Include="Models\DataAccessModel\ShopSeafood.cs" />
     <Compile Include="Models\ParameterModel\CreateAccountParameter.cs" />
     <Compile Include="Models\ParameterModel\LoginParameterModel.cs" />
     <Compile Include="Models\BaseModel\IEntiy.cs" />

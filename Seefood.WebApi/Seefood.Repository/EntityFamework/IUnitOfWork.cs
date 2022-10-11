@@ -13,6 +13,15 @@ namespace Seefood.Repository.EntityFamework
         IGenericRepository<SessionAuthorize> SessionAuthorizeRepository { get; }
         IGenericRepository<Product> ProductRepository { get; }
         IGenericRepository<FavouriteProd> FavouriteProdRepository { get; }
+        IGenericRepository<Category> CategoryRepository { get; }
+        IGenericRepository<ProdInfo> ProdInfoRepository { get; }
+        IGenericRepository<ProdProcessing> ProdProcessingRepository { get; }
+        IGenericRepository<ProdPromotion> ProdPromotionRepository { get; }
+        IGenericRepository<Region> RegionRepository { get; }
+        IGenericRepository<RegionDistrict> RegionDistrictRepository { get; }
+        IGenericRepository<SeafoodPromotion> SeafoodPromotionRepository { get; }
+        IGenericRepository<ShopSeafood> ShopSeafoodRepository { get; }
+
         void Commit(string request_id = "");
     }
 }

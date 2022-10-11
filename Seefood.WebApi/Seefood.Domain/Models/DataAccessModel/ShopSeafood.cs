@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Seefood.Domain.Models.DataAccessModel
 {
-    public class ShopSeefood : VBaseModel
+    public class ShopSeafood : VBaseModel
     {
         public string RegionDistrictCode { get; set; }
         public string Name { get; set; }

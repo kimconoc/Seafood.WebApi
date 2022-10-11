@@ -34,5 +34,13 @@ namespace Seefood.Repository
         public DbSet<SessionAuthorize> SessionAuthorizes { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<FavouriteProd> FavouriteProds { get; set; }
+        public DbSet<Category> Categorys { get; set; }
+        public DbSet<ProdInfo> ProdInfos { get; set; }
+        public DbSet<ProdProcessing> ProdProcessings { get; set; }
+        public DbSet<ProdPromotion> ProdPromotions { get; set; }
+        public DbSet<Region> Regions { get; set; }
+        public DbSet<RegionDistrict> RegionDistricts { get; set; }
+        public DbSet<SeafoodPromotion> SeafoodPromotions { get; set; }
+        public DbSet<ShopSeafood> ShopSeafoods { get; set; }
     }
 }
