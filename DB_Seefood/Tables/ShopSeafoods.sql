@@ -8,6 +8,7 @@ GO
 CREATE TABLE [dbo].[ShopSeafoods](
 	[Id] [uniqueidentifier] NOT NULL,
 	[RegionDistrictCode] [nvarchar](100) NULL,
+	[RegionCode] [nvarchar](100) NULL,
 	[Name] [nvarchar](max) NULL,
 	[Address] [nvarchar](200) NULL,
 	[Phone] [nvarchar](20) NULL,

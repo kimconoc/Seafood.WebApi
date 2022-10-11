@@ -19,13 +19,8 @@ namespace Seefood.WebApi.Controllers
         {
             try
             {
-                var ipRequest = GetIp();
-                string[] ShopSeafoodCode = { "" };
-                if (regionCode == Constant.Region_HaNoi)
-                {
-                    ShopSeafoodCode = Constant.ShopSeafood_HaNoi;
-                }    
-                var products = (from prod in unitOfWork.ProductRepository.AsQueryable().Where(e => !e.IsDeleted && ShopSeafoodCode.Contains(e.ShopCode))
+                var ipRequest = GetIp();   
+                var products = (from prod in unitOfWork.ProductRepository.AsQueryable().Where(e => !e.IsDeleted && regionCode.Equals(e.RegionCode))
                                 join favourite in unitOfWork.FavouriteProdRepository.AsQueryable().Where(e => !e.IsDeleted && e.IpRequest.Equals(ipRequest))
                                 on prod.Id equals favourite.ProductId into res1
                                 from x in res1.DefaultIfEmpty()
@@ -36,6 +31,8 @@ namespace Seefood.WebApi.Controllers
                                 {
                                     Id = prod.Id,
                                     CategoryCode = prod.CategoryCode,
+                                    RegionDistrictCode = prod.RegionDistrictCode,
+                                    RegionCode = prod.RegionCode,
                                     Name = prod.Name,
                                     Description = prod.Description,
                                     DescPromotion = y.Content,
@@ -69,12 +66,7 @@ namespace Seefood.WebApi.Controllers
             try
             {
                 var ipRequest = GetIp();
-                string[] ShopSeafoodCode = { "" };
-                if (regionCode == Constant.Region_HaNoi)
-                {
-                    ShopSeafoodCode = Constant.ShopSeafood_HaNoi;
-                }
-                var products = (from prod in unitOfWork.ProductRepository.AsQueryable().Where(e => !e.IsDeleted && e.CategoryCode.Equals(code) && ShopSeafoodCode.Contains(e.ShopCode))
+                var products = (from prod in unitOfWork.ProductRepository.AsQueryable().Where(e => !e.IsDeleted && e.CategoryCode.Equals(code) && regionCode.Equals(e.RegionCode))
                                 join favourite in unitOfWork.FavouriteProdRepository.AsQueryable().Where(e => !e.IsDeleted && e.IpRequest.Equals(ipRequest))
                                 on prod.Id equals favourite.ProductId into res1
                                 from x in res1.DefaultIfEmpty()
@@ -85,6 +77,8 @@ namespace Seefood.WebApi.Controllers
                                 {
                                     Id = prod.Id,
                                     CategoryCode = prod.CategoryCode,
+                                    RegionDistrictCode = prod.RegionDistrictCode,
+                                    RegionCode = prod.RegionCode,
                                     Name = prod.Name,
                                     Description = prod.Description,
                                     DescPromotion = y.Content,

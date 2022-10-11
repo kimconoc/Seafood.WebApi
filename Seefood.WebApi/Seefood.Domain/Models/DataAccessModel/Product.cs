@@ -11,6 +11,8 @@ namespace Seefood.Domain.Models.DataAccessModel
     {
         public string CategoryCode { get; set; }
         public string ShopCode { get; set; }
+        public string RegionDistrictCode { get; set; }
+        public string RegionCode { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public string Favourite { get; set; }

@@ -6,6 +6,8 @@ CREATE TABLE [dbo].[Products](
 	[Id] [uniqueidentifier] NOT NULL,
 	[CategoryCode] [nvarchar](100) NULL,
 	[ShopCode] [nvarchar](100) NULL,
+	[RegionDistrictCode] [nvarchar](100) NULL,
+	[RegionCode] [nvarchar](100) NULL,
 	[Name] [nvarchar](100) NULL,
 	[Description] [nvarchar](max) NULL,
 	[ReviewProd] [float] NULL,

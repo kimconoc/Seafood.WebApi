@@ -30,6 +30,7 @@ namespace Seefood.Domain.Common.Constant
         public const string RegionDistrict_ThanhXuan = "SEAHANOITHANHXUAN";
         public const string RegionDistrict_ThanhTri = "SEAHANOITHANHTRI";
         //Con
+        public const string ShopSeafood_NgocHoi = "SEAFOODNGOCHOI";
         public readonly static string[] ShopSeafood_HaNoi = { "SEAFOODNGOCHOI"};
         #endregion Khu vực Hà Nội
     }
