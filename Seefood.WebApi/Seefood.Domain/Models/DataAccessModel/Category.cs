@@ -7,13 +7,12 @@ using System.Threading.Tasks;
 
 namespace Seefood.Domain.Models.DataAccessModel
 {
-    public class ShopSeefood : VBaseModel
+    public class Category : VBaseModel
     {
-        public string RegionDistrictCode { get; set; }
         public string Name { get; set; }
-        public string Address { get; set; }
-        public string Phone { get; set; }
-        public string Code { get; set; }
+        public string Description { get; set; }
         public string Note { get; set; }
+        public string Code { get; set; }
+        public string Icon { get; set; }
     }
 }

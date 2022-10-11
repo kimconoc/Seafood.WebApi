@@ -6,8 +6,7 @@ GO
 
 CREATE TABLE [dbo].[SeefoodPromotions](
 	[Id] [uniqueidentifier] NOT NULL,
-	[RegionId] [uniqueidentifier] NULL,
-	[RegionDistrictCode] [nvarchar](100) NULL,
+	[ShopCode] [nvarchar](100) NULL,
 	[Content] [nvarchar](max) NULL,
 	[Note] [nvarchar](max) NULL,
 	[IsDeleted] [bit] NULL,

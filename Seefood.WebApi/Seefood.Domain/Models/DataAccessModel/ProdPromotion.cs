@@ -11,6 +11,7 @@ namespace Seefood.Domain.Models.DataAccessModel
     {
         public Guid? ProductId { get; set; }
         public string Content { get; set; }
+        public bool PromotionMain { get; set; }
         public string Note { get; set; }
     }
 }

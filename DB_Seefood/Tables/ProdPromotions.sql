@@ -7,8 +7,9 @@ GO
 CREATE TABLE [dbo].[ProdPromotions](
 	[Id] [uniqueidentifier] NOT NULL,
 	[ProductId] [uniqueidentifier] NULL,
-	[Content] nvarchar(MAX) NULL,
-	[Note] nvarchar(MAX) NULL,
+	[Content] [nvarchar](max) NULL,
+	[PromotionMain] bit NULL,
+	[Note] [nvarchar](max) NULL,
 	[IsDeleted] [bit] NULL,
 	[DeletedAt] [datetime] NULL,
 	[DeletedBy] [nvarchar](100) NULL,

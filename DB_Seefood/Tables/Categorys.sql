@@ -8,6 +8,7 @@ CREATE TABLE [dbo].[Categorys](
 	[Description] [nvarchar](max) NULL,
 	[Note] [nvarchar](max) NULL,
 	[Code] [nvarchar](100) NULL,
+	[Icon] [nvarchar](100) NULL,
 	[IsDeleted] [bit] NULL,
 	[DeletedAt] [datetime] NULL,
 	[DeletedBy] [nvarchar](100) NULL,

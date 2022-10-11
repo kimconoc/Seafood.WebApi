@@ -4,13 +4,15 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 
+
 CREATE TABLE [dbo].[ShopSeefoods](
 	[Id] [uniqueidentifier] NOT NULL,
-	[RegionId] [uniqueidentifier] NULL,
-	[RegionDistrictId] [uniqueidentifier] NULL,
-	[Name] nvarchar(MAX) NULL,
-	[Phone] nvarchar(20) NULL,
-	[Note] nvarchar(MAX) NULL,
+	[RegionDistrictCode] [nvarchar](100) NULL,
+	[Name] [nvarchar](max) NULL,
+	[Address] [nvarchar](200) NULL,
+	[Phone] [nvarchar](20) NULL,
+	[Code] [nvarchar](100) NULL,
+	[Note] [nvarchar](max) NULL,
 	[IsDeleted] [bit] NULL,
 	[DeletedAt] [datetime] NULL,
 	[DeletedBy] [nvarchar](100) NULL,
