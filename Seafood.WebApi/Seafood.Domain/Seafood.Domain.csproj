@@ -45,9 +45,11 @@
     <Compile Include="Common\Constant\Helper.cs" />
     <Compile Include="Common\Constant\Constant.cs" />
     <Compile Include="Common\Constant\Message.cs" />
+    <Compile Include="Common\Enum\SeafoodEnum.cs" />
     <Compile Include="Common\FileLog\FileHelper.cs" />
     <Compile Include="Models\DataAccessModel\Category.cs" />
     <Compile Include="Models\DataAccessModel\FavouriteProd.cs" />
+    <Compile Include="Models\DataAccessModel\Image.cs" />
     <Compile Include="Models\DataAccessModel\ProdInfo.cs" />
     <Compile Include="Models\DataAccessModel\ProdProcessing.cs" />
     <Compile Include="Models\DataAccessModel\ProdPromotion.cs" />

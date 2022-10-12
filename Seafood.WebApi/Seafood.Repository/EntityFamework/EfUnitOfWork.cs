@@ -23,6 +23,7 @@ namespace Seafood.Repository.EntityFamework
         private readonly EfGenericRepository<RegionDistrict> _regionDistrictRepo;
         private readonly EfGenericRepository<SeafoodPromotion> _seafoodPromotionRepo;
         private readonly EfGenericRepository<ShopSeafood> _shopSeafoodRepo;
+        private readonly EfGenericRepository<Image> _imageRepo;
 
         public EfUnitOfWork()
         {
@@ -38,6 +39,7 @@ namespace Seafood.Repository.EntityFamework
             _regionDistrictRepo = new EfGenericRepository<RegionDistrict>(context);
             _seafoodPromotionRepo = new EfGenericRepository<SeafoodPromotion>(context);
             _shopSeafoodRepo = new EfGenericRepository<ShopSeafood>(context);
+            _imageRepo = new EfGenericRepository<Image>(context);
         }
 
         public IGenericRepository<User> UserRepository => _userRepo;
@@ -52,6 +54,7 @@ namespace Seafood.Repository.EntityFamework
         public IGenericRepository<RegionDistrict> RegionDistrictRepository => _regionDistrictRepo;
         public IGenericRepository<SeafoodPromotion> SeafoodPromotionRepository => _seafoodPromotionRepo;
         public IGenericRepository<ShopSeafood> ShopSeafoodRepository => _shopSeafoodRepo;
+        public IGenericRepository<Image> ImageRepository => _imageRepo;
 
         public void Commit(string request_id = "")
         {

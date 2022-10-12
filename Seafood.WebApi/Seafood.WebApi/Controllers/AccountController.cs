@@ -46,18 +46,18 @@ namespace Seafood.WebApi.Controllers
         public IHttpActionResult LoginAPI([FromBody] LoginParameterModel request)
         {
             if (!request.Validate())
-                return Ok(BadRequest());
+                return Ok(Bad_Request());
 
             var user = ValidateUser(request.Username, request.Password);
             if (user == null)
             {
-                var result = BadRequest();
+                var result = Bad_Request();
                 result.Message = Message.LOGIN_ERROR;
                 return Ok(result);
             }
             if (user.IsLocked)
             {
-                var result = BadRequest();
+                var result = Bad_Request();
                 result.Message = Message.Account_LOCKED;
                 return Ok(result);
             }
@@ -81,7 +81,7 @@ namespace Seafood.WebApi.Controllers
                 IsAdminUser = user.IsAdminUser,
                 IsLocked = user.IsLocked
             };
-            return Ok(RequestOK<dynamic>(data));
+            return Ok(Request_OK<dynamic>(data));
         }
 
         private User ValidateUser(string username, string password)
@@ -190,17 +190,17 @@ namespace Seafood.WebApi.Controllers
         public IHttpActionResult CreateAccount([FromBody] CreateAccountParameter request)
         {
             if (request == null)
-                return Ok(BadRequest());
+                return Ok(Bad_Request());
             if (!Helper.ValidPhoneNumer(request.NumberPhone) || !Helper.IsValidEmail(request.Email)
                 || string.IsNullOrEmpty(request.FirstName) || string.IsNullOrEmpty(request.LastName) || string.IsNullOrEmpty(request.Password))
-                return Ok(BadRequest());
+                return Ok(Bad_Request());
 
             try
             {
                 var user = unitOfWork.UserRepository.FirstOrDefault(s => s.Username.Trim().ToLower().Equals(request.NumberPhone.Trim().ToLower()));
                 if (user != null)
                 {
-                    var result = BadRequest();
+                    var result = Bad_Request();
                     result.Message = new
                     {
                         ViMessage = "Số điện thoại đã được đăng ký",
@@ -222,12 +222,12 @@ namespace Seafood.WebApi.Controllers
                 unitOfWork.Commit();
                 //
                 bool data = true;
-                return Ok(RequestOK<bool>(data));
+                return Ok(Request_OK<bool>(data));
             }
             catch(Exception ex)
             {
                 FileHelper.GeneratorFileByDay(ex.ToString(), MethodBase.GetCurrentMethod().Name);
-                return Ok(ServerError());
+                return Ok(Server_Error());
             }
         }
         #endregion CreateAccount

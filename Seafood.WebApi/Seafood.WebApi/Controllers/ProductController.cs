@@ -1,4 +1,5 @@
 ﻿using Seafood.Domain.Common.Constant;
+using Seafood.Domain.Common.Enum;
 using Seafood.Domain.Common.FileLog;
 using Seafood.Domain.Models.DataAccessModel;
 using System;
@@ -45,16 +46,16 @@ namespace Seafood.WebApi.Controllers
 
                 if (products == null || products.Count() == 0)
                 {
-                    return Ok(NotFound());
+                    return Ok(Not_Found());
                 }
 
                 dynamic data = products.ToList().OrderBy(fa => fa.Favourite).Reverse();
-                return Ok(RequestOK<dynamic>(data));
+                return Ok(Request_OK<dynamic>(data));
             }
             catch(Exception ex)
             {
                 FileHelper.GeneratorFileByDay(ex.ToString(), MethodBase.GetCurrentMethod().Name);
-                return Ok(ServerError());
+                return Ok(Server_Error());
             }
             
         }
@@ -91,16 +92,58 @@ namespace Seafood.WebApi.Controllers
 
                 if (products == null || products.Count() == 0)
                 {
-                    return Ok(NotFound());
+                    return Ok(Not_Found());
                 }
 
                 dynamic data = products.ToList().OrderBy(fa => fa.Favourite).Reverse();
-                return Ok(RequestOK<dynamic>(data));
+                return Ok(Request_OK<dynamic>(data));
             }
             catch(Exception ex)
             {
                 FileHelper.GeneratorFileByDay(ex.ToString(), MethodBase.GetCurrentMethod().Name);
-                return Ok(ServerError());
+                return Ok(Server_Error());
+            }
+        }
+
+        [HttpGet]
+        [Route("api/Product/GetProdDetailtById")]
+        public IHttpActionResult GetProdDetailtById(Guid prodId)
+        {
+            try
+            {
+                var product = unitOfWork.ProductRepository.FirstOrDefault(
+                e => !e.IsDeleted &&
+                e.Id == prodId);
+
+                if(product == null)
+                {
+                    return Ok(Not_Found());
+                }    
+
+                dynamic data = new
+                {
+                    Id = product.Id,
+                    CategoryCode = product.CategoryCode,
+                    RegionDistrictCode = product.RegionDistrictCode,
+                    RegionCode = product.RegionCode,
+                    Name = product.Name,
+                    Description = product.Description,
+                    ReviewProd = product.ReviewProd,
+                    Price = product.Price,
+                    PriceSale = product.PriceSale,
+                    Amount = product.Amount,
+                    Images = GetListImageById(prodId, (int)ImageTypeEnum.Product),
+                    ListProcessing = GetListProcessingByIdProd(prodId),
+                    ListPromotion = GetListPromotionByIdProd(prodId),
+                    ListProdInfo = GetListProdInfoByIdProd(prodId),
+                    ListSeafoodPromotion = GetListSeafoodPromotion(),
+                };
+                return Ok(Request_OK<dynamic>(data));
+            }
+            catch (Exception ex)
+            {
+                FileHelper.GeneratorFileByDay(ex.ToString(), MethodBase.GetCurrentMethod().Name);
+                return Ok(Server_Error());
             }
         }
 
@@ -129,13 +172,28 @@ namespace Seafood.WebApi.Controllers
                     unitOfWork.Commit();
                 };  
                 dynamic data = true;
-                return Ok(RequestOK<dynamic>(data));
+                return Ok(Request_OK<dynamic>(data));
             }
             catch (Exception ex)
             {
                 FileHelper.GeneratorFileByDay(ex.ToString(), MethodBase.GetCurrentMethod().Name);
-                return Ok(ServerError());
+                return Ok(Server_Error());
             }
         }
+
+        #region PrivateMenthod
+        private List<ProdProcessing> GetListProcessingByIdProd(Guid prodId)
+        {
+            return unitOfWork.ProdProcessingRepository.Find(e => !e.IsDeleted && e.ProductId == prodId).ToList();
+        }
+        private List<ProdPromotion> GetListPromotionByIdProd(Guid prodId)
+        {
+            return unitOfWork.ProdPromotionRepository.Find(e => !e.IsDeleted && e.ProductId == prodId).ToList();
+        }
+        private List<ProdInfo> GetListProdInfoByIdProd(Guid prodId)
+        {
+            return unitOfWork.ProdInfoRepository.Find(e => !e.IsDeleted && e.ProductId == prodId).ToList();
+        }
+        #endregion PrivateMenthod
     }
 }

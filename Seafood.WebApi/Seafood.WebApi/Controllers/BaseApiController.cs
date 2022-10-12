@@ -1,5 +1,10 @@
-﻿using Seafood.Domain.Models.BaseModel;
+﻿using Seafood.Domain.Common.Enum;
+using Seafood.Domain.Models.BaseModel;
+using Seafood.Domain.Models.DataAccessModel;
 using Seafood.Repository.EntityFamework;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.ServiceModel.Channels;
 using System.Web;
@@ -38,7 +43,28 @@ namespace Seafood.WebApi.Controllers
                 return null;
             }
         }
-        protected RequestBase<TRequest> RequestOK<TRequest>(TRequest data)
+        protected List<SeafoodPromotion> GetListSeafoodPromotion()
+        {
+            return unitOfWork.SeafoodPromotionRepository.AsQueryable().ToList();
+        }
+        protected List<Image> GetListImageById(Guid id , int typeEnum)
+        {
+            if ((int)ImageTypeEnum.Product == typeEnum)
+            {
+                return unitOfWork.ImageRepository.Find(e => !e.IsDeleted && e.ProductId == id).ToList();
+            }  
+            else if ((int)ImageTypeEnum.Shop == typeEnum)
+            {
+                return unitOfWork.ImageRepository.Find(e => !e.IsDeleted && e.ShopSeefoodId == id).ToList();
+            }
+            else if ((int)ImageTypeEnum.More == typeEnum)
+            {
+                return unitOfWork.ImageRepository.Find(e => !e.IsDeleted && e.MoreImgId == id).ToList();
+            }
+
+            return null;
+        }
+        protected RequestBase<TRequest> Request_OK<TRequest>(TRequest data)
         {
             return new RequestBase<TRequest>()
             {
@@ -48,7 +74,7 @@ namespace Seafood.WebApi.Controllers
                 Message = Domain.Common.Constant.Message.Successful
             };
         }
-        protected RequestBaseNoData BadRequest()
+        protected RequestBaseNoData Bad_Request()
         {
             return new RequestBaseNoData()
             {
@@ -57,7 +83,7 @@ namespace Seafood.WebApi.Controllers
                 Message = Domain.Common.Constant.Message.Bad_Request
             };
         }
-        protected RequestBaseNoData NotFound()
+        protected RequestBaseNoData Not_Found()
         {
             return new RequestBaseNoData()
             {
@@ -66,7 +92,7 @@ namespace Seafood.WebApi.Controllers
                 Message = Domain.Common.Constant.Message.DATA_NOT_FOUND
             };
         }
-        protected RequestBaseNoData ServerError()
+        protected RequestBaseNoData Server_Error()
         {
             return new RequestBaseNoData()
             {
