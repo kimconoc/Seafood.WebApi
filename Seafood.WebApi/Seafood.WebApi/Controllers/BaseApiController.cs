@@ -47,6 +47,10 @@ namespace Seafood.WebApi.Controllers
         {
             return unitOfWork.SeafoodPromotionRepository.AsQueryable().ToList();
         }
+        protected string GetIconByCategory(string categoryCode)
+        {
+            return unitOfWork.CategoryRepository.FirstOrDefault(e => !e.IsDeleted && e.Code == categoryCode).Icon;
+        }
         protected List<Image> GetListImageById(Guid id , int typeEnum)
         {
             if ((int)ImageTypeEnum.Product == typeEnum)

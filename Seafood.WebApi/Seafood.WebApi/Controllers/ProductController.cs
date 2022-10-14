@@ -132,6 +132,7 @@ namespace Seafood.WebApi.Controllers
                     Price = product.Price,
                     PriceSale = product.PriceSale,
                     Amount = product.Amount,
+                    Icon = GetIconByCategory(product.CategoryCode),
                     Images = GetListImageById(prodId, (int)ImageTypeEnum.Product),
                     ListProcessing = GetListProcessingByIdProd(prodId),
                     ListPromotion = GetListPromotionByIdProd(prodId),
@@ -184,7 +185,7 @@ namespace Seafood.WebApi.Controllers
         #region PrivateMenthod
         private List<ProdProcessing> GetListProcessingByIdProd(Guid prodId)
         {
-            return unitOfWork.ProdProcessingRepository.Find(e => !e.IsDeleted && e.ProductId == prodId).ToList();
+            return unitOfWork.ProdProcessingRepository.Find(e => !e.IsDeleted && (e.ProductId == prodId || e.Note.Equals("DENGUYEN") || e.Note.Equals("THEOYEUCAU"))).ToList();
         }
         private List<ProdPromotion> GetListPromotionByIdProd(Guid prodId)
         {
