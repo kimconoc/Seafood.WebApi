@@ -171,8 +171,8 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BaseApiController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\MasterDataController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
-    <Compile Include="Controllers\ShopSeafoodController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Filters\CustomExceptionFilter.cs" />
     <Compile Include="Filters\CustomModifyingErrorMessageDelegatingHandler.cs" />
@@ -225,7 +225,7 @@
     <Folder Include="Models\" />
     <Folder Include="Views\Account\" />
     <Folder Include="Views\BaseApi\" />
-    <Folder Include="Views\ShopSeafood\" />
+    <Folder Include="Views\MasterData\" />
     <Folder Include="Views\User\" />
   </ItemGroup>
   <ItemGroup>
