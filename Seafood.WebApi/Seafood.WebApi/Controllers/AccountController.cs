@@ -29,10 +29,22 @@ namespace Seafood.WebApi.Controllers
         public HttpResponseMessage IsAuthoriAPI()
         {
             var resp = new HttpResponseMessage();
+            var username = GetUsername();
+            var userData = unitOfWork.UserRepository.FirstOrDefault(s => s.Username.Trim().ToLower().Equals(username.Trim().ToLower()));
             dynamic data = new
             {
-                IsAuthori = true,
-                Username = getUsername()
+                Id = userData.Id,
+                Username = userData.Username,
+                Roles = userData.Roles,
+                Fullname = userData.Fullname,
+                FirstName = userData.FirstName,
+                LastName = userData.LastName,
+                MiddleName = userData.MiddleName,
+                DisplayName = userData.DisplayName,
+                Mobile = userData.Mobile,
+                EmailAddress = userData.EmailAddress,
+                IsAdminUser = userData.IsAdminUser,
+                IsLocked = userData.IsLocked
             };
             var objIsAuthori = new RequestBase<dynamic>()
             {
@@ -53,14 +65,14 @@ namespace Seafood.WebApi.Controllers
             if (!request.Validate())
                 return Ok(Bad_Request());
 
-            var user = ValidateUser(request.Username, request.Password);
-            if (user == null)
+            var userData = ValidateUser(request.Username, request.Password);
+            if (userData == null)
             {
                 var result = Bad_Request();
                 result.Message = Message.LOGIN_ERROR;
                 return Ok(result);
             }
-            if (user.IsLocked)
+            if (userData.IsLocked)
             {
                 var result = Bad_Request();
                 result.Message = Message.Account_LOCKED;
@@ -68,23 +80,23 @@ namespace Seafood.WebApi.Controllers
             }
 
             // Đăng ký cookieValue nhảy vào starup
-            ClaimsIdentity identity = CreateIdentity(user);
+            ClaimsIdentity identity = CreateIdentity(userData);
             Request.GetOwinContext().Authentication.SignIn(identity);
             //
             dynamic data = new
             {
-                Id = user.Id,
-                Username = user.Username,
-                Roles = user.Roles,
-                Fullname = user.Fullname,
-                FirstName = user.FirstName,
-                LastName = user.LastName,
-                MiddleName = user.MiddleName,
-                DisplayName = user.DisplayName,
-                Mobile = user.Mobile,
-                EmailAddress = user.EmailAddress,
-                IsAdminUser = user.IsAdminUser,
-                IsLocked = user.IsLocked
+                Id = userData.Id,
+                Username = userData.Username,
+                Roles = userData.Roles,
+                Fullname = userData.Fullname,
+                FirstName = userData.FirstName,
+                LastName = userData.LastName,
+                MiddleName = userData.MiddleName,
+                DisplayName = userData.DisplayName,
+                Mobile = userData.Mobile,
+                EmailAddress = userData.EmailAddress,
+                IsAdminUser = userData.IsAdminUser,
+                IsLocked = userData.IsLocked
             };
             return Ok(Request_OK<dynamic>(data));
         }
@@ -92,7 +104,7 @@ namespace Seafood.WebApi.Controllers
         private User ValidateUser(string username, string password)
         {
             string devAccounts = ConfigurationManager.AppSettings.Get("DevUsername");
-            if (ConfigurationManager.AppSettings["HiddenError"].Equals("false") && devAccounts.Contains(username))
+            if (ConfigurationManager.AppSettings["HiddenError"].Equals("true") && devAccounts.Contains(username))
                 return unitOfWork.UserRepository.FirstOrDefault(s => s.Username.Equals(username));
 
             var userData = unitOfWork.UserRepository.FirstOrDefault(s => s.Username.Trim().ToLower().Equals(username.Trim().ToLower()));
@@ -108,11 +120,11 @@ namespace Seafood.WebApi.Controllers
             return null;
         }
 
-        private ClaimsIdentity CreateIdentity(User user)
+        private ClaimsIdentity CreateIdentity(User userData)
         {
-            string username = string.IsNullOrEmpty(user.Username) ? "" : user.Username;
-            string roles = string.IsNullOrEmpty(user.Roles) ? "" : user.Roles;
-            string isAdminUser = user.IsAdminUser? "true" : "false";
+            string username = string.IsNullOrEmpty(userData.Username) ? "" : userData.Username;
+            string roles = string.IsNullOrEmpty(userData.Roles) ? "" : userData.Roles;
+            string isAdminUser = userData.IsAdminUser? "true" : "false";
             var claims = new[]
             {
                 new Claim(ClaimTypes.Name, username.Trim()),

@@ -25,7 +25,7 @@ namespace Seafood.WebApi.Controllers
             }
             base.Dispose(disposing);
         }
-        protected String getUsername()
+        protected String GetUsername()
         {
             try
             {
