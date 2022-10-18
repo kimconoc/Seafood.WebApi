@@ -34,14 +34,14 @@ namespace Seafood.WebApi.Controllers
                 IsAuthori = true,
                 Username = getUsername()
             };
-            var objIsAuthori = new RequestBase<bool>()
+            var objIsAuthori = new RequestBase<dynamic>()
             {
                 Data = data,
                 Success = false,
                 StatusCode = (int)HttpStatusCode.OK,
                 Message = Domain.Common.Constant.Message.Successful
             };
-            resp.Content = new ObjectContent<RequestBase<bool>>(objIsAuthori, new JsonMediaTypeFormatter());
+            resp.Content = new ObjectContent<RequestBase<dynamic>>(objIsAuthori, new JsonMediaTypeFormatter());
             return resp;
         }
         #endregion IsAuthori
