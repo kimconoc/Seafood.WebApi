@@ -29,9 +29,14 @@ namespace Seafood.WebApi.Controllers
         public HttpResponseMessage IsAuthoriAPI()
         {
             var resp = new HttpResponseMessage();
+            dynamic data = new
+            {
+                IsAuthori = true,
+                Username = getUsername()
+            };
             var objIsAuthori = new RequestBase<bool>()
             {
-                Data = true,
+                Data = data,
                 Success = false,
                 StatusCode = (int)HttpStatusCode.OK,
                 Message = Domain.Common.Constant.Message.Successful

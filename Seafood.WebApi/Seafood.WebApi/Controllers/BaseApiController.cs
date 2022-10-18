@@ -4,8 +4,10 @@ using Seafood.Domain.Models.DataAccessModel;
 using Seafood.Repository.EntityFamework;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Net;
+using System.Security.Claims;
 using System.ServiceModel.Channels;
 using System.Web;
 using System.Web.Http;
@@ -22,6 +24,23 @@ namespace Seafood.WebApi.Controllers
                 unitOfWork.Dispose();
             }
             base.Dispose(disposing);
+        }
+        protected String getUsername()
+        {
+            try
+            {
+                var identity = (ClaimsIdentity)User.Identity;
+                var usertname = identity?.Name;
+                return string.IsNullOrWhiteSpace(usertname) ? (IsProInv() ? "kimconoc" : "") : usertname;
+            }
+            catch (Exception)
+            {
+                return IsProInv() ? "kimconoc" : "";
+            }
+        }
+        protected bool IsProInv()
+        {
+            return ConfigurationManager.AppSettings["HiddenError"].Equals("true");
         }
         protected string GetIp()
         {

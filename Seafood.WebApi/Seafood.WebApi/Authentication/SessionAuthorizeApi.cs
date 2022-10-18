@@ -22,7 +22,7 @@ namespace Seafood.WebApi.Authentication
             var ip = GetClientIpAddress(actionContext.Request);
             try
             {
-                if (ConfigurationManager.AppSettings["HiddenError"].Equals("false") && ConfigurationManager.AppSettings["DevWriteLists"].Contains(ip))
+                if (ConfigurationManager.AppSettings["HiddenError"].Equals("true") && ConfigurationManager.AppSettings["DevWriteLists"].Contains(ip))
                     return true;
             }
             catch (Exception) { }
