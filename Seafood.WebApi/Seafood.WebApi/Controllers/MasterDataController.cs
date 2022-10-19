@@ -11,7 +11,7 @@ namespace Seafood.WebApi.Controllers
     public class MasterDataController : BaseApiController
     {
         [HttpGet]
-        [Route("api/Product/GetInfoShopSeeFood")]
+        [Route("api/MasterData/GetInfoShopSeeFood")]
         public IHttpActionResult GetInfoShopSeeFood(string region = "")
         {
             try
@@ -25,6 +25,31 @@ namespace Seafood.WebApi.Controllers
                 else
                 {
                     listObj = unitOfWork.ShopSeafoodRepository.Find(x => !x.IsDeleted && x.RegionCode == region).ToList();
+                }
+                return Ok(Request_OK<dynamic>(listObj));
+            }
+            catch (Exception ex)
+            {
+                FileHelper.GeneratorFileByDay(ex.ToString(), MethodBase.GetCurrentMethod().Name);
+                return Ok(Server_Error());
+            }
+        }
+
+        [HttpGet]
+        [Route("api/MasterData/GetListSeafoodPromotion")]
+        public IHttpActionResult GetListSeafoodPromotion(string shopCode = "")
+        {
+            try
+            {
+
+                var listObj = new List<SeafoodPromotion>();
+                if (string.IsNullOrEmpty(shopCode))
+                {
+                    listObj = unitOfWork.SeafoodPromotionRepository.Find(x => !x.IsDeleted).ToList();
+                }
+                else
+                {
+                    listObj = unitOfWork.SeafoodPromotionRepository.Find(x => !x.IsDeleted && x.ShopCode == shopCode).ToList();
                 }
                 return Ok(Request_OK<dynamic>(listObj));
             }
