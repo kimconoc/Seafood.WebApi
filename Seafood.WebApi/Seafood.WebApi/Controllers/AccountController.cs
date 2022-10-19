@@ -31,6 +31,17 @@ namespace Seafood.WebApi.Controllers
             var resp = new HttpResponseMessage();
             var username = GetUsername();
             var userData = unitOfWork.UserRepository.FirstOrDefault(s => s.Username.Trim().ToLower().Equals(username.Trim().ToLower()));
+            if(userData == null)
+            {
+                var authoriBadRequest = new RequestBaseNoData()
+                {
+                    Success = false,
+                    StatusCode = (int)HttpStatusCode.BadRequest,
+                    Message = Domain.Common.Constant.Message.DATA_NOT_FOUND
+                };
+                resp.Content = new ObjectContent<RequestBaseNoData>(authoriBadRequest, new JsonMediaTypeFormatter());
+                return resp;
+            }    
             dynamic data = new
             {
                 Id = userData.Id,
