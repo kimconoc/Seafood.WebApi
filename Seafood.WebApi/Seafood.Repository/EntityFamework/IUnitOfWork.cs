@@ -18,7 +18,6 @@ namespace Seafood.Repository.EntityFamework
         IGenericRepository<ProdProcessing> ProdProcessingRepository { get; }
         IGenericRepository<ProdPromotion> ProdPromotionRepository { get; }
         IGenericRepository<Region> RegionRepository { get; }
-        IGenericRepository<RegionDistrict> RegionDistrictRepository { get; }
         IGenericRepository<SeafoodPromotion> SeafoodPromotionRepository { get; }
         IGenericRepository<ShopSeafood> ShopSeafoodRepository { get; }
         IGenericRepository<Image> ImageRepository { get; }

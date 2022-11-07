@@ -55,7 +55,6 @@
     <Compile Include="Models\DataAccessModel\ProdPromotion.cs" />
     <Compile Include="Models\DataAccessModel\Product.cs" />
     <Compile Include="Models\DataAccessModel\Region.cs" />
-    <Compile Include="Models\DataAccessModel\RegionDistrict.cs" />
     <Compile Include="Models\DataAccessModel\SeafoodPromotion.cs" />
     <Compile Include="Models\DataAccessModel\SessionAuthorize.cs" />
     <Compile Include="Models\DataAccessModel\ShopSeafood.cs" />

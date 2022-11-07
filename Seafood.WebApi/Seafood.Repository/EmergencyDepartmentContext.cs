@@ -39,7 +39,6 @@ namespace Seafood.Repository
         public DbSet<ProdProcessing> ProdProcessings { get; set; }
         public DbSet<ProdPromotion> ProdPromotions { get; set; }
         public DbSet<Region> Regions { get; set; }
-        public DbSet<RegionDistrict> RegionDistricts { get; set; }
         public DbSet<SeafoodPromotion> SeafoodPromotions { get; set; }
         public DbSet<ShopSeafood> ShopSeafoods { get; set; }
         public DbSet<Image> Images { get; set; }

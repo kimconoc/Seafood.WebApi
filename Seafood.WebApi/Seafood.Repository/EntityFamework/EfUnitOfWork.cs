@@ -20,7 +20,6 @@ namespace Seafood.Repository.EntityFamework
         private readonly EfGenericRepository<ProdProcessing> _prodProcessingRepo;
         private readonly EfGenericRepository<ProdPromotion> _prodPromotionRepo;
         private readonly EfGenericRepository<Region> _regionRepo;
-        private readonly EfGenericRepository<RegionDistrict> _regionDistrictRepo;
         private readonly EfGenericRepository<SeafoodPromotion> _seafoodPromotionRepo;
         private readonly EfGenericRepository<ShopSeafood> _shopSeafoodRepo;
         private readonly EfGenericRepository<Image> _imageRepo;
@@ -36,7 +35,6 @@ namespace Seafood.Repository.EntityFamework
             _prodProcessingRepo = new EfGenericRepository<ProdProcessing>(context);
             _prodPromotionRepo = new EfGenericRepository<ProdPromotion>(context);
             _regionRepo = new EfGenericRepository<Region>(context);
-            _regionDistrictRepo = new EfGenericRepository<RegionDistrict>(context);
             _seafoodPromotionRepo = new EfGenericRepository<SeafoodPromotion>(context);
             _shopSeafoodRepo = new EfGenericRepository<ShopSeafood>(context);
             _imageRepo = new EfGenericRepository<Image>(context);
@@ -51,7 +49,6 @@ namespace Seafood.Repository.EntityFamework
         public IGenericRepository<ProdProcessing> ProdProcessingRepository => _prodProcessingRepo;
         public IGenericRepository<ProdPromotion> ProdPromotionRepository => _prodPromotionRepo;
         public IGenericRepository<Region> RegionRepository => _regionRepo;
-        public IGenericRepository<RegionDistrict> RegionDistrictRepository => _regionDistrictRepo;
         public IGenericRepository<SeafoodPromotion> SeafoodPromotionRepository => _seafoodPromotionRepo;
         public IGenericRepository<ShopSeafood> ShopSeafoodRepository => _shopSeafoodRepo;
         public IGenericRepository<Image> ImageRepository => _imageRepo;

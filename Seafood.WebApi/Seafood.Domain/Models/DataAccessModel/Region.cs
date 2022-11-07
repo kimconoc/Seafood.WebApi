@@ -9,10 +9,14 @@ namespace Seafood.Domain.Models.DataAccessModel
 {
     public class Region : VBaseModel
     {
-        public string Name { get; set; }
+        public string NameRegion { get; set; }
+        public string CodeRegion { get; set; }
+        public string NameDistrict { get; set; }
+        public string CodeDistrict { get; set; }
+        public string NameWard { get; set; }
+        public string CodeWard { get; set; }
         public string Description { get; set; }
         public string Note { get; set; }
-        public string Code { get; set; }
 
     }
 }
