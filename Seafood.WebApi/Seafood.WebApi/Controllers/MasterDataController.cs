@@ -59,5 +59,33 @@ namespace Seafood.WebApi.Controllers
                 return Ok(Server_Error());
             }
         }
+        [HttpGet]
+        [Route("api/MasterData/GetListRegion")]
+        public IHttpActionResult GetListRegion(string codeRegion = "", string codeDistrict = "")
+        {
+            try
+            {
+
+                var listObj = new List<Region>();
+                if (!string.IsNullOrEmpty(codeRegion) && !string.IsNullOrEmpty(codeDistrict))
+                {
+                    listObj = unitOfWork.RegionRepository.Find(x => !x.IsDeleted && x.CodeRegion == codeRegion && x.CodeDistrict == codeDistrict).ToList();
+                }
+                else if (!string.IsNullOrEmpty(codeRegion))
+                {
+                    listObj = unitOfWork.RegionRepository.Find(x => !x.IsDeleted && x.CodeRegion == codeRegion).ToList();
+                }
+                else
+                {
+                    listObj = unitOfWork.RegionRepository.Find(x => !x.IsDeleted).ToList();
+                }    
+                return Ok(Request_OK<dynamic>(listObj));
+            }
+            catch (Exception ex)
+            {
+                FileHelper.GeneratorFileByDay(ex.ToString(), MethodBase.GetCurrentMethod().Name);
+                return Ok(Server_Error());
+            }
+        }
     }
 }
