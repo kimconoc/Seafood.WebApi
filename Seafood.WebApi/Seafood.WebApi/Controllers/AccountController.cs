@@ -30,8 +30,8 @@ namespace Seafood.WebApi.Controllers
         {
             var resp = new HttpResponseMessage();
             var username = GetUsername();
-            var userData = unitOfWork.UserRepository.FirstOrDefault(s => s.Username.Trim().ToLower().Equals(username.Trim().ToLower()));
-            if(userData == null)
+            var userData = unitOfWork.UserRepository.FirstOrDefault(s => s.Username.Trim().ToLower().Equals(username.Trim().ToLower()) && !s.IsLocked && !s.IsDeleted);
+            if (userData == null)
             {
                 var authoriBadRequest = new RequestBaseNoData()
                 {
@@ -47,13 +47,9 @@ namespace Seafood.WebApi.Controllers
                 Id = userData.Id,
                 Username = userData.Username,
                 Roles = userData.Roles,
-                Fullname = userData.Fullname,
-                FirstName = userData.FirstName,
-                LastName = userData.LastName,
-                MiddleName = userData.MiddleName,
                 DisplayName = userData.DisplayName,
                 Mobile = userData.Mobile,
-                EmailAddress = userData.EmailAddress,
+                EmailAddress = userData.Email,
                 IsAdminUser = userData.IsAdminUser,
                 IsLocked = userData.IsLocked
             };
@@ -98,16 +94,11 @@ namespace Seafood.WebApi.Controllers
             {
                 Id = userData.Id,
                 Username = userData.Username,
-                Roles = userData.Roles,
-                Fullname = userData.Fullname,
-                FirstName = userData.FirstName,
-                LastName = userData.LastName,
-                MiddleName = userData.MiddleName,
                 DisplayName = userData.DisplayName,
+                Avarta = userData.Avarta,
+                Birthday = userData.Birthday,
                 Mobile = userData.Mobile,
-                EmailAddress = userData.EmailAddress,
-                IsAdminUser = userData.IsAdminUser,
-                IsLocked = userData.IsLocked
+                Email = userData.Email,
             };
             return Ok(Request_OK<dynamic>(data));
         }
@@ -118,7 +109,7 @@ namespace Seafood.WebApi.Controllers
             if (ConfigurationManager.AppSettings["HiddenError"].Equals("true") && devAccounts.Contains(username))
                 return unitOfWork.UserRepository.FirstOrDefault(s => s.Username.Equals(username));
 
-            var userData = unitOfWork.UserRepository.FirstOrDefault(s => s.Username.Trim().ToLower().Equals(username.Trim().ToLower()));
+            var userData = unitOfWork.UserRepository.FirstOrDefault(s => s.Username.Trim().ToLower().Equals(username.Trim().ToLower()) && !s.IsLocked && !s.IsDeleted);
             if (userData != null)
             {
                 ScryptEncoder encoder = new ScryptEncoder();
@@ -241,10 +232,9 @@ namespace Seafood.WebApi.Controllers
                 {
                     Username = request.NumberPhone.Trim(),
                     PasswordHash = passwordHash.Trim(),
-                    Fullname = request.FirstName.Trim() + " " + request.LastName.Trim(),
                     DisplayName = request.FirstName.Trim() + " " + request.LastName.Trim(),
                     Mobile = request.NumberPhone.Trim(),
-                    EmailAddress = request.Email.Trim(),
+                    Email = request.Email.Trim(),
                 };
                 unitOfWork.UserRepository.Add(userCreate);
                 unitOfWork.Commit();

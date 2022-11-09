@@ -20,16 +20,13 @@ namespace Seafood.WebApi.Controllers
         {
             try
             {
-                var user = unitOfWork.UserRepository.Find(x => !x.IsDeleted).Select(e => new User
+                var user = unitOfWork.UserRepository.Find(x => !x.IsDeleted && !x.IsLocked).Select(e => new User
                 {
                     Id = e.Id,
                     Username = e.Username,
-                    FirstName = e.FirstName,
-                    LastName = e.LastName,
-                    Fullname = e.Fullname,
                     IsAdminUser = e.IsAdminUser,
-                    IsLocked = e.IsLocked,
-                    EmailAddress = e.EmailAddress,
+                    DisplayName = e.DisplayName,
+                    Email = e.Email,
                     Mobile = e.Mobile
                 }).ToList(); ;
                 return Content(HttpStatusCode.OK, new
