@@ -97,6 +97,7 @@ namespace Seafood.WebApi.Controllers
                 DisplayName = userData.DisplayName,
                 Avarta = userData.Avarta,
                 Birthday = userData.Birthday,
+                Sex = userData.Sex,
                 Mobile = userData.Mobile,
                 Email = userData.Email,
             };
