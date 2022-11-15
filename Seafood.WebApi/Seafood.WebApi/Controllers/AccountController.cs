@@ -260,7 +260,7 @@ namespace Seafood.WebApi.Controllers
                 var user = unitOfWork.UserRepository.FirstOrDefault(x => !x.IsDeleted && !x.IsLocked && x.Mobile.Trim() == number.Trim());
                 if(user == null)
                 {
-                    return Ok(NotFound());
+                    return Ok(Not_Found());
                 }
                 {
                     return Ok(Request_OK<string>(user?.Mobile));
