@@ -48,6 +48,7 @@
     <Compile Include="Common\Enum\SeafoodEnum.cs" />
     <Compile Include="Common\FileLog\FileHelper.cs" />
     <Compile Include="Models\DataAccessModel\Category.cs" />
+    <Compile Include="Models\DataAccessModel\CheckCodeFirebase.cs" />
     <Compile Include="Models\DataAccessModel\FavouriteProd.cs" />
     <Compile Include="Models\DataAccessModel\Image.cs" />
     <Compile Include="Models\DataAccessModel\ProdInfo.cs" />

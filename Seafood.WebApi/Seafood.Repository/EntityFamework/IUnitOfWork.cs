@@ -21,6 +21,7 @@ namespace Seafood.Repository.EntityFamework
         IGenericRepository<SeafoodPromotion> SeafoodPromotionRepository { get; }
         IGenericRepository<ShopSeafood> ShopSeafoodRepository { get; }
         IGenericRepository<Image> ImageRepository { get; }
+        IGenericRepository<CheckCodeFirebase> CheckCodeFirebaseRepository { get; }
 
         void Commit(string request_id = "");
     }

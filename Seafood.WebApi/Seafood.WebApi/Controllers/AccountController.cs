@@ -263,8 +263,47 @@ namespace Seafood.WebApi.Controllers
                     return Ok(Not_Found());
                 }
                 {
-                    return Ok(Request_OK<string>(user?.Mobile));
+                    return Ok(Request_OK<string>(user?.Mobile.Trim()));
                 }   
+            }
+            catch (Exception ex)
+            {
+                FileHelper.GeneratorFileByDay(ex.ToString(), MethodBase.GetCurrentMethod().Name);
+                return Content(HttpStatusCode.BadRequest, Message.Bad_Request);
+            }
+        }
+        [HttpGet]
+        [Route("api/Account/CheckCodeFirebase")]
+        public IHttpActionResult CheckCodeFirebase(string number)
+        {
+            try
+            {
+                var firebase = unitOfWork.CheckCodeFirebaseRepository.FirstOrDefault(x => !x.IsDeleted && x.Mobile.Trim() == number.Trim());
+                if (firebase == null)
+                {
+                    var modelFirebase = new CheckCodeFirebase()
+                    {
+                        Mobile = number,
+                        NumberOfSend = 1,
+                        TimeSend = DateTime.Now,
+                    };
+                    unitOfWork.CheckCodeFirebaseRepository.Add(modelFirebase);
+                    unitOfWork.Commit();
+                    return Ok(Request_OK<bool>(true));
+                }
+                else if(firebase != null && DateTime.Now.Subtract(firebase.TimeSend).TotalMinutes > 5)
+                {
+                    firebase.TimeSend = DateTime.Now;
+                    firebase.NumberOfSend = firebase.NumberOfSend + 1;
+                    unitOfWork.CheckCodeFirebaseRepository.Update(firebase);
+                    unitOfWork.Commit();
+                    return Ok(Request_OK<bool>(true));
+                }
+                else
+                {
+                    return Ok(Request_OK<bool>(false));
+                }    
+
             }
             catch (Exception ex)
             {
