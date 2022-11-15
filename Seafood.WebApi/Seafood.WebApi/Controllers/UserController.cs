@@ -37,7 +37,7 @@ namespace Seafood.WebApi.Controllers
             catch (Exception ex)
             {
                 FileHelper.GeneratorFileByDay(ex.ToString(), MethodBase.GetCurrentMethod().Name);
-                return Content(HttpStatusCode.BadRequest, Message.Bad_Request);
+                return Ok(Server_Error());
             }
         }
     }
