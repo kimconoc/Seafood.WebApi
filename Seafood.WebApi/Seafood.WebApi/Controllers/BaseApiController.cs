@@ -97,15 +97,7 @@ namespace Seafood.WebApi.Controllers
                 Message = Domain.Common.Constant.Message.Successful
             };
         }
-        protected RequestBaseNoData Bad_Request()
-        {
-            return new RequestBaseNoData()
-            {
-                Success = false,
-                StatusCode = (int)HttpStatusCode.BadRequest,
-                Message = Domain.Common.Constant.Message.Bad_Request
-            };
-        }
+
         protected RequestBaseNoData Not_Found()
         {
             return new RequestBaseNoData()
@@ -115,6 +107,17 @@ namespace Seafood.WebApi.Controllers
                 Message = Domain.Common.Constant.Message.DATA_NOT_FOUND
             };
         }
+
+        protected RequestBaseNoData Bad_Request()
+        {
+            return new RequestBaseNoData()
+            {
+                Success = false,
+                StatusCode = (int)HttpStatusCode.BadRequest,
+                Message = Domain.Common.Constant.Message.Bad_Request
+            };
+        }
+        
         protected RequestBaseNoData Server_Error()
         {
             return new RequestBaseNoData()

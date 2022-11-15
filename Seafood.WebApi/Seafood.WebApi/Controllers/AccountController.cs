@@ -250,5 +250,27 @@ namespace Seafood.WebApi.Controllers
             }
         }
         #endregion CreateAccount
+
+        [HttpGet]
+        [Route("api/Account/CheckUserByPhoneNumber")]
+        public IHttpActionResult CheckUserByPhoneNumber(string number)
+        {
+            try
+            {
+                var user = unitOfWork.UserRepository.FirstOrDefault(x => !x.IsDeleted && !x.IsLocked && x.Mobile.Trim() == number.Trim());
+                if(user == null)
+                {
+                    return Ok(NotFound());
+                }
+                {
+                    return Ok(Request_OK<string>(user?.Mobile));
+                }   
+            }
+            catch (Exception ex)
+            {
+                FileHelper.GeneratorFileByDay(ex.ToString(), MethodBase.GetCurrentMethod().Name);
+                return Content(HttpStatusCode.BadRequest, Message.Bad_Request);
+            }
+        }
     }
 }
