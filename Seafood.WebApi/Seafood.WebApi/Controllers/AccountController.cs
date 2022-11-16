@@ -64,6 +64,7 @@ namespace Seafood.WebApi.Controllers
             return resp;
         }
         #endregion IsAuthori
+
         #region Login
         [HttpPost]
         [Route("api/Account/Login")]
@@ -138,6 +139,7 @@ namespace Seafood.WebApi.Controllers
             return identity;
         }
         #endregion Login
+
         #region Logout
         [HttpGet]
         [Route("api/Account/Logout")]
@@ -204,6 +206,7 @@ namespace Seafood.WebApi.Controllers
             }
         }
         #endregion Logout
+
         #region CreateAccount
         [HttpPost]
         [Route("api/Account/Create")]
@@ -251,27 +254,7 @@ namespace Seafood.WebApi.Controllers
         }
         #endregion CreateAccount
 
-        [HttpGet]
-        [Route("api/Account/CheckUserByPhoneNumber")]
-        public IHttpActionResult CheckUserByPhoneNumber(string number)
-        {
-            try
-            {
-                var user = unitOfWork.UserRepository.FirstOrDefault(x => !x.IsDeleted && !x.IsLocked && x.Mobile.Trim() == number.Trim());
-                if(user == null)
-                {
-                    return Ok(Not_Found());
-                }
-                {
-                    return Ok(Request_OK<string>(user?.Mobile.Trim()));
-                }   
-            }
-            catch (Exception ex)
-            {
-                FileHelper.GeneratorFileByDay(ex.ToString(), MethodBase.GetCurrentMethod().Name);
-                return Ok(Server_Error());
-            }
-        }
+        #region ForgotPasswordFirebase
         [HttpGet]
         [Route("api/Account/CheckCodeFirebase")]
         public IHttpActionResult CheckCodeFirebase(string number)
@@ -286,7 +269,7 @@ namespace Seafood.WebApi.Controllers
                 else
                 {
                     return Ok(Request_OK<bool>(false));
-                }    
+                }
             }
             catch (Exception ex)
             {
@@ -296,7 +279,7 @@ namespace Seafood.WebApi.Controllers
         }
         [HttpGet]
         [Route("api/Account/UpdateCodeFirebase")]
-        public IHttpActionResult UpdateCodeFirebase(string number)
+        public IHttpActionResult UpdateCodeFirebase(string number, string code)
         {
             try
             {
@@ -313,14 +296,90 @@ namespace Seafood.WebApi.Controllers
                     unitOfWork.Commit();
                     return Ok(Request_OK<bool>(true));
                 }
-                else 
+                else
                 {
-                    firebase.TimeSend = DateTime.Now;
-                    firebase.NumberOfSend = firebase.NumberOfSend + 1;
-                    unitOfWork.CheckCodeFirebaseRepository.Update(firebase);
-                    unitOfWork.Commit();
-                    return Ok(Request_OK<bool>(true));
+                    //update thời gian gửi mã code
+                    if (string.IsNullOrEmpty(code))
+                    {
+                        firebase.TimeSend = DateTime.Now;
+                        firebase.NumberOfSend = firebase.NumberOfSend + 1;
+                        unitOfWork.CheckCodeFirebaseRepository.Update(firebase);
+                        unitOfWork.Commit();
+                        return Ok(Request_OK<bool>(true));
+                    }
+                    else
+                    {
+                        //update mã code được gửi đến số điện thoại
+                        firebase.LatestCode = code;
+                        unitOfWork.CheckCodeFirebaseRepository.Update(firebase);
+                        unitOfWork.Commit();
+                        return Ok(Request_OK<bool>(true));
+                    }
                 }
+            }
+            catch (Exception ex)
+            {
+                FileHelper.GeneratorFileByDay(ex.ToString(), MethodBase.GetCurrentMethod().Name);
+                return Ok(Server_Error());
+            }
+        }
+
+        [HttpGet]
+        [Route("api/Account/ChangePwByCodeFirebase")]
+        public IHttpActionResult ChangePwByCodeFirebase(string number, string code, string newPassword)
+        {
+            try
+            {
+                var userData = unitOfWork.UserRepository.FirstOrDefault(x => !x.IsDeleted && !x.IsLocked && x.Mobile.Trim() == number.Trim());
+                if (userData == null)
+                {
+                    return Ok(Bad_Request());
+                }
+                var firebase = unitOfWork.CheckCodeFirebaseRepository.FirstOrDefault(x => !x.IsDeleted && x.Mobile.Trim() == number.Trim());
+                if (firebase == null || !firebase.LatestCode.Equals(code) || DateTime.Now.Subtract(firebase.TimeSend).TotalMinutes > 5)
+                {
+                    return Ok(Bad_Request());
+                }
+                ScryptEncoder encoder = new ScryptEncoder();
+                var passwordHash = encoder.Encode(newPassword);
+                userData.PasswordHash = passwordHash;
+                unitOfWork.UserRepository.Update(userData);
+                unitOfWork.Commit();
+                dynamic data = new
+                {
+                    Id = userData.Id,
+                    Username = userData.Username,
+                    DisplayName = userData.DisplayName,
+                    Avarta = userData.Avarta,
+                    Birthday = userData.Birthday,
+                    Sex = userData.Sex,
+                    Mobile = userData.Mobile,
+                    Email = userData.Email,
+                };
+                return Ok(Request_OK<dynamic>(data));
+            }
+            catch (Exception ex)
+            {
+                FileHelper.GeneratorFileByDay(ex.ToString(), MethodBase.GetCurrentMethod().Name);
+                return Ok(Server_Error());
+            }
+        }
+        #endregion #region ForgotPasswordFirebase
+
+        [HttpGet]
+        [Route("api/Account/CheckUserByPhoneNumber")]
+        public IHttpActionResult CheckUserByPhoneNumber(string number)
+        {
+            try
+            {
+                var user = unitOfWork.UserRepository.FirstOrDefault(x => !x.IsDeleted && !x.IsLocked && x.Mobile.Trim() == number.Trim());
+                if(user == null)
+                {
+                    return Ok(Not_Found());
+                }
+                {
+                    return Ok(Request_OK<string>(user?.Mobile.Trim()));
+                }   
             }
             catch (Exception ex)
             {
