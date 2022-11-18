@@ -301,6 +301,7 @@ namespace Seafood.WebApi.Controllers
                     //update thời gian gửi mã code
                     if (string.IsNullOrEmpty(code))
                     {
+                        firebase.LatestCode = null;
                         firebase.TimeSend = DateTime.Now;
                         firebase.NumberOfSend = firebase.NumberOfSend + 1;
                         unitOfWork.CheckCodeFirebaseRepository.Update(firebase);
@@ -336,7 +337,7 @@ namespace Seafood.WebApi.Controllers
                     return Ok(Bad_Request());
                 }
                 var firebase = unitOfWork.CheckCodeFirebaseRepository.FirstOrDefault(x => !x.IsDeleted && x.Mobile.Trim() == number.Trim());
-                if (firebase == null || !firebase.LatestCode.Equals(code) || DateTime.Now.Subtract(firebase.TimeSend).TotalMinutes > 5)
+                if (firebase == null || !firebase.LatestCode.Equals(code) || DateTime.Now.Subtract(firebase.TimeSend).TotalMinutes > 30)
                 {
                     return Ok(Bad_Request());
                 }
