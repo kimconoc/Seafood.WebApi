@@ -236,6 +236,7 @@ namespace Seafood.WebApi.Controllers
                     Username = request.NumberPhone.Trim(),
                     PasswordHash = passwordHash.Trim(),
                     DisplayName = request.NumberPhone.Trim(),
+                    Mobile = request.NumberPhone.Trim(),
                 };
                 unitOfWork.UserRepository.Add(userCreate);
                 unitOfWork.Commit();
