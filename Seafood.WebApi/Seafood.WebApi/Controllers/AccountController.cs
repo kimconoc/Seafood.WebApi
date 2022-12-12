@@ -241,8 +241,19 @@ namespace Seafood.WebApi.Controllers
                 unitOfWork.UserRepository.Add(userCreate);
                 unitOfWork.Commit();
                 //
-                bool data = true;
-                return Ok(Request_OK<bool>(data));
+                var userData = unitOfWork.UserRepository.FirstOrDefault(x => !x.IsDeleted && !x.IsLocked && x.Mobile.Trim() == request.NumberPhone.Trim());
+                dynamic data = new
+                {
+                    Id = userData.Id,
+                    Username = userData.Username,
+                    DisplayName = userData.DisplayName,
+                    Avarta = userData.Avarta,
+                    Birthday = userData.Birthday,
+                    Sex = userData.Sex,
+                    Mobile = userData.Mobile,
+                    Email = userData.Email,
+                };
+                return Ok(Request_OK<dynamic>(data));
             }
             catch(Exception ex)
             {
