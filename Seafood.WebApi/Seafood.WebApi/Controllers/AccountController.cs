@@ -214,8 +214,7 @@ namespace Seafood.WebApi.Controllers
         {
             if (request == null)
                 return Ok(Bad_Request());
-            if (!Helper.ValidPhoneNumer(request.NumberPhone) || !Helper.IsValidEmail(request.Email)
-                || string.IsNullOrEmpty(request.FirstName) || string.IsNullOrEmpty(request.LastName) || string.IsNullOrEmpty(request.Password))
+            if (!Helper.ValidPhoneNumer(request.NumberPhone)|| string.IsNullOrEmpty(request.Password))
                 return Ok(Bad_Request());
 
             try
@@ -236,9 +235,7 @@ namespace Seafood.WebApi.Controllers
                 {
                     Username = request.NumberPhone.Trim(),
                     PasswordHash = passwordHash.Trim(),
-                    DisplayName = request.FirstName.Trim() + " " + request.LastName.Trim(),
-                    Mobile = request.NumberPhone.Trim(),
-                    Email = request.Email.Trim(),
+                    DisplayName = request.NumberPhone.Trim(),
                 };
                 unitOfWork.UserRepository.Add(userCreate);
                 unitOfWork.Commit();
