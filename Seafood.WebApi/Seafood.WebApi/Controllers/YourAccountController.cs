@@ -28,7 +28,7 @@ namespace Seafood.WebApi.Controllers
             }
         }
 
-        [HttpPost]
+        [HttpGet]
         [Route("api/User/UpdateAvarta")]
         public IHttpActionResult UpdateAvarta(Guid userId,string path)
         {
