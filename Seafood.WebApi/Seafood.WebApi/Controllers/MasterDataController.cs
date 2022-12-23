@@ -71,17 +71,17 @@ namespace Seafood.WebApi.Controllers
                 if (!string.IsNullOrEmpty(codeRegion) && !string.IsNullOrEmpty(codeDistrict))
                 {
                     listObj = unitOfWork.RegionRepository.Find(x => !x.IsDeleted && x.CodeRegion == codeRegion && x.CodeDistrict == codeDistrict && 
-                    (string.IsNullOrEmpty(txtSearch) || x.NameWard.ToLower().GetVnStringOnlyCharactersAndNumbers().Contains(txtSearch.ToLower().GetVnStringOnlyCharactersAndNumbers()))).ToList();
+                    (string.IsNullOrEmpty(txtSearch) || x.NameWard.ToLower().Contains(txtSearch.ToLower()))).ToList();
                 }
                 else if (!string.IsNullOrEmpty(codeRegion))
                 {
                     listObj = unitOfWork.RegionRepository.Find(x => !x.IsDeleted && x.CodeRegion == codeRegion &&
-                    (string.IsNullOrEmpty(txtSearch) || x.NameDistrict.ToLower().GetVnStringOnlyCharactersAndNumbers().Contains(txtSearch.ToLower().GetVnStringOnlyCharactersAndNumbers()))).ToList();
+                    (string.IsNullOrEmpty(txtSearch) || x.NameDistrict.ToLower().Contains(txtSearch.ToLower()))).ToList();
                 }
                 else
                 {
                     listObj = unitOfWork.RegionRepository.Find(x => !x.IsDeleted &&
-                    (string.IsNullOrEmpty(txtSearch) || x.NameRegion.ToLower().GetVnStringOnlyCharactersAndNumbers().Contains(txtSearch.ToLower().GetVnStringOnlyCharactersAndNumbers()))).ToList();
+                    (string.IsNullOrEmpty(txtSearch) || x.NameRegion.ToLower().Contains(txtSearch.ToLower()))).ToList();
                 }    
                 return Ok(Request_OK<dynamic>(listObj));
             }
