@@ -24,6 +24,7 @@ namespace Seafood.Repository.EntityFamework
         private readonly EfGenericRepository<ShopSeafood> _shopSeafoodRepo;
         private readonly EfGenericRepository<Image> _imageRepo;
         private readonly EfGenericRepository<CheckCodeFirebase> _checkCodeFirebaseRepo;
+        private readonly EfGenericRepository<Addresse> _addresseRepo;
 
         public EfUnitOfWork()
         {
@@ -40,6 +41,7 @@ namespace Seafood.Repository.EntityFamework
             _shopSeafoodRepo = new EfGenericRepository<ShopSeafood>(context);
             _imageRepo = new EfGenericRepository<Image>(context);
             _checkCodeFirebaseRepo = new EfGenericRepository<CheckCodeFirebase>(context);
+            _addresseRepo = new EfGenericRepository<Addresse>(context);
         }
 
         public IGenericRepository<User> UserRepository => _userRepo;
@@ -55,6 +57,7 @@ namespace Seafood.Repository.EntityFamework
         public IGenericRepository<ShopSeafood> ShopSeafoodRepository => _shopSeafoodRepo;
         public IGenericRepository<Image> ImageRepository => _imageRepo;
         public IGenericRepository<CheckCodeFirebase> CheckCodeFirebaseRepository => _checkCodeFirebaseRepo;
+        public IGenericRepository<Addresse> AddresseRepository => _addresseRepo;
 
         public void Commit(string request_id = "")
         {

@@ -46,7 +46,9 @@
     <Compile Include="Common\Constant\Constant.cs" />
     <Compile Include="Common\Constant\Message.cs" />
     <Compile Include="Common\Enum\SeafoodEnum.cs" />
+    <Compile Include="Common\Extentions\StringExtension.cs" />
     <Compile Include="Common\FileLog\FileHelper.cs" />
+    <Compile Include="Models\DataAccessModel\Addresse.cs" />
     <Compile Include="Models\DataAccessModel\Category.cs" />
     <Compile Include="Models\DataAccessModel\CheckCodeFirebase.cs" />
     <Compile Include="Models\DataAccessModel\FavouriteProd.cs" />

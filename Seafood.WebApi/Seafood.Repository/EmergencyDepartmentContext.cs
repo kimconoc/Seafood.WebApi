@@ -43,5 +43,6 @@ namespace Seafood.Repository
         public DbSet<ShopSeafood> ShopSeafoods { get; set; }
         public DbSet<Image> Images { get; set; }
         public DbSet<CheckCodeFirebase> CheckCodeFirebases { get; set; }
+        public DbSet<Addresse> Addresses { get; set; }
     }
 }
