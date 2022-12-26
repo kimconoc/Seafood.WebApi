@@ -1,14 +1,14 @@
-﻿using Seafood.Domain.Models.BaseModel;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Seafood.Domain.Models.DataAccessModel
+namespace Seafood.Domain.Models.ParameterModel
 {
-    public class Addresse : VBaseModel
+    public class AddressParameter
     {
+        public Guid? Id { get; set; }
         public Guid UserId { get; set; }
         public string FullName { get; set; }
         public string Mobile { get; set; }

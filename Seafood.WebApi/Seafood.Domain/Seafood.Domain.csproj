@@ -61,6 +61,7 @@
     <Compile Include="Models\DataAccessModel\SeafoodPromotion.cs" />
     <Compile Include="Models\DataAccessModel\SessionAuthorize.cs" />
     <Compile Include="Models\DataAccessModel\ShopSeafood.cs" />
+    <Compile Include="Models\ParameterModel\AddressParameter.cs" />
     <Compile Include="Models\ParameterModel\CreateAccountParameter.cs" />
     <Compile Include="Models\ParameterModel\LoginParameterModel.cs" />
     <Compile Include="Models\BaseModel\IEntiy.cs" />
