@@ -34,7 +34,7 @@ namespace Seafood.WebApi.Controllers
                              from res in result.DefaultIfEmpty()
                              select new
                              {
-                                 Id = res.Id,
+                                 Id = address.Id,
                                  UserId = address.UserId,
                                  FullName = address.FullName,
                                  Mobile = address.Mobile,
@@ -58,7 +58,44 @@ namespace Seafood.WebApi.Controllers
         [Route("api/Address/GetAddressByUserId")]
         public IHttpActionResult GetAddressByUserId(Guid addressId)
         {
-            var result = unitOfWork.AddresseRepository.FirstOrDefault(x => !x.IsDeleted && x.Id == addressId);
+            var address = unitOfWork.AddresseRepository.FirstOrDefault(x => !x.IsDeleted && x.Id == addressId);
+            if(address == null)
+            {
+                return Ok(Bad_Request());
+            }    
+            var result = (from addre in unitOfWork.AddresseRepository.AsQueryable().Where(e => !e.IsDeleted && e.Id == addressId)
+                             join region in unitOfWork.RegionRepository.AsQueryable().Where(e => !e.IsDeleted)
+                             on new
+                             {
+                                 key1 = address.CodeRegion,
+                                 key2 = address.CodeDistrict,
+                                 key3 = address.CodeWard,
+                             }
+                             equals new
+                             {
+                                 key1 = region.CodeRegion,
+                                 key2 = region.CodeDistrict,
+                                 key3 = region.CodeWard,
+                             }
+                             into resu
+                             from res in resu.DefaultIfEmpty()
+                             select new
+                             {
+                                 Id = address.Id,
+                                 UserId = address.UserId,
+                                 FullName = address.FullName,
+                                 Mobile = address.Mobile,
+                                 TypeAddress = address.TypeAddress,
+                                 IsAddressMain = address.IsAddressMain,
+                                 Address = address.Address,
+                                 CodeWard = res.CodeWard,
+                                 NameWard = res.NameWard,
+                                 CodeDistrict = res.CodeDistrict,
+                                 NameDistrict = res.NameDistrict,
+                                 CodeRegion = res.CodeRegion,
+                                 NameRegion = res.NameRegion,
+                             }).FirstOrDefault();
+
             return Ok(Request_OK(result));
         }
 
@@ -132,10 +169,10 @@ namespace Seafood.WebApi.Controllers
         [Route("api/Address/DeleteAddressByUserId")]
         public IHttpActionResult DeleteAddressByUserId(Guid addressId)
         {
-            var result = unitOfWork.AddresseRepository.FirstOrDefault(x => !x.IsDeleted && x.Id == addressId);
-            if (result == null)
+            var address = unitOfWork.AddresseRepository.FirstOrDefault(x => !x.IsDeleted && x.Id == addressId);
+            if (address == null || address.IsAddressMain)
                 return Ok(Request_OK(false));
-            unitOfWork.AddresseRepository.Delete(result);
+            unitOfWork.AddresseRepository.Delete(address);
             unitOfWork.Commit();
             return Ok(Request_OK(true));
         }
