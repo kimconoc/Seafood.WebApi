@@ -83,9 +83,9 @@ namespace Seafood.Repository.EntityFamework
                 ((IEntity)entity).CreatedBy = userName;
                 if (((IEntity)entity).UpdatedAt == null)
                     ((IEntity)entity).CreatedAt = DateTime.Now;
-                ((IEntity)entity).UpdatedBy = userName;
-                if (((IEntity)entity).UpdatedAt == null)
-                    ((IEntity)entity).UpdatedAt = DateTime.Now;
+                //((IEntity)entity).UpdatedBy = userName;
+                //if (((IEntity)entity).UpdatedAt == null)
+                //    ((IEntity)entity).UpdatedAt = DateTime.Now;
             }
             _dbSet.Add(entity);
         }
@@ -133,7 +133,8 @@ namespace Seafood.Repository.EntityFamework
             try
             {
                 var claims = ClaimsPrincipal.Current.Identities.First().Claims.ToList();
-                return claims?.FirstOrDefault(x => x.Type.Equals(ClaimTypes.Name, StringComparison.OrdinalIgnoreCase))?.Value;
+                var user = claims?.FirstOrDefault(x => x.Type.Equals(ClaimTypes.Name, StringComparison.OrdinalIgnoreCase))?.Value;
+                return String.IsNullOrEmpty(user) ? "dev_local" : user;
             }
             catch (Exception)
             {
