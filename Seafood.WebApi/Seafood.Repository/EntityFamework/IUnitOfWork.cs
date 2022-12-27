@@ -23,6 +23,7 @@ namespace Seafood.Repository.EntityFamework
         IGenericRepository<Image> ImageRepository { get; }
         IGenericRepository<CheckCodeFirebase> CheckCodeFirebaseRepository { get; }
         IGenericRepository<Addresse> AddresseRepository { get; }
+        IGenericRepository<Basket> BasketRepository { get; }
 
         void Commit(string request_id = "");
     }

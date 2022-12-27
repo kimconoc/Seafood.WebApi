@@ -101,14 +101,14 @@ namespace Seafood.WebApi.Controllers
 
         [HttpPost]
         [Route("api/Address/CreateAddressByUserId")]
-        public IHttpActionResult CreateAddressByUserId([FromBody] AddressParameter address)
+        public IHttpActionResult CreateAddressByUserId([FromBody] AddressParameter addressModel)
         {
-            if(address == null)
+            if(addressModel == null)
                 return Ok(Bad_Request());
 
-            if (address.IsAddressMain)
+            if (addressModel.IsAddressMain)
             {
-                var litResult = unitOfWork.AddresseRepository.Find(x => !x.IsDeleted && x.UserId == address.UserId).ToList();
+                var litResult = unitOfWork.AddresseRepository.Find(x => !x.IsDeleted && x.UserId == addressModel.UserId).ToList();
                 foreach (var item in litResult)
                 {
                     item.IsAddressMain = false;
@@ -117,15 +117,15 @@ namespace Seafood.WebApi.Controllers
             }
 
             Addresse addresse = new Addresse();
-            addresse.UserId = address.UserId;
-            addresse.FullName = address.FullName;
-            addresse.Mobile = address.Mobile;
-            addresse.CodeRegion = address.CodeRegion;
-            addresse.CodeDistrict = address.CodeDistrict;
-            addresse.CodeWard = address.CodeWard;
-            addresse.TypeAddress = address.TypeAddress;
-            addresse.Address = address.Address;
-            addresse.IsAddressMain = address.IsAddressMain;
+            addresse.UserId = addressModel.UserId;
+            addresse.FullName = addressModel.FullName;
+            addresse.Mobile = addressModel.Mobile;
+            addresse.CodeRegion = addressModel.CodeRegion;
+            addresse.CodeDistrict = addressModel.CodeDistrict;
+            addresse.CodeWard = addressModel.CodeWard;
+            addresse.TypeAddress = addressModel.TypeAddress;
+            addresse.Address = addressModel.Address;
+            addresse.IsAddressMain = addressModel.IsAddressMain;
             unitOfWork.AddresseRepository.Add(addresse);
             unitOfWork.Commit();
             return Ok(Request_OK(true));
@@ -133,17 +133,17 @@ namespace Seafood.WebApi.Controllers
 
         [HttpPost]
         [Route("api/Address/UpdateAddressByUserId")]
-        public IHttpActionResult UpdateAddressByUserId([FromBody] AddressParameter address)
+        public IHttpActionResult UpdateAddressByUserId([FromBody] AddressParameter addressModel)
         {
-            if (address == null)
+            if (addressModel == null)
                 return Ok(Bad_Request());
 
-            var result = unitOfWork.AddresseRepository.FirstOrDefault(x => !x.IsDeleted && x.Id == address.Id);
-            if(!result.IsAddressMain)
+            var address = unitOfWork.AddresseRepository.FirstOrDefault(x => !x.IsDeleted && x.Id == addressModel.Id);
+            if(!address.IsAddressMain)
             {
-                if(address.IsAddressMain)
+                if(addressModel.IsAddressMain)
                 {
-                    var litResult = unitOfWork.AddresseRepository.Find(x => !x.IsDeleted && x.UserId == address.UserId).ToList();
+                    var litResult = unitOfWork.AddresseRepository.Find(x => !x.IsDeleted && x.UserId == addressModel.UserId).ToList();
                     foreach(var item in litResult)
                     {
                         item.IsAddressMain = false;
@@ -151,16 +151,16 @@ namespace Seafood.WebApi.Controllers
                     }    
                 }    
             }
-            result.UserId = address.UserId;
-            result.FullName = address.FullName;
-            result.Mobile = address.Mobile;
-            result.CodeRegion = address.CodeRegion;
-            result.CodeDistrict = address.CodeDistrict;
-            result.CodeWard = address.CodeWard;
-            result.TypeAddress = address.TypeAddress;
-            result.Address = address.Address;
-            result.IsAddressMain = address.IsAddressMain;
-            unitOfWork.AddresseRepository.Update(result);
+            address.UserId = addressModel.UserId;
+            address.FullName = addressModel.FullName;
+            address.Mobile = addressModel.Mobile;
+            address.CodeRegion = addressModel.CodeRegion;
+            address.CodeDistrict = addressModel.CodeDistrict;
+            address.CodeWard = addressModel.CodeWard;
+            address.TypeAddress = addressModel.TypeAddress;
+            address.Address = addressModel.Address;
+            address.IsAddressMain = addressModel.IsAddressMain;
+            unitOfWork.AddresseRepository.Update(address);
             unitOfWork.Commit();
             return Ok(Request_OK(true));
         }
