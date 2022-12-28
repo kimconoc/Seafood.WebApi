@@ -187,10 +187,6 @@ namespace Seafood.WebApi.Controllers
         {
             return unitOfWork.ProdProcessingRepository.Find(e => !e.IsDeleted && (e.ProductId == prodId || e.Note.Equals("DENGUYEN") || e.Note.Equals("THEOYEUCAU"))).ToList();
         }
-        private List<ProdPromotion> GetListPromotionByIdProd(Guid prodId)
-        {
-            return unitOfWork.ProdPromotionRepository.Find(e => !e.IsDeleted && e.ProductId == prodId).ToList();
-        }
         private List<ProdInfo> GetListProdInfoByIdProd(Guid prodId)
         {
             return unitOfWork.ProdInfoRepository.Find(e => !e.IsDeleted && e.ProductId == prodId).ToList();

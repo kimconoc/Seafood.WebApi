@@ -26,5 +26,37 @@ namespace Seafood.WebApi.Controllers
             unitOfWork.Commit();
             return Ok(Request_OK(true));
         }
+        [HttpGet]
+        [Route("api/Basket/GetBasketByUserId")]
+        public IHttpActionResult GetBasketByUserId(Guid userId)
+        {
+
+            if (userId == null)
+                return Ok(Bad_Request());
+
+            var prodBaskets = (from bask in unitOfWork.BasketRepository.AsQueryable().Where(x => !x.IsDeleted && x.UserId == userId)
+                                join prod in unitOfWork.ProductRepository.AsQueryable().Where(e => !e.IsDeleted)
+                                on bask.ProductId equals prod.Id into res1
+                                from resProd in res1.DefaultIfEmpty()
+                                join imge in unitOfWork.ImageRepository.AsQueryable().Where(e => !e.IsDeleted && e.IsImageMain)
+                                on bask.ProductId equals imge.ProductId into res2
+                                from resImge in res2.DefaultIfEmpty()
+                                join proces in unitOfWork.ProdProcessingRepository.AsQueryable().Where(e => !e.IsDeleted)
+                                on bask.ProdProcessingId equals proces.Id into res3
+                                from resProces in res3.DefaultIfEmpty()
+                                select new
+                                {
+                                    Id = bask.Id,
+                                    Imge = resImge.UrlPath,
+                                    ProductName = resProd.Name,
+                                    ProductDescription = resProd.Description,
+                                    ProdProcessingName = resProces.Name,
+                                    Price = resProd.Price,
+                                    PriceSale = resProd.PriceSale,
+                                });
+
+            dynamic data = prodBaskets.ToList();
+            return Ok(Request_OK<dynamic>(data));
+        }
     }
 }

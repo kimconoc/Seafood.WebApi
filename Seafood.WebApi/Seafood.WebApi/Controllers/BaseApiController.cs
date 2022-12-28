@@ -62,9 +62,14 @@ namespace Seafood.WebApi.Controllers
                 return null;
             }
         }
+
         protected List<SeafoodPromotion> GetListSeafoodPromotion()
         {
             return unitOfWork.SeafoodPromotionRepository.AsQueryable().ToList();
+        }
+        protected List<ProdPromotion> GetListPromotionByIdProd(Guid prodId)
+        {
+            return unitOfWork.ProdPromotionRepository.Find(e => !e.IsDeleted && e.ProductId == prodId).ToList();
         }
         protected string GetIconByCategory(string categoryCode)
         {
@@ -87,6 +92,7 @@ namespace Seafood.WebApi.Controllers
 
             return null;
         }
+
         protected RequestBase<TRequest> Request_OK<TRequest>(TRequest data)
         {
             return new RequestBase<TRequest>()

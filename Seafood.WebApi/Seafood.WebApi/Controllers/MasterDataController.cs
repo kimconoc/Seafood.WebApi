@@ -61,6 +61,23 @@ namespace Seafood.WebApi.Controllers
             }
         }
         [HttpGet]
+        [Route("api/MasterData/GetListPromotionByProdId")]
+        public IHttpActionResult GetListPromotionByProdId(Guid prodId)
+        {
+            try
+            {
+
+                var listObj = unitOfWork.ProdPromotionRepository.Find(e => !e.IsDeleted && e.ProductId == prodId).ToList();
+                return Ok(Request_OK<dynamic>(listObj));
+            }
+            catch (Exception ex)
+            {
+                FileHelper.GeneratorFileByDay(ex.ToString(), MethodBase.GetCurrentMethod().Name);
+                return Ok(Server_Error());
+            }
+        }
+
+        [HttpGet]
         [Route("api/MasterData/GetListRegion")]
         public IHttpActionResult GetListRegion(string txtSearch = "",string codeRegion = "", string codeDistrict = "")
         {
