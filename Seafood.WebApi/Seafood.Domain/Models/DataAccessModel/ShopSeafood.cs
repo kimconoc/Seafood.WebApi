@@ -9,8 +9,9 @@ namespace Seafood.Domain.Models.DataAccessModel
 {
     public class ShopSeafood : VBaseModel
     {
-        public string RegionDistrictCode { get; set; }
-        public string RegionCode { get; set; }
+        public string CodeRegion { get; set; }
+        public string CodeDistrict { get; set; }
+        public string CodeWard { get; set; }
         public string Name { get; set; }
         public string Address { get; set; }
         public string Phone { get; set; }

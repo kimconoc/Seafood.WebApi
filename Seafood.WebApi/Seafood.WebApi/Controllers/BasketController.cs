@@ -48,6 +48,7 @@ namespace Seafood.WebApi.Controllers
                                 {
                                     Id = bask.Id,
                                     Imge = resImge.UrlPath,
+                                    ProductId = resProd.Id,
                                     ProductName = resProd.Name,
                                     ProductDescription = resProd.Description,
                                     ProdProcessingName = resProces.Name,

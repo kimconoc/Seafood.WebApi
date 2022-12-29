@@ -25,7 +25,7 @@ namespace Seafood.WebApi.Controllers
                 }
                 else
                 {
-                    listObj = unitOfWork.ShopSeafoodRepository.Find(x => !x.IsDeleted && x.RegionCode == region).ToList();
+                    listObj = unitOfWork.ShopSeafoodRepository.Find(x => !x.IsDeleted && x.CodeRegion == region).ToList();
                 }
                 return Ok(Request_OK<dynamic>(listObj));
             }
