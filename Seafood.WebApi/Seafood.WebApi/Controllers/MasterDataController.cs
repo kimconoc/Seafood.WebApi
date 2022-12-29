@@ -108,5 +108,18 @@ namespace Seafood.WebApi.Controllers
                 return Ok(Server_Error());
             }
         }
+
+        [HttpGet]
+        [Route("api/MasterData/GetCountBasketByUserId")]
+        public IHttpActionResult GetCountBasketByUserId(Guid userId)
+        {
+            int count = 0;
+            if (userId == null)
+                return Ok(Bad_Request());
+
+            var prodBaskets = unitOfWork.BasketRepository.AsQueryable().Where(x => !x.IsDeleted && x.UserId == userId);
+            count = prodBaskets.Count();
+            return Ok(Request_OK(count));
+        }
     }
 }
