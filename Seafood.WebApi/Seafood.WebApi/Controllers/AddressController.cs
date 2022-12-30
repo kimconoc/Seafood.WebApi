@@ -166,8 +166,8 @@ namespace Seafood.WebApi.Controllers
         }
 
         [HttpDelete]
-        [Route("api/Address/DeleteAddressByUserId")]
-        public IHttpActionResult DeleteAddressByUserId(Guid addressId)
+        [Route("api/Address/DeleteAddressById")]
+        public IHttpActionResult DeleteAddressById(Guid addressId)
         {
             var address = unitOfWork.AddresseRepository.FirstOrDefault(x => !x.IsDeleted && x.Id == addressId);
             if (address == null || address.IsAddressMain)

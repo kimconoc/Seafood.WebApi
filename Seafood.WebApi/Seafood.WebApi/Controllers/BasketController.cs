@@ -16,13 +16,19 @@ namespace Seafood.WebApi.Controllers
             if (basketModel == null)
                 return Ok(Bad_Request());
 
-            var basket = unitOfWork.BasketRepository.FirstOrDefault(x => !x.IsDeleted && x.UserId == basketModel.UserId && x.ProductId == basketModel.ProductId);
+            var basket = unitOfWork.BasketRepository.FirstOrDefault(x => x.UserId == basketModel.UserId && x.ProductId == basketModel.ProductId);
             if(basket != null)
             {
-                return Ok(Request_OK(true));
-            }    
+                basket.ProdProcessingId = basketModel.ProdProcessingId;
+                basket.Note = basketModel.Note;
+                basket.IsDeleted = false;
+                unitOfWork.BasketRepository.Update(basket);
 
-            unitOfWork.BasketRepository.Add(basketModel);
+            }    
+            else
+            {
+                unitOfWork.BasketRepository.Add(basketModel);
+            }    
             unitOfWork.Commit();
             return Ok(Request_OK(true));
         }
@@ -58,6 +64,21 @@ namespace Seafood.WebApi.Controllers
 
             dynamic data = prodBaskets.ToList();
             return Ok(Request_OK<dynamic>(data));
+        }
+        [HttpPost]
+        [Route("api/Basket/DeleteBasketById")]
+        public IHttpActionResult DeleteBasketById([FromBody] List<Guid> lstBasket)
+        {
+            if (lstBasket == null || lstBasket.Count == 0)
+                return Ok(Bad_Request());
+
+            foreach(var item in lstBasket)
+            {
+                var basket = unitOfWork.BasketRepository.GetById(item);
+                unitOfWork.BasketRepository.Delete(basket);
+            }    
+            unitOfWork.Commit();
+            return Ok(Request_OK(true));
         }
     }
 }
