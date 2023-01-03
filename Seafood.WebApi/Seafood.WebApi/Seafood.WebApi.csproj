@@ -176,6 +176,7 @@
     <Compile Include="Controllers\MasterDataController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Controllers\UserController.cs" />
+    <Compile Include="Controllers\VoucherController.cs" />
     <Compile Include="Controllers\YourAccountController.cs" />
     <Compile Include="Filters\CustomExceptionFilter.cs" />
     <Compile Include="Filters\CustomModifyingErrorMessageDelegatingHandler.cs" />
@@ -226,7 +227,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Models\" />
-    <Folder Include="Views\Basket\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

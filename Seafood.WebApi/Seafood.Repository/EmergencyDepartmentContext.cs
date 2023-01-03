@@ -45,5 +45,7 @@ namespace Seafood.Repository
         public DbSet<CheckCodeFirebase> CheckCodeFirebases { get; set; }
         public DbSet<Addresse> Addresses { get; set; }
         public DbSet<Basket> Baskets { get; set; }
+        public DbSet<Voucher> Vouchers { get; set; }
+        public DbSet<VoucherSeafood> VoucherSeafoods { get; set; }
     }
 }
