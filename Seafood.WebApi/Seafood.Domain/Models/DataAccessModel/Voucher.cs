@@ -10,7 +10,7 @@ namespace Seafood.Domain.Models.DataAccessModel
     public class Voucher : VBaseModel
     {
         public Guid UserId { get; set; }
-        public string Titel { get; set; }
+        public string Title { get; set; }
         public string Code { get; set; }
         public int TypeVoucher { get; set; }
         public int ReductionAmount { get; set; }
