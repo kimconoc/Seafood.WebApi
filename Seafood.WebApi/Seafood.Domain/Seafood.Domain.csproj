@@ -54,6 +54,7 @@
     <Compile Include="Models\DataAccessModel\CheckCodeFirebase.cs" />
     <Compile Include="Models\DataAccessModel\FavouriteProd.cs" />
     <Compile Include="Models\DataAccessModel\Image.cs" />
+    <Compile Include="Models\DataAccessModel\Order.cs" />
     <Compile Include="Models\DataAccessModel\ProdInfo.cs" />
     <Compile Include="Models\DataAccessModel\ProdProcessing.cs" />
     <Compile Include="Models\DataAccessModel\ProdPromotion.cs" />

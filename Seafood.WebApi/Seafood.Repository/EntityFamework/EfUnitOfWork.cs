@@ -28,6 +28,7 @@ namespace Seafood.Repository.EntityFamework
         private readonly EfGenericRepository<Basket> _basketRepo;
         private readonly EfGenericRepository<Voucher> _voucherRepo;
         private readonly EfGenericRepository<VoucherSeafood> _voucherSeafoodRepo;
+        private readonly EfGenericRepository<Order> _orderRepo;
 
         public EfUnitOfWork()
         {
@@ -48,6 +49,7 @@ namespace Seafood.Repository.EntityFamework
             _basketRepo = new EfGenericRepository<Basket>(context);
             _voucherRepo = new EfGenericRepository<Voucher>(context);
             _voucherSeafoodRepo = new EfGenericRepository<VoucherSeafood>(context);
+            _orderRepo = new EfGenericRepository<Order>(context);
         }
 
         public IGenericRepository<User> UserRepository => _userRepo;
@@ -67,6 +69,7 @@ namespace Seafood.Repository.EntityFamework
         public IGenericRepository<Basket> BasketRepository => _basketRepo;
         public IGenericRepository<Voucher> VoucherRepository => _voucherRepo;
         public IGenericRepository<VoucherSeafood> VoucherSeafoodRepository => _voucherSeafoodRepo;
+        public IGenericRepository<Order> OrderRepository => _orderRepo;
 
         public void Commit(string request_id = "")
         {

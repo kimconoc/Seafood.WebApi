@@ -9,6 +9,22 @@ namespace Seafood.Domain.Common.Constant
 {
     public class Helper
     {
+        public static string CreateCodeVoucher()
+        {
+            int lengthOfVoucher = 10;
+            string voucher = string.Empty;
+            char[] keys = "ABCDEFGHIJKLMNOPQRSTUVWXYZ01234567890".ToCharArray();
+            voucher = GenerateVoucher(keys, lengthOfVoucher);
+            return voucher;
+        }
+        private static string GenerateVoucher(char[] keys, int lengthOfVoucher)
+        {
+            Random random = new Random();
+            return Enumerable
+                .Range(1, lengthOfVoucher) // for(i.. ) 
+                .Select(k => keys[random.Next(0, keys.Length - 1)])  // generate a new random char 
+                .Aggregate("", (e, c) => e + c); // join into a string
+        }
         public static bool ValidPhoneNumer(string phoneNumber, string lengthAndPrefixPhoneNumber = "10-09,086,088,089,020,032,033,034,035,036,037,038,039,070,079,077,076,078,083,084,085,081,082,056,058,059")
         {
             if (string.IsNullOrEmpty(phoneNumber))
@@ -50,7 +66,6 @@ namespace Seafood.Domain.Common.Constant
 
             return false;
         }
-
         public static bool IsValidEmail(string email)
         {
             if (string.IsNullOrEmpty(email))

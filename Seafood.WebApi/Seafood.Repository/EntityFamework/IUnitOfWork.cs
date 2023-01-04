@@ -26,6 +26,7 @@ namespace Seafood.Repository.EntityFamework
         IGenericRepository<Basket> BasketRepository { get; }
         IGenericRepository<Voucher> VoucherRepository { get; }
         IGenericRepository<VoucherSeafood> VoucherSeafoodRepository { get; }
+        IGenericRepository<Order> OrderRepository { get; }
 
         void Commit(string request_id = "");
     }

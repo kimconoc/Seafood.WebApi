@@ -16,8 +16,8 @@ namespace Seafood.Domain.Models.DataAccessModel
         public string Name { get; set; }
         public string Description { get; set; }
         public double? ReviewProd { get; set; }
-        public int? Price { get; set; }
-        public int? PriceSale { get; set; }
+        public int Price { get; set; }
+        public int PriceSale { get; set; }
         public double? Amount { get; set; }
         public string Note { get; set; }
     }

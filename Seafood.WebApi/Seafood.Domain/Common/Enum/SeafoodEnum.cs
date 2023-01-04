@@ -16,4 +16,30 @@ namespace Seafood.Domain.Common.Enum
         [Description("Get list Image More")]
         More = 2,
     }
+    public enum TypeAddressEnum
+    {
+        [Description("Nhà riêng/Chung cư")]
+        NhaRieng = 0,
+        [Description("Cơ quan/Công ty")]
+        CoQuan = 1,
+    }
+    public enum TypeVoucherEnum
+    {
+        [Description("Voucher Seafood")]
+        Seafood = 0,
+        [Description("Voucher User")]
+        User = 1,
+    }
+    public enum StatusOrderEnum
+    {
+        [Description("Đang xử lý")]
+        DangXuLy = 0,
+        [Description("Đang vận chuyển")]
+        DangVanChuyen = 1,
+        [Description("Đơn đã giao")]
+        DonDaGiao = 2,
+        [Description("Đơn đã hủy")]
+        DonDaHuy = -1,
+    }
+
 }
