@@ -57,6 +57,7 @@ namespace Seafood.WebApi.Controllers
                                     ProductId = resProd.Id,
                                     ProductName = resProd.Name,
                                     ProductDescription = resProd.Description,
+                                    ProdProcessingId = resProces.Id,
                                     ProdProcessingName = resProces.Name,
                                     Price = resProd.Price,
                                     PriceSale = resProd.PriceSale,

@@ -62,7 +62,7 @@ namespace Seafood.WebApi.Controllers
         {
             int total = 0;
             string codeVoucher = orders[0].CodeVoucher;
-            int typeVoucher = orders[0].TypeVoucher;
+            int? typeVoucher = orders[0].TypeVoucher;
             int totalPrice = orders[0].TotalPrice;
             foreach (var order in orders)
             {

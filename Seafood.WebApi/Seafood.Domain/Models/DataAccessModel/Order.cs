@@ -14,7 +14,7 @@ namespace Seafood.Domain.Models.DataAccessModel
         public Guid ProdProcessingId { get; set; }
         public string Code { get; set; }
         public string CodeVoucher { get; set; }
-        public int TypeVoucher { get; set; }    
+        public int? TypeVoucher { get; set; }    
         public int Status { get; set; }
         public int Quantity { get; set; }
         public int TotalPrice { get; set; }
