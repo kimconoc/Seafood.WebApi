@@ -2,6 +2,7 @@
 using Seafood.Domain.Common.Enum;
 using Seafood.Domain.Common.FileLog;
 using Seafood.Domain.Models.DataAccessModel;
+using Seafood.WebApi.Authentication;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +12,7 @@ using System.Web.Http;
 
 namespace Seafood.WebApi.Controllers
 {
+    [SessionAuthorizeApi]
     public class OrderController : BaseApiController
     {
         [HttpPost]
@@ -19,7 +21,7 @@ namespace Seafood.WebApi.Controllers
         {
             try
             {
-                if (orders == null || orders.Any())
+                if (orders == null || !orders.Any())
                     return Ok(Bad_Request());
                 DateTime start = DateTime.Now;
                 bool isVoucher = false;
@@ -38,13 +40,14 @@ namespace Seafood.WebApi.Controllers
                     }    
                 }
                 if(string.IsNullOrEmpty(voucher) || !VerifileTotalPrice(orders))
-                    return Ok(Request_OK(false));
+                    return Ok(Server_Error());
 
                 foreach (var order in orders)
                 {
                     order.Code = voucher;
                     order.TimeOrder = start;
                     order.Status = (int)StatusOrderEnum.DangXuLy;
+                    RemoteProductBasket(order);
                     unitOfWork.OrderRepository.Add(order);
                 }    
                 unitOfWork.Commit();
@@ -53,7 +56,7 @@ namespace Seafood.WebApi.Controllers
             catch(Exception ex)
             {
                 FileHelper.GeneratorFileByDay(ex.ToString(), MethodBase.GetCurrentMethod().Name);
-                return Ok(Request_OK(false));
+                return Ok(Server_Error());
             }
            
         }
@@ -81,7 +84,24 @@ namespace Seafood.WebApi.Controllers
                     {
                         if (total > voucher.ReductionAmount)
                         {
-                            total = totalPrice - voucher.ReductionAmount;
+                            if(voucher.ConditionsApply == null || total > voucher.ConditionsApply)
+                                total = total - voucher.ReductionAmount;
+                        }
+                        else
+                        {
+                            total = 0;
+                        }
+                    }
+                }
+                else if (typeVoucher == (int)TypeVoucherEnum.User)
+                {
+                    var voucher = unitOfWork.VoucherRepository.FirstOrDefault(x => !x.IsDeleted && x.TypeVoucher == typeVoucher && x.Code == codeVoucher);
+                    if (voucher != null)
+                    {
+                        if (total > voucher.ReductionAmount)
+                        {
+                            if (voucher.ConditionsApply == null || total > voucher.ConditionsApply)
+                                total = total - voucher.ReductionAmount;
                         }
                         else
                         {
@@ -90,22 +110,16 @@ namespace Seafood.WebApi.Controllers
                     }
                 }
             }
-            else if (typeVoucher == (int)TypeVoucherEnum.User)
-            {
-                var voucher = unitOfWork.VoucherRepository.FirstOrDefault(x => !x.IsDeleted && x.TypeVoucher == typeVoucher && x.Code == codeVoucher);
-                if (voucher != null)
-                {
-                    if (total > voucher.ReductionAmount)
-                    {
-                        total = totalPrice - voucher.ReductionAmount;
-                    }
-                    else
-                    {
-                        total = 0;
-                    }
-                }
-            }
+            
             return total == totalPrice;
+        }
+        private void RemoteProductBasket(Order order)
+        {
+            var basket = unitOfWork.BasketRepository.FirstOrDefault(x => !x.IsDeleted && x.UserId == order.UserId && x.ProductId == order.ProductId);
+            if(basket != null)
+            {
+                unitOfWork.BasketRepository.Delete(basket);
+            }    
         }
     }
 }

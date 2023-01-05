@@ -1,4 +1,5 @@
 ﻿using Seafood.Domain.Models.DataAccessModel;
+using Seafood.WebApi.Authentication;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,6 +8,7 @@ using System.Web.Http;
 
 namespace Seafood.WebApi.Controllers
 {
+    [SessionAuthorizeApi]
     public class BasketController : BaseApiController
     {
         [HttpPost]
