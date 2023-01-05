@@ -73,7 +73,7 @@ namespace Seafood.WebApi.Controllers
                 if (prod == null)
                     return false;
 
-                total = prod.PriceSale * order.Quantity;
+                total = total + prod.PriceSale * order.Quantity;
             }
             if (!string.IsNullOrEmpty(codeVoucher))
             {
@@ -119,6 +119,14 @@ namespace Seafood.WebApi.Controllers
             if(basket != null)
             {
                 unitOfWork.BasketRepository.Delete(basket);
+            }    
+            if(!string.IsNullOrEmpty(order.CodeVoucher) && order.TypeVoucher != null)
+            {
+                if (order.TypeVoucher == (int)TypeVoucherEnum.User)
+                {
+                    var voucher = unitOfWork.VoucherRepository.FirstOrDefault(x => !x.IsDeleted && x.TypeVoucher == order.TypeVoucher && x.Code == order.CodeVoucher);
+                    unitOfWork.VoucherRepository.Delete(voucher);
+                }    
             }    
         }
     }

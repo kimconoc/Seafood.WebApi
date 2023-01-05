@@ -16,12 +16,12 @@ namespace Seafood.WebApi.Controllers
     {
         [HttpGet]
         [Route("api/Product/GetAllProd")]
-        public IHttpActionResult GetAllProd(string regionCode = Constant.Region_HaNoi)
+        public IHttpActionResult GetAllProd()
         {
             try
             {
                 var ipRequest = GetIp();   
-                var products = (from prod in unitOfWork.ProductRepository.AsQueryable().Where(e => !e.IsDeleted && regionCode.Equals(e.RegionCode))
+                var products = (from prod in unitOfWork.ProductRepository.AsQueryable().Where(e => !e.IsDeleted)
                                 join favourite in unitOfWork.FavouriteProdRepository.AsQueryable().Where(e => !e.IsDeleted && e.IpRequest.Equals(ipRequest))
                                 on prod.Id equals favourite.ProductId into res1
                                 from x in res1.DefaultIfEmpty()
@@ -32,8 +32,6 @@ namespace Seafood.WebApi.Controllers
                                 {
                                     Id = prod.Id,
                                     CategoryCode = prod.CategoryCode,
-                                    RegionDistrictCode = prod.RegionDistrictCode,
-                                    RegionCode = prod.RegionCode,
                                     Name = prod.Name,
                                     Description = prod.Description,
                                     DescPromotion = y.Content,
@@ -62,12 +60,12 @@ namespace Seafood.WebApi.Controllers
 
         [HttpGet]
         [Route("api/Product/GetProdByCode")]
-        public IHttpActionResult GetProdByCode(string code, string regionCode = Constant.Region_HaNoi)
+        public IHttpActionResult GetProdByCode(string code)
         {
             try
             {
                 var ipRequest = GetIp();
-                var products = (from prod in unitOfWork.ProductRepository.AsQueryable().Where(e => !e.IsDeleted && e.CategoryCode.Equals(code) && regionCode.Equals(e.RegionCode))
+                var products = (from prod in unitOfWork.ProductRepository.AsQueryable().Where(e => !e.IsDeleted && e.CategoryCode.Equals(code))
                                 join favourite in unitOfWork.FavouriteProdRepository.AsQueryable().Where(e => !e.IsDeleted && e.IpRequest.Equals(ipRequest))
                                 on prod.Id equals favourite.ProductId into res1
                                 from x in res1.DefaultIfEmpty()
@@ -78,8 +76,6 @@ namespace Seafood.WebApi.Controllers
                                 {
                                     Id = prod.Id,
                                     CategoryCode = prod.CategoryCode,
-                                    RegionDistrictCode = prod.RegionDistrictCode,
-                                    RegionCode = prod.RegionCode,
                                     Name = prod.Name,
                                     Description = prod.Description,
                                     DescPromotion = y.Content,
@@ -124,8 +120,6 @@ namespace Seafood.WebApi.Controllers
                 {
                     Id = product.Id,
                     CategoryCode = product.CategoryCode,
-                    RegionDistrictCode = product.RegionDistrictCode,
-                    RegionCode = product.RegionCode,
                     Name = product.Name,
                     Description = product.Description,
                     ReviewProd = product.ReviewProd,
