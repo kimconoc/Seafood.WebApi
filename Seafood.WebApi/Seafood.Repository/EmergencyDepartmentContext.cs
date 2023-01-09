@@ -48,5 +48,7 @@ namespace Seafood.Repository
         public DbSet<Voucher> Vouchers { get; set; }
         public DbSet<VoucherSeafood> VoucherSeafoods { get; set; }
         public DbSet<Order> Orders { get; set; }
+        public DbSet<SessionAuthorizeAdmin> SessionAuthorizeAdmins { get; set; }
+        public DbSet<UserAdmin> UserAdmins { get; set; }
     }
 }

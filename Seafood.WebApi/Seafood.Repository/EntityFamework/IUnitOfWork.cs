@@ -27,6 +27,8 @@ namespace Seafood.Repository.EntityFamework
         IGenericRepository<Voucher> VoucherRepository { get; }
         IGenericRepository<VoucherSeafood> VoucherSeafoodRepository { get; }
         IGenericRepository<Order> OrderRepository { get; }
+        IGenericRepository<SessionAuthorizeAdmin> SessionAuthorizeAdminRepository { get; }
+        IGenericRepository<UserAdmin> UserAdminRepository { get; }
 
         void Commit(string request_id = "");
     }
