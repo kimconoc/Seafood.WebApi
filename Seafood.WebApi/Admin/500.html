@@ -1,0 +1,20 @@
+﻿<link href="../Content/errPage.css" rel="stylesheet" />
+<script src="../Scripts/jquery/jquery-3.3.1.js"></script>
+
+<main class="content-wrapper">
+    <div class="cont_principal" style="height: 100%;">
+        <div class="cont_error">
+
+            <h1>Oops</h1>
+            <p>Đã có lỗi xảy ra. <a href="/Home/Index">Trở về trang chủ</a></p>
+        </div>
+        <div class="cont_aura_1"></div>
+        <div class="cont_aura_2"></div>
+    </div>
+</main>
+
+<script>
+    window.onload = function () {
+        document.querySelector('.cont_principal').className = "cont_principal cont_error_active";
+    }
+</script>

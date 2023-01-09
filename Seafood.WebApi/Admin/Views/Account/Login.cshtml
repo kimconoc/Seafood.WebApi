@@ -1,0 +1,93 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    @Styles.Render("~/bundles/css")
+    @Styles.Render("~/bundles/js")
+    <link href="~/assets/css/login.css" rel="stylesheet" />
+    <link href="~/assets/css/theme.css" rel="stylesheet" />
+    <script src="~/assets/js/constant.js"></script>
+    <script src="~/Scripts/jquery/jquery-3.3.1.js"></script>
+    <style>
+        /*Ghi đè tự động điền*/
+        input:-webkit-autofill,
+        input:-webkit-autofill:hover,
+        input:-webkit-autofill:focus,
+        input:-webkit-autofill:active {
+            /*background*/
+            -webkit-box-shadow: 0 0 0 30px white inset !important;
+        }
+
+        input:-webkit-autofill {
+            /*color*/
+            -webkit-text-fill-color: none !important;
+        }
+        /*Ghi đè class*/
+        .box-login-form .box-input-login input:focus {
+            outline: none;
+        }
+    </style>
+</head>
+<body style="background-color: #dee8fc;">
+    <div class="box-form-account">
+        <div class="box-login-form">
+            <form role="form" method="post">
+                @Html.AntiForgeryToken()
+                <div class="header">
+                    Đăng nhập
+                </div>
+
+                <div id="box_login_form_account" class="box-input-login">
+                    <input id="userName" name="UserName" required maxlength="10" placeholder="Tài khoản" value="">
+                </div>
+                <div id="box_login_form_password" class="box-input-login">
+                    <input type="password" id="password" name="Password" required maxlength="50" placeholder="Mật Khẩu" value="" />
+                    <i id="hide_password" class="icon-show-password fa fa-eye-slash" aria-hidden="true"></i>
+                    <i id="show_password" style="display:none;" class="icon-show-password fa fa-eye" aria-hidden="true"></i>
+                </div>
+                <span class="validate-error" id="alert_login"></span>
+                <button class="btn-login btn-core-accept">Đăng nhập</button>
+                @*<div class="box-describe">
+                    <div class="slim-line">
+                    </div>
+                    <span>Hoặc</span>
+                    <div class="slim-line">
+                    </div>
+                </div>
+                <div class="box-register">
+                    Liên hệ Amin?
+                    <a href="/Account/RegisterAccount">Liên hệ</a>
+                </div>*@
+            </form>
+        </div>
+    </div>
+    <script>
+        $(document).ready(function ()
+        {
+            $('#userName').on('focus', function () {
+                document.getElementById("box_login_form_account").style.borderColor = "rgb(7, 171, 226)";
+            });
+            $('#userName').on('blur', function () {
+                document.getElementById("box_login_form_account").style.borderColor = "rgba(0,0,0,.14)";
+            });
+            $('#password').on('focus', function () {
+                document.getElementById("box_login_form_password").style.borderColor = "rgb(7, 171, 226)";
+            });
+            $('#password').on('blur', function () {
+                document.getElementById("box_login_form_password").style.borderColor = "rgba(0,0,0,.14)";
+            });
+            if ('@ViewBag.Message' != '')
+            {
+                $('#alert_login').html('@ViewBag.Message');
+                $('#alert_login').fadeIn(500);
+                setTimeout("$('#alert_login').fadeOut(1500);", 5000 );
+            };
+        });
+    </script>
+
+</body>
+</html>

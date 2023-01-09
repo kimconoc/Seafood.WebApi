@@ -1,0 +1,71 @@
+﻿
+@{
+    Layout = null;
+}
+
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UploadFile</title>
+    @Styles.Render("~/bundles/css")
+    @Styles.Render("~/bundles/js")
+    <!--css, js bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <style>
+        .box-upload-file-excel {
+            display:flex;
+            flex-flow:column;
+            gap:5px;
+            margin-top:20px;
+            margin-left:20px;
+        }
+        .btnExecute {
+            padding: 8px 8px;
+            width: 120px;
+            height: 36px;
+            border-radius: 4px;
+            font-size: 14px;
+            font-weight: 400;
+            line-height: 1.4;
+            display: flex;
+            -webkit-box-pack: center;
+            justify-content: center;
+            -webkit-box-align: center;
+            align-items: center;
+            cursor: pointer;
+            border: 1px solid transparent;
+            color: white;
+            background: linear-gradient(rgb(7, 171, 226),#3b5898);
+        }
+    </style>
+</head>
+<body>
+    @using (Html.BeginForm("ExecuteReadFileExcel", "UploadFile", FormMethod.Post, new { enctype = "multipart/form-data", onsubmit = "return myFunction()" }))
+    {
+        <div class="box-upload-file-excel">
+            <input type="file" id="executeReadFileExcel" name="executeReadFileExcel" class="chooseFile" />
+            <input type="submit" value="Upload đọc excel" id="btnSubmit" class="btnExecute" />
+        </div>
+    }
+    @using (Html.BeginForm("ExecuteSaveFile", "UploadFile", FormMethod.Post, new { enctype = "multipart/form-data", onsubmit = "return myFunction()" }))
+    {
+        <div class="box-upload-file-excel">
+            <input type="file" id="executeSaveFile" name="executeSaveFile" class="chooseFile" />
+            <input type="submit" value="Upload lưu file" id="btnSubmit" class="btnExecute" />
+        </div>
+    }
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+

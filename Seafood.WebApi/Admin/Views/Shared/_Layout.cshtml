@@ -1,0 +1,166 @@
+﻿@using Newtonsoft.Json;
+@using Amin.Models;
+@using Admin.Common;
+
+@{
+    //FormsIdentity id = (FormsIdentity)HttpContext.Current.User.Identity;
+    //FormsAuthenticationTicket ticket = id.Ticket;
+    //var userData = JsonConvert.DeserializeObject<UserData>(ticket.UserData);
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    @Styles.Render("~/bundles/css")
+    <link href="~/assets/css/demo/style.css" rel="stylesheet" />
+</head>
+<body>
+    <script src="../assets/js/preloader.js"></script>
+    <div class="body-wrapper">
+        <!-- partial:partials/_sidebar.html -->
+        <aside class="mdc-drawer mdc-drawer--dismissible mdc-drawer--open">
+            <div class="mdc-drawer__header">
+                <a class="brand-logo">
+                    <img src="~/assets/images/logos/r-logo_login.jpg" style="width: 60%;border-radius:100%;" />
+                </a>
+            </div>
+            <div class="mdc-drawer__content">
+                <div class="mdc-list-group">
+                    <nav class="mdc-list mdc-drawer-menu">
+                        @if (User.IsInRole(Constant.AdminRoles.SuperAdmin) || User.IsInRole(Constant.AdminRoles.ManageUser))
+                        {
+                            <div class="mdc-list-item mdc-drawer-item">
+                                <a class="mdc-drawer-link" href="@Url.Action("Index", "User")">
+                                    <i class="material-icons mdc-list-item__start-detail mdc-drawer-item-icon" aria-hidden="true">account_box</i>
+                                    Quản lý người dùng
+                                </a>
+                            </div>
+                        }
+
+                        @if (User.IsInRole(Constant.AdminRoles.SuperAdmin) || User.IsInRole(Constant.AdminRoles.ManageUser))
+                        {
+                            <div class="mdc-list-item mdc-drawer-item">
+                                <a class="mdc-expansion-panel-link" href="#" data-toggle="expansionPanel" data-target="masterdata-sub-menu">
+                                    <i class="material-icons mdc-list-item__start-detail mdc-drawer-item-icon" aria-hidden="true">storage</i>
+                                    Quản lý dữ liệu
+                                    <i class="mdc-drawer-arrow material-icons">chevron_right</i>
+                                </a>
+                                <div class="mdc-expansion-panel" id="masterdata-sub-menu">
+                                    <nav class="mdc-list mdc-drawer-submenu">
+                                        <div class="mdc-list-item mdc-drawer-item">
+                                            <a class="mdc-drawer-link" href="@Url.Action("Index", "Site")">
+                                                Bệnh viện
+                                            </a>
+                                        </div>
+                                        <div class="mdc-list-item mdc-drawer-item">
+                                            <a class="mdc-drawer-link" href="@Url.Action("Index", "Specialty")">
+                                                Chuyên khoa
+                                            </a>
+                                        </div>
+                                        <div class="mdc-list-item mdc-drawer-item">
+                                            <a class="mdc-drawer-link" href="@Url.Action("Index", "Clinic")">
+                                                Phòng khám
+                                            </a>
+                                        </div>
+                                    </nav>
+                                </div>
+                            </div>
+                        }
+                        @if (User.IsInRole(Constant.AdminRoles.SuperAdmin) || User.IsInRole(Constant.AdminRoles.ManageUser))
+                        {
+                            <div class="mdc-list-item mdc-drawer-item">
+                                <a class="mdc-drawer-link" href="@Url.Action("Index", "Role")">
+                                    <i class="material-icons mdc-list-item__start-detail mdc-drawer-item-icon" aria-hidden="true">dashboard</i>
+                                    Quản lý nhóm quyền
+                                </a>
+                            </div>
+                        }
+                        @if (true)
+                        {
+                            <div class="mdc-list-item mdc-drawer-item">
+                                <a class="mdc-expansion-panel-link" href="#" data-toggle="expansionPanel" data-target="record-sub-menu">
+                                    <i class="material-icons mdc-list-item__start-detail mdc-drawer-item-icon" aria-hidden="true">assignment</i>
+                                    Quản lý hồ sơ
+                                    <i class="mdc-drawer-arrow material-icons">chevron_right</i>
+                                </a>
+                                <div class="mdc-expansion-panel" id="record-sub-menu">
+                                    <nav class="mdc-list mdc-drawer-submenu">
+                                        <div class="mdc-list-item mdc-drawer-item">
+                                            <a class="mdc-drawer-link" href="@Url.Action("Index", "UnlockForm")">
+                                                Quản lý mở khóa hồ sơ
+                                            </a>
+                                        </div>
+                                        <div class="mdc-list-item mdc-drawer-item">
+                                            <a class="mdc-drawer-link" href="@Url.Action("Index", "DeleteRecord")">
+                                                Xóa hồ sơ
+                                            </a>
+                                        </div>
+                                        <div class="mdc-list-item mdc-drawer-item">
+                                            <a class="mdc-drawer-link" href="@Url.Action("Index", "ChangeStatus")">
+                                                Thay đổi trạng thái
+                                            </a>
+                                        </div>
+                                    </nav>
+                                </div>
+                            </div>
+                        }
+                    </nav>
+                </div>
+            </div>
+        </aside>
+        <div class="main-wrapper mdc-drawer-app-content">
+            <header class="mdc-top-app-bar">
+                <div class="mdc-top-app-bar__row">
+                    <div class="mdc-top-app-bar__section mdc-top-app-bar__section--align-start">
+                        <button class="material-icons mdc-top-app-bar__navigation-icon mdc-icon-button sidebar-toggler">menu</button>
+                    </div>
+                    <div class="mdc-top-app-bar__section mdc-top-app-bar__section--align-end mdc-top-app-bar__section-right">
+                        <div class="dropdown" style="margin-top: 10px;">
+                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="material-icons mdc-list-item__start-detail mdc-drawer-item-icon" aria-hidden="true" style="font-size: 30px;">account_circle</i>
+                                <span class="user-name">Phạm Văn Đức</span>
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <a class="dropdown-item" href="/Account/Logout">Đăng xuất</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <div class="page-wrapper mdc-toolbar-fixed-adjust">
+                <main class="content-wrapper">
+                    @RenderBody()
+                </main>
+            </div>
+        </div>
+    </div>
+
+    <script src="~/assets/vendors/js/vendor.bundle.base.js"></script>
+    @Scripts.Render("~/bundles/js")
+    <script src="~/assets/js/misc.js"></script>
+    <script>
+        $(window).on('beforeunload', function () {
+            document.body.className = "";
+        });
+
+        $.ajaxSetup({
+            complete: function (x, e) {
+                if (x.status == 401) {
+                    alert("Phiên đăng nhập đã hết. Vui lòng đăng nhập lại để tiếp tục.");
+                    window.location = "/Account/Login";
+                }
+                if (x.status == 500) {
+                    var url = '@Url.Action("CommonErr", "Error")';
+                    $('#errorPopupPlaceholder').load(url);
+                }
+            }
+        });
+    </script>
+    @RenderSection("script", false)
+    <div id="errorPopupPlaceholder"></div>
+</body>
+</html>
