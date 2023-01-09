@@ -10,6 +10,7 @@ namespace Amin.Models
         public Guid UserId { get; set; }
         public string Username { get; set; }
         public string DisplayName { get; set; }
+        public List<string> Roles { get; set; }
         public string Avarta { get; set; }
         public DateTime Birthday { get; set; }
         public int Sex { get; set; }

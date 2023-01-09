@@ -575,6 +575,16 @@
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Seafood.Domain\Seafood.Domain.csproj">
+      <Project>{9F6EBA68-E695-4C75-B46D-3BEA0E8233BA}</Project>
+      <Name>Seafood.Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Seafood.Repository\Seafood.Repository.csproj">
+      <Project>{51497DE4-2490-4CD4-8D55-856E467CC40F}</Project>
+      <Name>Seafood.Repository</Name>
+    </ProjectReference>
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

@@ -1,33 +1,56 @@
 ﻿using Amin.MemCached;
 using Amin.Models;
+using Newtonsoft.Json;
+using Seafood.Domain.Common.FileLog;
+using Seafood.Repository.EntityFamework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Reflection;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Security;
 
 namespace Amin.Controllers
 {
     public class BaseController : Controller
     {
-        //protected IProvider provider = new Provider();
+        protected IUnitOfWork unitOfWork = new EfUnitOfWork();
         protected override void Dispose(bool disposing)
         {
             if (disposing)
             {
-
+                unitOfWork.Dispose();
             }
             base.Dispose(disposing);
         }
 
-        //public UserData GetCurrentUser()
-        //{
-        //    var user = Authenticator.CurrentUser(ControllerContext.HttpContext);
-        //    return user;
-        //}
+        public UserData GetCurrentUser()
+        {
+            UserData userData = null;
+            var signinTokenCookie = Request.Cookies[GetSigninToken()];
+            if (signinTokenCookie != null && !string.IsNullOrEmpty(signinTokenCookie.Value))
+            {
+                try
+                {
+                    var token = FormsAuthentication.Decrypt(signinTokenCookie.Value);
+                    userData = JsonConvert.DeserializeObject<UserData>(token.UserData);
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+            }
+            return userData;
+        }
+        private static string GetSigninToken()
+        {
+            return FormsAuthentication.FormsCookieName;
+        }
         protected override void OnException(ExceptionContext filterContext)
         {
+            FileHelper.GeneratorFileByDay(filterContext.Exception.Message, MethodBase.GetCurrentMethod().Name);
             filterContext.ExceptionHandled = true;
             filterContext.Result = RedirectToAction("Login", "Account");
         }

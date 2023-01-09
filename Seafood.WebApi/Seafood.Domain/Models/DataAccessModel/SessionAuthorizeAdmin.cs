@@ -14,6 +14,6 @@ namespace Seafood.Domain.Models.DataAccessModel
         public string SessionId { get; set; }
         public string Session { get; set; }
         public DateTime TimeLogin { get; set; }
-        public DateTime TimeLogout { get; set; }
+        public DateTime? TimeLogout { get; set; }
     }
 }
