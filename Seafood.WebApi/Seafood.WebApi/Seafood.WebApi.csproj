@@ -176,7 +176,6 @@
     <Compile Include="Controllers\MasterDataController.cs" />
     <Compile Include="Controllers\OrderController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
-    <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\VoucherController.cs" />
     <Compile Include="Controllers\YourAccountController.cs" />
     <Compile Include="Filters\CustomExceptionFilter.cs" />
