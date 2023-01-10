@@ -15,6 +15,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - My ASP.NET Application</title>
     @Styles.Render("~/bundles/css")
+    @Styles.Render("~/bundles/js")
+    <link href="~/assets/css/theme.css" rel="stylesheet" />
+    <script src="~/assets/js/constant.js"></script>
+    <script src="~/Scripts/jquery/jquery-3.3.1.js"></script>
+    <link href="~/Content/fa/font-awesome.css" rel="stylesheet" />
     <link href="~/assets/css/demo/style.css" rel="stylesheet" />
 </head>
 <body>
@@ -33,7 +38,7 @@
                         @if (User.IsInRole(Constant.AdminRoles.SuperAdmin))
                         {
                             <div class="mdc-list-item mdc-drawer-item">
-                                <a class="mdc-drawer-link" href="@Url.Action("Index", "User")">
+                                <a class="mdc-drawer-link" href="@Url.Action("ListUser", "User")">
                                     <i class="material-icons mdc-list-item__start-detail mdc-drawer-item-icon" aria-hidden="true">account_box</i>
                                     Quản lý người dùng
                                 </a>
@@ -51,7 +56,7 @@
                         @if (User.IsInRole(Constant.AdminRoles.SuperAdmin))
                         {
                              <div class="mdc-list-item mdc-drawer-item">
-                                 <a class="mdc-drawer-link" href="@Url.Action("Index", "User")">
+                                 <a class="mdc-drawer-link" href="@Url.Action("ListUser", "User")">
                                      <i class="material-icons mdc-list-item__start-detail mdc-drawer-item-icon" aria-hidden="true">assignment</i>
                                      Quản lý đơn hàng
                                  </a>

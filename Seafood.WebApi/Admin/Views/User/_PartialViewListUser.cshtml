@@ -1,0 +1,69 @@
+﻿@using Seafood.Domain.Models.DataAccessModel;
+@model List<User>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+    </style>
+</head>
+<body>
+    <div>
+        <table id="tbl-users" class="mdl-data-table"></table>
+    </div>
+    <script>
+         $(document).ready(function () {
+            $('#tbl-users').DataTable({
+            autoWidth: true,
+            responsive: true,
+            processing: true,
+            paging: true,
+            serverSide: true,
+            filter: false,
+            orderMulti: false,
+            order: [[1, "asc"]],
+            searching: true,
+            lengthChange: false,
+            ajax: {
+                url: "@Url.Action("GetListUsers", "User")",
+                type: "POST"
+            },
+            columnDefs: [
+                { targets: 0, visible: false, searchable: false, orderable: false },
+                { targets: 1, width: "15%" },
+                { targets: 2, width: "12%", searchable: false, orderable: false },
+                { targets: 3, width: "25%", searchable: false, orderable: false },
+                { targets: 4, width: "12%", searchable: false, orderable: false },
+                { targets: 5, width: "12%", searchable: false, orderable: false },
+                { targets: 6, width: "12%", searchable: false, orderable: false },
+                { targets: 7, width: "12%", searchable: false, orderable: false },
+            ],
+            columns: [
+                { data: "Id", name: "Id" },
+                { title: "Tên hiển thị", data: "DisplayName", name: "DisplayName" },
+                { title: "Số điện thoại", data: "Mobile", name: "Mobile" },
+                { title: "Địa chỉ email", data: "Email", name: "Email" },
+                { title: "Giới tính", data: "Sex", name: "Sex" },
+                { title: "Ngày sinh", data: "Birthday", name: "Birthday" },
+                { title: "Tình trạng khóa", data: "IsLocked", name: "IsLocked" },
+                { title: "IsDeleted", data: "IsDeleted", name: "IsDeleted" },
+                {
+                    title: "Thao tác", searchable: false, orderable: false ,render: function (data, type, full, meta) {
+                        var render = '';
+                        if (full.IsDeleted) {
+                            render += '<button type="button" class="mdc-button mdc-button--raised icon-button filled-button--success mdc-ripple-upgraded" style="width: 30px; padding: 0;" title="Kích hoạt" onclick="activeUser(\'' + full.Id + '\')"><i class="material-icons mdc-button__icon">check</i></button>';
+                        } else {
+                            render += '<button type="button" class="mdc-button mdc-button--raised icon-button filled-button--secondary mdc-ripple-upgraded" style="width: 30px; padding: 0;" title="Vô hiệu" onclick="deactiveUser(\'' + full.Id + '\')"><i class="material-icons mdc-button__icon">clear</i></button>';
+                        }
+                        render += '&nbsp;<button type="button" class="mdc-button mdc-button--raised icon-button filled-button--info mdc-ripple-upgraded" style="width: 30px; margin-right: 5px; padding: 0;" onclick="viewDetail(\'' + full.Id + '\')"><i class="material-icons mdc-button__icon">edit</i></button>';
+                        return render;
+                    }
+                }
+            ]
+        });
+    })
+    </script>
+</body>
+</html>
+
+
