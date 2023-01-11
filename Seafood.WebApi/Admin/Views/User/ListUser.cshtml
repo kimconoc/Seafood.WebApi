@@ -22,52 +22,40 @@
 <head>
     <style>
         .box-header-filter {
-            display:none;
-        }
-        .container-table{
-            overflow-x:auto;
-        }
-        .mdl-grid  {
-            display: block;
-        }
-        .pagination {
-            display: block;
-            text-align: center;
-        }
-        div.dataTables_wrapper div.dataTables_filter {
-            text-align: left;
+            display: none;
         }
     </style>
 </head>
 <body>
+    @Html.AntiForgeryToken()
     <div class="mdc-layout-grid">
         <div class="mdc-layout-grid__inner">
             <div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-12">
                 <div class="mdc-card p-0">
                     <h6 class="card-title card-padding pb-0">
-                        <i class="fa fa-users" aria-hidden="true"></i>
+                        <i class="icon-title fa fa-users" aria-hidden="true"></i>
                         Quản lý người dùng
                     </h6>
                     <div class="box-header-filter container">
                         <div class="row">
                             <div class="col-3">
-                                <input type="text" class="form-control" id="filterName" placeholder="Tài khoản"/>
+                                <input type="text" class="form-control" id="filterName" placeholder="Tài khoản" />
                             </div>
                             <div class="col-1">
                                 <button class="mdc-button mdc-button--outlined outlined-button--success mdc-ripple-upgraded">
-                                <i class="material-icons mdc-button__icon">search</i>
+                                    <i class="material-icons mdc-button__icon">search</i>
                                     Tìm kiếm
                                 </button>
                             </div>
-                            
+
                         </div>
                     </div>
-                    <div  class="container-table">
+                    <div class="container-table">
                         <div id="list_user">
                         </div>
                     </div>
                 </div>
-              
+
             </div>
         </div>
     </div>

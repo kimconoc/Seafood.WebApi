@@ -13,7 +13,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - My ASP.NET Application</title>
+    <title>@*@ViewBag.Title*@ Admin manager</title>
     @Styles.Render("~/bundles/css")
     @Styles.Render("~/bundles/js")
     <link href="~/assets/css/theme.css" rel="stylesheet" />
@@ -21,6 +21,13 @@
     <script src="~/Scripts/jquery/jquery-3.3.1.js"></script>
     <link href="~/Content/fa/font-awesome.css" rel="stylesheet" />
     <link href="~/assets/css/demo/style.css" rel="stylesheet" />
+    @*master-plan*@
+    <script src="~/assets/helpers/master-plan/adr_common.js"></script>
+    <script src="~/assets/helpers/master-plan/iosOverlay.js"></script>
+    <link href="~/assets/helpers/master-plan/style.css" rel="stylesheet" />
+    @*cssscript*@
+    <link rel="stylesheet" href="~/assets/helpers/toastinette-notification-main/assets/css/toastinette.min.css">
+    <script src="~/assets/helpers/toastinette-notification-main/assets/js/toastinette.js"></script>
 </head>
 <body>
     <script src="../assets/js/preloader.js"></script>

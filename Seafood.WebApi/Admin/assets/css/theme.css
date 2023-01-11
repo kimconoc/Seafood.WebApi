@@ -21,6 +21,35 @@
 }
 
 @import url(https://fonts.googleapis.com/css?family=Vibur);
+
+/*mdl-data-table*/
+.icon-title {
+    color: rgb(7, 171, 226);
+    font-size: 25px;
+}
+
+.container-table {
+    overflow-x: auto;
+}
+
+.mdl-data-table {
+    width: 100% !important;
+}
+
+.mdl-grid {
+    display: block;
+}
+
+.pagination {
+    display: block;
+    text-align: center;
+}
+
+div.dataTables_wrapper div.dataTables_filter {
+    text-align: left;
+}
+
+/*mdl-data-table*/
 /*//////////////////////////////*/
 .validate-error {
     color: #D93025;

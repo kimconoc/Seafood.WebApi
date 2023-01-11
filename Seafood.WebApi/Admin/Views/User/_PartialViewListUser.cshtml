@@ -12,56 +12,110 @@
         <table id="tbl-users" class="mdl-data-table"></table>
     </div>
     <script>
-         $(document).ready(function () {
+        $(document).ready(function () {
             $('#tbl-users').DataTable({
-            autoWidth: true,
-            responsive: true,
-            processing: true,
-            paging: true,
-            serverSide: true,
-            filter: false,
-            orderMulti: false,
-            order: [[1, "asc"]],
-            searching: true,
-            lengthChange: false,
-            ajax: {
-                url: "@Url.Action("GetListUsers", "User")",
-                type: "POST"
-            },
-            columnDefs: [
-                { targets: 0, visible: false, searchable: false, orderable: false },
-                { targets: 1, width: "15%" },
-                { targets: 2, width: "12%", searchable: false, orderable: false },
-                { targets: 3, width: "25%", searchable: false, orderable: false },
-                { targets: 4, width: "12%", searchable: false, orderable: false },
-                { targets: 5, width: "12%", searchable: false, orderable: false },
-                { targets: 6, width: "12%", searchable: false, orderable: false },
-                { targets: 7, width: "12%", searchable: false, orderable: false },
-            ],
-            columns: [
-                { data: "Id", name: "Id" },
-                { title: "Tên hiển thị", data: "DisplayName", name: "DisplayName" },
-                { title: "Số điện thoại", data: "Mobile", name: "Mobile" },
-                { title: "Địa chỉ email", data: "Email", name: "Email" },
-                { title: "Giới tính", data: "Sex", name: "Sex" },
-                { title: "Ngày sinh", data: "Birthday", name: "Birthday" },
-                { title: "Tình trạng khóa", data: "IsLocked", name: "IsLocked" },
-                { title: "IsDeleted", data: "IsDeleted", name: "IsDeleted" },
-                {
-                    title: "Thao tác", searchable: false, orderable: false ,render: function (data, type, full, meta) {
-                        var render = '';
-                        if (full.IsDeleted) {
-                            render += '<button type="button" class="mdc-button mdc-button--raised icon-button filled-button--success mdc-ripple-upgraded" style="width: 30px; padding: 0;" title="Kích hoạt" onclick="activeUser(\'' + full.Id + '\')"><i class="material-icons mdc-button__icon">check</i></button>';
-                        } else {
-                            render += '<button type="button" class="mdc-button mdc-button--raised icon-button filled-button--secondary mdc-ripple-upgraded" style="width: 30px; padding: 0;" title="Vô hiệu" onclick="deactiveUser(\'' + full.Id + '\')"><i class="material-icons mdc-button__icon">clear</i></button>';
+                autoWidth: true,
+                responsive: true,
+                processing: true,
+                paging: true,
+                serverSide: true,
+                filter: false,
+                orderMulti: false,
+                order: [[1, "asc"]],
+                searching: true,
+                lengthChange: false,
+                ajax: {
+                    url: "@Url.Action("GetListUsers", "User")",
+                    type: "POST"
+                },
+                columnDefs: [
+                    { targets: 0, visible: false, searchable: false, orderable: false },
+                    { targets: 1, width: "15%" },
+                    { targets: 2, width: "10%", searchable: false, orderable: false },
+                    { targets: 3, width: "15%", searchable: false, orderable: false },
+                    { targets: 4, width: "10%", searchable: false, orderable: false },
+                    { targets: 5, width: "10%", searchable: false, orderable: false },
+                    { targets: 6, width: "10%", searchable: false, orderable: false },
+                    { targets: 7, width: "10%", searchable: false, orderable: false },
+                    { targets: 8, width: "10%", searchable: false, orderable: false },
+                    { targets: 9, width: "10%", searchable: false, orderable: false },
+                ],
+                columns: [
+                    { data: "Id", name: "Id" },
+                    { title: "Tên hiển thị", data: "DisplayName", name: "DisplayName" },
+                    { title: "Số điện thoại", data: "Mobile", name: "Mobile" },
+                    { title: "Địa chỉ email", data: "Email", name: "Email" },
+                    { title: "Giới tính", data: "Sex", name: "Sex" },
+                    { title: "Ngày tạo", data: "CreatedAt", name: "Birthday" },
+                    { title: "Thời gian cập nhật", data: "UpdatedAt", name: "Birthday" },
+                    { title: "Ngày sinh", data: "Birthday", name: "Birthday" },
+                    { title: "Tình trạng khóa", data: "StrIsLocked", name: "StrIsLocked" },
+                    { title: "IsDeleted", data: "IsDeleted", name: "IsDeleted" },
+                    {
+                        title: "Thao tác", searchable: false, orderable: false ,render: function (data, type, full, meta) {
+                            var render = '';
+                            if (full.IsLocked)
+                            {
+                                render += '<button type="button" class="mdc-button mdc-button--raised icon-button filled-button--success mdc-ripple-upgraded" style="width: 30px; padding: 0;" title="Kích hoạt" onclick="activeUser(\'' + full.Id + '\')"><i class="material-icons mdc-button__icon">check</i></button>';
+                            }
+                            else
+                            {
+                                render += '<button type="button" class="mdc-button mdc-button--raised icon-button filled-button--secondary mdc-ripple-upgraded" style="width: 30px; padding: 0;" title="Vô hiệu" onclick="deactiveUser(\'' + full.Id + '\')"><i class="material-icons mdc-button__icon">clear</i></button>';
+                            }
+                            //render += '&nbsp;<button type="button" class="mdc-button mdc-button--raised icon-button filled-button--info mdc-ripple-upgraded" style="width: 30px; margin-right: 5px; padding: 0;" title="Chỉnh sửa" onclick="viewDetail(\'' + full.Id + '\')"><i class="material-icons mdc-button__icon">edit</i></button>';
+                            return render;
                         }
-                        render += '&nbsp;<button type="button" class="mdc-button mdc-button--raised icon-button filled-button--info mdc-ripple-upgraded" style="width: 30px; margin-right: 5px; padding: 0;" onclick="viewDetail(\'' + full.Id + '\')"><i class="material-icons mdc-button__icon">edit</i></button>';
-                        return render;
                     }
-                }
-            ]
-        });
-    })
+                ]
+            });
+        })
+
+        function activeUser(id) {
+            if (confirm("Mở khóa cho người dùng này?") == true) {
+                ShowOverlay(true);
+                $.ajax
+                ({
+                    type: "POST",
+                    data: { id : id, "__RequestVerificationToken": $('input[name="__RequestVerificationToken"]')[0].value },
+                    url: "@Url.Action("ActivateUser", "User")",
+                    success: function (data) {
+                        hideOverlay();
+                        if (data.Success)
+                        {
+                            showToasinette_Success_Top_Right(data.Message);
+                            $('#tbl-users').DataTable().ajax.reload();
+                        }
+                        else
+                        {
+                            showToasinette_Error_Top_Right(data.Message);
+                        }
+                    }
+                })
+            }
+        }
+        function deactiveUser(id) {
+            if (confirm("Khóa người dùng này?") == true) {
+                ShowOverlay(true);
+                $.ajax
+                ({
+                    type: "POST",
+                    data: { id : id, "__RequestVerificationToken": $('input[name="__RequestVerificationToken"]')[0].value },
+                    url: "@Url.Action("DeactivateUser", "User")",
+                    success: function (data) {
+                        hideOverlay();
+                        if (data.Success)
+                        {
+                            showToasinette_Success_Top_Right(data.Message);
+                            $('#tbl-users').DataTable().ajax.reload();
+                        }
+                        else
+                        {
+                            showToasinette_Error_Top_Right(data.Message);
+                        }
+                    }
+                })
+            }
+        }
     </script>
 </body>
 </html>

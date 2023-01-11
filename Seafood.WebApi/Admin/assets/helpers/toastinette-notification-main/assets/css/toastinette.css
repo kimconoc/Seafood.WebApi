@@ -237,6 +237,7 @@
   transform: translateX(0);
 }
 .toast[data-position^=top] {
+    z-index:1000000;
   -webkit-animation: toastSlideFromTop 0.6s ease-out forwards;
           animation: toastSlideFromTop 0.6s ease-out forwards;
 }

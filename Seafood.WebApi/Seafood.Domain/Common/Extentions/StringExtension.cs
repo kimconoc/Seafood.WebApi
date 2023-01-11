@@ -33,7 +33,6 @@ namespace Seafood.Domain.Common.Extentions
 
             return enumValue.ToString();
         }
-
         /// <summary>
         /// Đưa kiểu unikey về không dấu
         /// </summary>
@@ -75,6 +74,14 @@ namespace Seafood.Domain.Common.Extentions
             if ("ÙÚỤỦŨƯỪỨỰỬỮ".Contains(s)) return 'U';
             if ("ỲÝỴỶỸ".Contains(s)) return 'Y';
             return x;
+        }
+        public static string FormatDatetimeToDayMonthYear(this DateTime value)
+        {
+            return string.Format("{0}/{1}/{2}",value.Day, value.Month, value.Year);
+        }
+        public static string FormatDatetimeToHourMinDayMonthYear(this DateTime value)
+        {
+            return string.Format("{0}:{1} {2}/{3}/{4}", value.Hour, value.Minute, value.Day, value.Month, value.Year);
         }
     }
 }
