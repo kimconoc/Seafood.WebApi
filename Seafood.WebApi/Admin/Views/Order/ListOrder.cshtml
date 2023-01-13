@@ -1,0 +1,117 @@
+﻿@using Seafood.Domain.Common.Enum;
+@using Seafood.Domain.Common.Extentions;
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        .custom-btn-mdc-button {
+            padding: 0;
+            font-size: 25px;
+            color: #00b67a;
+            border-width: 0px;
+            background: transparent;
+        }
+    </style>
+</head>
+<body>
+    @Html.AntiForgeryToken()
+    <div class="mdc-layout-grid">
+        <div class="mdc-layout-grid__inner">
+            <div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-12">
+                <div class="mdc-card p-0">
+                    <h6 class="card-title card-padding pb-0">
+                        <i class="icon-title fa fa-users" aria-hidden="true"></i>
+                        Quản lý đơn hàng
+                    </h6>
+                    <div class="box-header-filter container">
+                        <div class="row">
+                            <div class="col-2">
+                                <input type="text" class="form-control" id="filterCode" placeholder="Mã đơn hàng" />
+                            </div>
+                            <div class="col-2">
+                                <input type="text" class="form-control" id="filterNumber" placeholder="Số điện thoại" />
+                            </div>
+                            <div class="col-2">
+                                <select id="status" class="form-select" aria-label="Default select example">
+                                    @{
+                                        <option value="-1">-- Tất cả --</option>
+                                        foreach (var item in Enum.GetValues(typeof(StatusOrderEnum)))
+                                        {
+                                            <option value="@((int)item)"> @StringExtension.GetDescription((Enum)item)</option>
+                                        }
+                                    }
+                                </select>
+                            </div>
+                            <div class="col-1">
+                                <button class="mdc-button mdc-button--outlined outlined-button--success mdc-ripple-upgraded">
+                                    <i class="material-icons mdc-button__icon">search</i>
+                                    Tìm kiếm
+                                </button>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="container-table">
+                        <div>
+                            <table id="tbl-orders" class="mdl-data-table"></table>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <script>
+        $(document).ready(function () {
+            $('#tbl-orders').DataTable({
+                autoWidth: true,
+                responsive: true,
+                processing: true,
+                paging: true,
+                serverSide: true,
+                filter: false,
+                orderMulti: false,
+                order: [[1, "asc"]],
+                searching: false,
+                lengthChange: false,
+                ajax: {
+                    url: "@Url.Action("GetListOrder", "Order")",
+                    type: "POST"
+                },
+                columnDefs: [
+                    { targets: 0, visible: false, searchable: false, orderable: false },
+                    { targets: 1, width: "10%", searchable: false, orderable: false },
+                    { targets: 2, width: "10%", searchable: false, orderable: false },
+                ],
+                columns: [
+                    { data: "Id", name: "Id" },
+                    { title: "Ngày tạo", data: "CreatedAt", name: "Birthday" },
+                    { title: "Thời gian cập nhật", data: "UpdatedAt", name: "Birthday" },
+                    //{
+                    //    title: "Thao tác", searchable: false, orderable: false ,render: function (data, type, full, meta) {
+                    //        var render = '';
+                    //        if (full.IsLocked)
+                    //        {
+                    //            render += '<button type="button" class="custom-btn-mdc-button" style="" title="Kích hoạt" onclick="activeUser(\'' + full.Id + '\')"><i class="fa fa-toggle-off" aria-hidden="true"></i></button>';
+                    //        }
+                    //        else
+                    //        {
+                    //            render += '<button type="button" class="custom-btn-mdc-button" style="" title="Vô hiệu" onclick="deactiveUser(\'' + full.Id + '\')"><i class="fa fa-toggle-on" aria-hidden="true"></i></button>';
+                    //        }
+                    //        //render += '&nbsp;<button type="button" class="mdc-button mdc-button--raised icon-button filled-button--info mdc-ripple-upgraded" style="width: 30px; margin-right: 5px; padding: 0;" title="Chỉnh sửa" onclick="viewDetail(\'' + full.Id + '\')"><i class="material-icons mdc-button__icon">edit</i></button>';
+                    //        return render;
+                    //    }
+                    //}
+                ]
+            });
+        })
+    </script>
+</body>
+</html>
+
+
+

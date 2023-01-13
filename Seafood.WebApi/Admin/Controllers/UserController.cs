@@ -20,11 +20,11 @@ namespace Admin.Controllers
         {
             return View();
         }
-        public ActionResult GetlistUser(Search search)
+        public ActionResult GetPartialViewListUser(Search search)
         {
             return PartialView("_PartialViewListUser", new List<User>());
         }
-        public ActionResult GetListUsers(DataTablesQueryModel queryModel)
+        public ActionResult GetListUser(DataTablesQueryModel queryModel)
         {
             int totalResultsCount;
             var take = queryModel.length;

@@ -28,6 +28,11 @@
     font-size: 25px;
 }
 
+.box-header-filter {
+    margin: 0;
+    margin-top: 10px;
+}
+
 .container-table {
     overflow-x: auto;
 }

@@ -261,6 +261,7 @@
     <Content Include="assets\helpers\awesome-alert-main\README.md" />
     <Compile Include="Common\Constant.cs" />
     <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\OrderController.cs" />
     <Compile Include="Controllers\UploadFileController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="CustomAuthen\SessionAuthen.cs" />
@@ -562,6 +563,7 @@
     <Content Include="Views\Admin\Index.cshtml" />
     <Content Include="Views\User\ListUser.cshtml" />
     <Content Include="Views\User\_PartialViewListUser.cshtml" />
+    <None Include="Views\Order\ListOrder.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

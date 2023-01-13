@@ -1,20 +1,6 @@
 ﻿
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
-    var listYears = new List<SelectListItem>();
-
-    var startYear = 2022;
-    var endYear = startYear + 10;
-    if (endYear <= DateTime.Now.Year)
-    {
-        endYear++;
-    }
-    for (var i = startYear; i <= endYear; i++)
-    {
-        var dataYear = new SelectListItem { Text = i.ToString(), Value = i.ToString() };
-        listYears.Add(dataYear);
-    }
-
 }
 
 <!DOCTYPE html>
@@ -64,8 +50,8 @@
             getlistUser();
         });
         function getlistUser() {
-            var url = '@Url.Action("GetlistUser", "User")';
-            var search = $('#Year').val();
+            var url = '@Url.Action("GetPartialViewListUser", "User")';
+            var search = "";
             $('#list_user').load(url, { Search: search}, function (response, status, xhr) { });
         }
     </script>

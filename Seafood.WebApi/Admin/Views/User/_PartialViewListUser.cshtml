@@ -5,6 +5,13 @@
 <html>
 <head>
     <style>
+        .custom-btn-mdc-button {
+            padding: 0;
+            font-size: 25px;
+            color: #00b67a;
+            border-width: 0px;
+            background: transparent;
+        }
     </style>
 </head>
 <body>
@@ -25,7 +32,7 @@
                 searching: true,
                 lengthChange: false,
                 ajax: {
-                    url: "@Url.Action("GetListUsers", "User")",
+                    url: "@Url.Action("GetListUser", "User")",
                     type: "POST"
                 },
                 columnDefs: [
@@ -56,11 +63,11 @@
                             var render = '';
                             if (full.IsLocked)
                             {
-                                render += '<button type="button" class="mdc-button mdc-button--raised icon-button filled-button--success mdc-ripple-upgraded" style="width: 30px; padding: 0;" title="Kích hoạt" onclick="activeUser(\'' + full.Id + '\')"><i class="material-icons mdc-button__icon">check</i></button>';
+                                render += '<button type="button" class="custom-btn-mdc-button" style="" title="Kích hoạt" onclick="activeUser(\'' + full.Id + '\')"><i class="fa fa-toggle-off" aria-hidden="true"></i></button>';
                             }
                             else
                             {
-                                render += '<button type="button" class="mdc-button mdc-button--raised icon-button filled-button--secondary mdc-ripple-upgraded" style="width: 30px; padding: 0;" title="Vô hiệu" onclick="deactiveUser(\'' + full.Id + '\')"><i class="material-icons mdc-button__icon">clear</i></button>';
+                                render += '<button type="button" class="custom-btn-mdc-button" style="" title="Vô hiệu" onclick="deactiveUser(\'' + full.Id + '\')"><i class="fa fa-toggle-on" aria-hidden="true"></i></button>';
                             }
                             //render += '&nbsp;<button type="button" class="mdc-button mdc-button--raised icon-button filled-button--info mdc-ripple-upgraded" style="width: 30px; margin-right: 5px; padding: 0;" title="Chỉnh sửa" onclick="viewDetail(\'' + full.Id + '\')"><i class="material-icons mdc-button__icon">edit</i></button>';
                             return render;
