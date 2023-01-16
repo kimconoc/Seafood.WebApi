@@ -1,6 +1,9 @@
 ﻿using Amin.MemCached;
 using Amin.Models;
 using Newtonsoft.Json;
+using Seafood.Domain.Common.Constant;
+using Seafood.Domain.Common.Enum;
+using Seafood.Domain.Common.Extentions;
 using Seafood.Domain.Common.FileLog;
 using Seafood.Repository.EntityFamework;
 using System;
@@ -47,6 +50,26 @@ namespace Amin.Controllers
         private static string GetSigninToken()
         {
             return FormsAuthentication.FormsCookieName;
+        }
+        protected string GetStatusNameOrder(int typeStatusOrder)
+        {
+            string statusName = string.Empty;
+            switch (typeStatusOrder)
+            {
+                case (int)StatusOrderEnum.DangXuLy:
+                    statusName = StatusOrderEnum.DangXuLy.GetDescription();
+                    break;
+                case (int)StatusOrderEnum.DangVanChuyen:
+                    statusName = StatusOrderEnum.DangVanChuyen.GetDescription();
+                    break;
+                case (int)StatusOrderEnum.DonDaGiao:
+                    statusName = StatusOrderEnum.DonDaGiao.GetDescription();
+                    break;
+                case (int)StatusOrderEnum.DonDaHuy:
+                    statusName = StatusOrderEnum.DonDaHuy.GetDescription();
+                    break;
+            }
+            return statusName;
         }
         protected override void OnException(ExceptionContext filterContext)
         {

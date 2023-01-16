@@ -22,6 +22,7 @@ namespace Seafood.Domain.Models.DataAccessModel
         public DateTime? TimeDeliveryStart { get; set; }
         public DateTime? EstimateDeliveryTime { get; set; }
         public DateTime? SuccessfulDeliveryTime { get; set; }
+        public DateTime? CancellationTime { get; set; }
         public string Note { get; set; }
     }
 }

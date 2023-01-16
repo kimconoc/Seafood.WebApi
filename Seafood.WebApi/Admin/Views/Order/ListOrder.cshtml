@@ -15,6 +15,9 @@
             border-width: 0px;
             background: transparent;
         }
+        div.dataTables_wrapper div.dataTables_filter {
+            display:none;
+        }
     </style>
 </head>
 <body>
@@ -33,10 +36,10 @@
                                 <input type="text" class="form-control" id="filterCode" placeholder="Mã đơn hàng" />
                             </div>
                             <div class="col-2">
-                                <input type="text" class="form-control" id="filterNumber" placeholder="Số điện thoại" />
+                                <input type="text" class="form-control" id="filterMobile" placeholder="Số điện thoại" />
                             </div>
                             <div class="col-2">
-                                <select id="status" class="form-select" aria-label="Default select example">
+                                <select id="filterStatus" class="form-select" aria-label="Default select example">
                                     @{
                                         <option value="-1">-- Tất cả --</option>
                                         foreach (var item in Enum.GetValues(typeof(StatusOrderEnum)))
@@ -47,7 +50,7 @@
                                 </select>
                             </div>
                             <div class="col-1">
-                                <button class="mdc-button mdc-button--outlined outlined-button--success mdc-ripple-upgraded">
+                                <button onclick="filterTable()" class="mdc-button mdc-button--outlined outlined-button--success mdc-ripple-upgraded">
                                     <i class="material-icons mdc-button__icon">search</i>
                                     Tìm kiếm
                                 </button>
@@ -66,49 +69,81 @@
         </div>
     </div>
     <script>
+        var tbl;
         $(document).ready(function () {
-            $('#tbl-orders').DataTable({
-                autoWidth: true,
-                responsive: true,
-                processing: true,
-                paging: true,
-                serverSide: true,
-                filter: false,
-                orderMulti: false,
-                order: [[1, "asc"]],
-                searching: false,
-                lengthChange: false,
-                ajax: {
-                    url: "@Url.Action("GetListOrder", "Order")",
-                    type: "POST"
-                },
-                columnDefs: [
-                    { targets: 0, visible: false, searchable: false, orderable: false },
-                    { targets: 1, width: "10%", searchable: false, orderable: false },
-                    { targets: 2, width: "10%", searchable: false, orderable: false },
-                ],
-                columns: [
-                    { data: "Id", name: "Id" },
-                    { title: "Ngày tạo", data: "CreatedAt", name: "Birthday" },
-                    { title: "Thời gian cập nhật", data: "UpdatedAt", name: "Birthday" },
-                    //{
-                    //    title: "Thao tác", searchable: false, orderable: false ,render: function (data, type, full, meta) {
-                    //        var render = '';
-                    //        if (full.IsLocked)
-                    //        {
-                    //            render += '<button type="button" class="custom-btn-mdc-button" style="" title="Kích hoạt" onclick="activeUser(\'' + full.Id + '\')"><i class="fa fa-toggle-off" aria-hidden="true"></i></button>';
-                    //        }
-                    //        else
-                    //        {
-                    //            render += '<button type="button" class="custom-btn-mdc-button" style="" title="Vô hiệu" onclick="deactiveUser(\'' + full.Id + '\')"><i class="fa fa-toggle-on" aria-hidden="true"></i></button>';
-                    //        }
-                    //        //render += '&nbsp;<button type="button" class="mdc-button mdc-button--raised icon-button filled-button--info mdc-ripple-upgraded" style="width: 30px; margin-right: 5px; padding: 0;" title="Chỉnh sửa" onclick="viewDetail(\'' + full.Id + '\')"><i class="material-icons mdc-button__icon">edit</i></button>';
-                    //        return render;
-                    //    }
-                    //}
-                ]
-            });
+            tbl = $('#tbl-orders').DataTable({
+                      autoWidth: true,
+                      responsive: true,
+                      processing: true,
+                      paging: true,
+                      serverSide: true,
+                      filter: false,
+                      orderMulti: false,
+                      order: [[1, "asc"]],
+                      searching: true,
+                      lengthChange: false,
+                      ajax: {
+                          url: "@Url.Action("GetListOrder", "Order")",
+                          type: "POST"
+                      },
+                      columnDefs: [
+                          { targets: 0, visible: false, searchable: false, orderable: false },
+                          { targets: 1, width: "15%" },
+                          { targets: 2, width: "10%", searchable: false, orderable: false },
+                          { targets: 3, width: "10%", searchable: false, orderable: false },
+                          { targets: 4, width: "10%", searchable: false, orderable: false },
+                          { targets: 5, width: "10%", searchable: false, orderable: false },
+                          { targets: 6, width: "10%", searchable: false, orderable: false },
+                          { targets: 7, width: "10%", searchable: false, orderable: false },
+                          { targets: 8, width: "10%", searchable: false, orderable: false },
+                          { targets: 9, width: "10%", searchable: false, orderable: false },
+                          { targets: 10, width: "10%", searchable: false, orderable: false },
+                          { targets: 11, width: "10%", searchable: false, orderable: false },
+                          { targets: 12, width: "10%", searchable: false, orderable: false },
+                          { targets: 13, width: "10%", searchable: false, orderable: false },
+                          { targets: 14, width: "10%", searchable: false, orderable: false },
+                          { targets: 15, width: "10%", searchable: false, orderable: false },
+                          { targets: 16, width: "10%", searchable: false, orderable: false },
+                      ],
+                      columns: [
+                          { data: "Id", name: "Id" },
+                          { title: "Tên hiển thị", data: "DisplayName", name: "DisplayName" },
+                          { title: "Mã đơn hàng", data: "Code", name: "Code" },
+                          { title: "Số điện thoại", data: "Mobile", name: "Mobile" },
+                          { title: "Trạng thái", data: "Status", name: "Status" },
+                          { title: "Sản phẩm", data: "Product", name: "Product" },
+                          { title: "Số lượng", data: "Quantity", name: "Quantity" },
+                          { title: "Chế biến", data: "ProdProcessingsName", name: "ProdProcessingsName" },
+                          { title: "Giá chế biến", data: "ProdProcessingsPrice", name: "ProdProcessingsPrice" },
+                          { title: "Voucher", data: "Voucher", name: "Voucher" },
+                          { title: "Tổng giá", data: "TotalPrice", name: "TotalPrice" },
+                          { title: "Thời gian đặt", data: "TimeOrder", name: "TimeOrder" },
+                          { title: "Thời gian ship", data: "TimeDeliveryStart", name: "TimeDeliveryStart" },
+                          { title: "Dự tính giao hàng", data: "EstimateDeliveryTime", name: "EstimateDeliveryTime" },
+                          { title: "Giao hàng thành công", data: "SuccessfulDeliveryTime", name: "SuccessfulDeliveryTime" },
+                          { title: "Thời gian hủy", data: "CancellationTime", name: "CancellationTime" },
+                          { title: "Thời gian cập nhật", data: "UpdatedAt", name: "UpdatedAt" },
+                          {
+                              title: "Thao tác", searchable: false, orderable: false, render: function (data, type, full, meta) {
+                                  var render = '';
+                                  render += '<button type="button" class="custom-btn-mdc-button" style="" title="Xử lý" onclick="handleWithOrders(\'' + full.Id + '\')"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>';
+                                  return render;
+                              }
+                          }
+                      ]
+                  });
         })
+
+        function filterTable() {
+            tbl.columns(2).search($("#filterCode").val())
+                .columns(3).search($("#filterMobile").val())
+                .columns(4).search(document.getElementById("filterStatus").value)
+                .draw();
+        }
+
+        function handleWithOrders(idTbl) {
+
+        }
     </script>
 </body>
 </html>

@@ -87,5 +87,42 @@ namespace Seafood.Domain.Common.Constant
                 return false;
             }
         }
+
+        public static string FomatToTypeMoney(double? Price)
+        {
+            var result = string.Empty;
+            if (Price == null)
+                return result;
+            var strPrice = Price.ToString();
+            if (strPrice.Length < 4)
+            {
+                result = strPrice;
+            }    
+            else if (strPrice.Length == 4)
+            {
+                result = strPrice.Substring(0, 1) + "." + strPrice.Substring(1);
+            }
+            else if (strPrice.Length == 5)
+            {
+                result = strPrice.Substring(0, 2) + "." + strPrice.Substring(2);
+            }
+            else if (strPrice.Length == 6)
+            {
+                result = strPrice.Substring(0, 3) + "." + strPrice.Substring(3);
+            }
+            else if (strPrice.Length == 7)
+            {
+                result = strPrice.Substring(0, 1) + "." + strPrice.Substring(1, 4) + "." + strPrice.Substring(4);
+            }
+            else if (strPrice.Length == 8)
+            {
+                result = strPrice.Substring(0, 2) + "." + strPrice.Substring(2, 5) + "." + strPrice.Substring(5);
+            }
+            else if (strPrice.Length == 9)
+            {
+                result = strPrice.Substring(0, 3) + "." + strPrice.Substring(3, 6) + "." + strPrice.Substring(6);
+            }
+            return result + " đ";
+        }
     }
 }
