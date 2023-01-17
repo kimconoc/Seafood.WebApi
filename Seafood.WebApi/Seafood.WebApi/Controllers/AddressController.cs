@@ -1,4 +1,5 @@
-﻿using Seafood.Domain.Models.DataAccessModel;
+﻿using Seafood.Domain.Common.Enum;
+using Seafood.Domain.Models.DataAccessModel;
 using Seafood.Domain.Models.ParameterModel;
 using Seafood.WebApi.Authentication;
 using System;
@@ -39,6 +40,7 @@ namespace Seafood.WebApi.Controllers
                                  FullName = address.FullName,
                                  Mobile = address.Mobile,
                                  TypeAddress = address.TypeAddress,
+                                 TypeAddressDetail = address.TypeAddressDetail,
                                  IsAddressMain = address.IsAddressMain,
                                  Address = address.Address,
                                  NameWard = res.NameWard,
@@ -123,7 +125,8 @@ namespace Seafood.WebApi.Controllers
             addresse.CodeRegion = addressModel.CodeRegion;
             addresse.CodeDistrict = addressModel.CodeDistrict;
             addresse.CodeWard = addressModel.CodeWard;
-            addresse.TypeAddress = addressModel.TypeAddress;
+            addresse.TypeAddressDetail = addressModel.typeAddressDetail;
+            addresse.TypeAddress = (int)TypeAddressEnum.User;
             addresse.Address = addressModel.Address;
             addresse.IsAddressMain = addressModel.IsAddressMain;
             unitOfWork.AddresseRepository.Add(addresse);
@@ -157,7 +160,8 @@ namespace Seafood.WebApi.Controllers
             address.CodeRegion = addressModel.CodeRegion;
             address.CodeDistrict = addressModel.CodeDistrict;
             address.CodeWard = addressModel.CodeWard;
-            address.TypeAddress = addressModel.TypeAddress;
+            address.TypeAddressDetail = addressModel.typeAddressDetail;
+            address.TypeAddress = (int)TypeAddressEnum.User;
             address.Address = addressModel.Address;
             address.IsAddressMain = addressModel.IsAddressMain;
             unitOfWork.AddresseRepository.Update(address);

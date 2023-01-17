@@ -12,6 +12,8 @@ namespace Seafood.Domain.Models.DataAccessModel
         public Guid UserId { get; set; }
         public Guid ProductId { get; set; }
         public Guid ProdProcessingId { get; set; }
+        public Guid AddressId { get; set; }
+        public int TypeAddress { get; set; }
         public string Code { get; set; }
         public string CodeVoucher { get; set; }
         public int? TypeVoucher { get; set; }    

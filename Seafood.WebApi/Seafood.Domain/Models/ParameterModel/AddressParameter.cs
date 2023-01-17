@@ -16,6 +16,7 @@ namespace Seafood.Domain.Models.ParameterModel
         public string CodeDistrict { get; set; }
         public string CodeWard { get; set; }
         public int TypeAddress { get; set; }
+        public int typeAddressDetail { get; set; }
         public bool IsAddressMain { get; set; }
         public string Address { get; set; }
         public string Note { get; set; }

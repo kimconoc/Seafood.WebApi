@@ -17,16 +17,34 @@ namespace Seafood.WebApi.Controllers
         {
             try
             {
+                var listObj = from shop in unitOfWork.ShopSeafoodRepository.AsQueryable().Where(e => !e.IsDeleted)
+                           join reg in unitOfWork.RegionRepository.AsQueryable().Where(e => !e.IsDeleted)
+                           on new
+                           {
+                               key1 = shop.CodeRegion,
+                               key2 = shop.CodeDistrict,
+                               key3 = shop.CodeWard,
+                           }
+                           equals new
+                           {
+                               key1 = reg.CodeRegion,
+                               key2 = reg.CodeDistrict,
+                               key3 = reg.CodeWard,
+                           } 
+                           into result
+                           from res in result.DefaultIfEmpty()
+                           select new
+                           {
+                               Id = shop.Id,
+                               Name = shop.Name,
+                               Mobile = shop.Mobile,
+                               TypeAddress = shop.TypeAddress,
+                               Address = shop.Address,
+                               NameWard = res.NameWard,
+                               NameDistrict = res.NameDistrict,
+                               NameRegion = res.NameRegion,
+                           };
 
-                var listObj = new List<ShopSeafood>();
-                if (string.IsNullOrEmpty(region))
-                {
-                    listObj = unitOfWork.ShopSeafoodRepository.Find(x => !x.IsDeleted).ToList();
-                }
-                else
-                {
-                    listObj = unitOfWork.ShopSeafoodRepository.Find(x => !x.IsDeleted && x.CodeRegion == region).ToList();
-                }
                 return Ok(Request_OK<dynamic>(listObj));
             }
             catch (Exception ex)

@@ -18,6 +18,13 @@ namespace Seafood.Domain.Common.Enum
     }
     public enum TypeAddressEnum
     {
+        [Description("Địa chỉ shop Seafood")]
+        Seafood = 0,
+        [Description("Địa chỉ giao hàng người dùng")]
+        User = 1,
+    }
+    public enum TypeAddressDetailEnum
+    {
         [Description("Nhà riêng/Chung cư")]
         NhaRieng = 0,
         [Description("Cơ quan/Công ty")]

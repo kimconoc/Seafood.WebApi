@@ -16,7 +16,7 @@ namespace Seafood.WebApi.Controllers
     public class OrderController : BaseApiController
     {
         [HttpPost]
-        [Route("api/Order/CreateOrderUserId")]
+        [Route("api/Order/CreateOrderByUserId")]
         public IHttpActionResult CreateOrderUserId([FromBody] List<Order> orders)
         {
             try
