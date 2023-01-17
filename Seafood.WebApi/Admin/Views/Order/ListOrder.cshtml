@@ -115,13 +115,15 @@
                           { targets: 14, width: "10%", searchable: false, orderable: false },
                           { targets: 15, width: "10%", searchable: false, orderable: false },
                           { targets: 16, width: "10%", searchable: false, orderable: false },
+                          { targets: 17, width: "10%", searchable: false, orderable: false },
                       ],
                       columns: [
                           { data: "Id", name: "Id" },
-                          { title: "Tên hiển thị", data: "DisplayName", name: "DisplayName" },
-                          { title: "Mã đơn hàng", data: "Code", name: "Code" },
+                          { title: "Tên người dùng", data: "DisplayName", name: "DisplayName" },
                           { title: "Số điện thoại", data: "Mobile", name: "Mobile" },
+                          { title: "Mã đơn hàng", data: "Code", name: "Code" },
                           { title: "Trạng thái", data: "Status", name: "Status" },
+                          { title: "Địa chỉ giao hàng", data: "DeliveryAddress", name: "DeliveryAddress" },
                           { title: "Sản phẩm", data: "Product", name: "Product" },
                           { title: "Số lượng", data: "Quantity", name: "Quantity" },
                           { title: "Chế biến", data: "ProdProcessingsName", name: "ProdProcessingsName" },
@@ -146,8 +148,8 @@
         })
 
         function filterTable() {
-            tbl.columns(2).search($("#filterCode").val())
-                .columns(3).search($("#filterMobile").val())
+            tbl.columns(3).search($("#filterCode").val())
+                .columns(2).search($("#filterMobile").val())
                 .columns(4).search(document.getElementById("filterStatus").value)
                 .draw();
         }

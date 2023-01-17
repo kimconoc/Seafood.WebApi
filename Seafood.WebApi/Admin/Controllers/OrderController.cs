@@ -69,6 +69,8 @@ namespace Admin.Controllers
                                 Status = resOrder.Status,
                                 Product = resProd.Name,
                                 Quantity = resOrder.Quantity,
+                                AddressId = resOrder.AddressId,
+                                TypeAddress = resOrder.TypeAddress,
                                 ProdProcessingsName = resProces.Name,
                                 ProdProcessingsPrice = resProces.Price,
                                 CodeVoucher = resOrder.CodeVoucher,
@@ -89,6 +91,7 @@ namespace Admin.Controllers
                   Id = x.Id,
                   DisplayName = x.DisplayName,
                   Code = x.Code,
+                  DeliveryAddress = GetInfoDeliveryAddress(x.AddressId, x.TypeAddress),
                   Mobile = x.Mobile,
                   Status = GetStatusNameOrder(x.Status),
                   Product = x.Product,
@@ -128,8 +131,37 @@ namespace Admin.Controllers
             }
 
             return info;
+        }
 
+        private string GetInfoDeliveryAddress(Guid addressId, int typeAddress)
+        {
+            string info = string.Empty;
+            switch (typeAddress)
+            {
+                case (int)TypeAddressEnum.Seafood:
+                    string fomatCssTypeAddress1 = string.Format("<span style='color: rgb(7, 171, 226); font - weight:bold;'>Cửa hàng</span>");
+                    var res1 = unitOfWork.ShopSeafoodRepository.FirstOrDefault(x => !x.IsDeleted & x.Id == addressId);
+                    var res11 = unitOfWork.RegionRepository.FirstOrDefault(x => !x.IsDeleted & x.CodeWard == res1.CodeWard);
+                    info = string.Format(fomatCssTypeAddress1 + "<br />" + res1.Address + "<br />" + res11.NameWard + ", " + res11.NameDistrict + ", " + res11.NameRegion + "<br />" + res1.Name + ", SĐT: " + res1.Mobile);
+                    break;
+                case (int)TypeAddressEnum.User:
+                    var strTypeAddressDetail = string.Empty;
+                    var res2 = unitOfWork.AddresseRepository.FirstOrDefault(x => !x.IsDeleted & x.Id == addressId);
+                    var res22 = unitOfWork.RegionRepository.FirstOrDefault(x => !x.IsDeleted & x.CodeWard == res2.CodeWard);
+                    if (res2.TypeAddressDetail == (int)TypeAddressDetailEnum.NhaRieng)
+                    {
+                        strTypeAddressDetail = TypeAddressDetailEnum.NhaRieng.GetDescription();
+                    }
+                    else if(res2.TypeAddressDetail == (int)TypeAddressDetailEnum.CoQuan)
+                    {
+                        strTypeAddressDetail = TypeAddressDetailEnum.CoQuan.GetDescription();
+                    }
+                    string fomatCssTypeAddress2 = string.Format("<span style='color: rgb(7, 171, 226); font - weight:bold;'>{0}</span>", strTypeAddressDetail);
+                    info = string.Format(fomatCssTypeAddress2 + "<br />" + res2.Address + "<br />" + res22.NameWard + ", " + res22.NameDistrict + ", " + res22.NameRegion + "<br />" + res2.FullName + ", SĐT: " + res2.Mobile);
+                    break;
+            }
 
+            return info;
         }
     }
 }
