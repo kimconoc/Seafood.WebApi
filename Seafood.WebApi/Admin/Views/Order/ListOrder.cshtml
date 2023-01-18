@@ -18,6 +18,24 @@
         div.dataTables_wrapper div.dataTables_filter {
             display:none;
         }
+
+        .modal {
+            background-color: rgb(0,0,0); /* Fallback color */
+            background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+            flex-flow: row;
+            justify-content: center;
+        }
+
+        .modal-content {
+            margin-top: 10vh;
+            min-width: 500px;
+            padding: 30px;
+            max-width: 500px;
+        }
+
+        .box-processing-line{
+            margin-bottom:12px;
+        }
     </style>
 </head>
 <body>
@@ -33,10 +51,10 @@
                     <div class="box-header-filter container">
                         <div class="row">
                             <div class="col-2">
-                                <input type="text" class="form-control" id="filterCode" placeholder="Mã đơn hàng" />
+                                <input type="text" class="form-control" id="filterMobile" placeholder="Số điện thoại" />
                             </div>
                             <div class="col-2">
-                                <input type="text" class="form-control" id="filterMobile" placeholder="Số điện thoại" />
+                                <input type="text" class="form-control" id="filterCode" placeholder="Mã đơn hàng" />
                             </div>
                             <div class="col-2">
                                 <select id="filterStatus" class="form-select" aria-label="Default select example">
@@ -72,9 +90,23 @@
     <div class="modal" tabindex="-1" role="dialog" id="handleOrders">
         <div class="modal-popup modal-dialog" role="document">
             <div class="modal-content">
-                <button style="margin-top:-18px;" class="aria-hidden close" aria-label="Close" onclick="CloseModalHandleOrder()">
-                    <span style="margin-right: 5px; font-size: 28px;" aria-hidden="true">&times;</span>
+                <button style="margin-top:-25px;margin-right:-20px;" class="aria-hidden close" aria-label="Close">
+                    <span onclick="CloseModalHandleOrder()" style="float: right; font-size: 28px;" aria-hidden="true">&times;</span>
                 </button>
+                <div class="box-processing-line">
+                    <label>Chuyển trạng thái:</label>
+                    <select id="filterStatus" class="form-select" aria-label="Default select example">
+                        @{
+                            foreach (var item in Enum.GetValues(typeof(StatusOrderEnum)))
+                            {
+                                <option value="@((int)item)"> @StringExtension.GetDescription((Enum)item)</option>
+                            }
+                        }
+                    </select>
+                </div>
+                <div class="box-processing-line">
+                    <label>Dự đoán thời gian giao hàng:</label>
+                </div>
             </div>
         </div>
     </div>
