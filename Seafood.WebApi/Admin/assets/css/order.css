@@ -1,0 +1,42 @@
+﻿.custom-btn-mdc-button {
+    padding: 0;
+    font-size: 25px;
+    color: #00b67a;
+    border-width: 0px;
+    background: transparent;
+}
+
+div.dataTables_wrapper div.dataTables_filter {
+    display: none;
+}
+
+.modal {
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    flex-flow: row;
+    justify-content: center;
+}
+
+    .modal .modal-content {
+        margin-top: 10vh;
+        min-width: 500px;
+        padding: 30px;
+        max-width: 500px;
+    }
+
+.box-processing-line {
+    margin-bottom: 12px;
+}
+
+.box-btn-handle-order {
+    display: flex;
+    flex-flow: column;
+    align-items: flex-end;
+    margin-top: 12px;
+    width: 100%;
+}
+
+    .box-btn-handle-order .click-btn {
+        display: flex;
+        gap: 5px;
+    }

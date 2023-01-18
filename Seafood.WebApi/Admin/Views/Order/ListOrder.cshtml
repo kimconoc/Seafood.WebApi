@@ -7,35 +7,29 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <link href="~/assets/css/order.css" rel="stylesheet" />
     <style>
-        .custom-btn-mdc-button {
-            padding: 0;
-            font-size: 25px;
-            color: #00b67a;
-            border-width: 0px;
-            background: transparent;
+        textarea {
+            display: block;
+            width: 100%;
+            padding: 0.375rem 2.25rem 0.375rem 0.75rem;
+            font-size: 1rem;
+            font-weight: 400;
+            line-height: 1.5;
+            color: #212529;
+            background-color: #fff;
+            background-repeat: no-repeat;
+            background-position: right 0.75rem center;
+            background-size: 16px 12px;
+            border: 1px solid #ced4da;
+            border-radius: 0.25rem;
+            transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
         }
-        div.dataTables_wrapper div.dataTables_filter {
-            display:none;
-        }
-
-        .modal {
-            background-color: rgb(0,0,0); /* Fallback color */
-            background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-            flex-flow: row;
-            justify-content: center;
-        }
-
-        .modal-content {
-            margin-top: 10vh;
-            min-width: 500px;
-            padding: 30px;
-            max-width: 500px;
-        }
-
-        .box-processing-line{
-            margin-bottom:12px;
-        }
+            textarea:focus {
+                border-color: #86b7fe;
+                outline: 0;
+                box-shadow: 0 0 0 0.25rem rgb(13 110 253 / 25%);
+            }
     </style>
 </head>
 <body>
@@ -95,7 +89,7 @@
                 </button>
                 <div class="box-processing-line">
                     <label>Chuyển trạng thái:</label>
-                    <select id="filterStatus" class="form-select" aria-label="Default select example">
+                    <select id="onchage_status" class="form-select" onchange="selectStatusOnchage()" aria-label="Default select example">
                         @{
                             foreach (var item in Enum.GetValues(typeof(StatusOrderEnum)))
                             {
@@ -104,14 +98,26 @@
                         }
                     </select>
                 </div>
-                <div class="box-processing-line">
-                    <label>Dự đoán thời gian giao hàng:</label>
+                <div style="display:none;" id="box_datetimepicker" class="box-processing-line">
+                    <label>Dự kiến thời gian giao hàng:</label> <br />
+                    <input id="datetimepicker" type="text" placeholder="__/__/____">
+                </div>
+                <textarea id="note_order" name="note_order" rows="3" maxlength="200" placeholder="Ghi chú"></textarea>
+                <div class="box-btn-handle-order">
+                    <div class="click-btn">
+                        <button class="btn-core-cancle">Hủy</button>
+                        <button class="btn-core-accept">Đồng ý</button>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
     <script>
         var modal = document.getElementById("handleOrders");
+        jQuery('#datetimepicker').datetimepicker({
+            format: 'd/m/Y H:i'
+        });
+        var idTbl;
         var tbl;
         $(document).ready(function () {
             tbl = $('#tbl-orders').DataTable({
@@ -134,7 +140,7 @@
                           { targets: 1, width: "15%" },
                           { targets: 2, width: "10%", searchable: false, orderable: false },
                           { targets: 3, width: "10%", searchable: false, orderable: false },
-                          { targets: 4, width: "10%", searchable: false, orderable: false },
+                          { targets: 4, visible: false, searchable: false, orderable: false },
                           { targets: 5, width: "10%", searchable: false, orderable: false },
                           { targets: 6, width: "10%", searchable: false, orderable: false },
                           { targets: 7, width: "10%", searchable: false, orderable: false },
@@ -148,13 +154,15 @@
                           { targets: 15, width: "10%", searchable: false, orderable: false },
                           { targets: 16, width: "10%", searchable: false, orderable: false },
                           { targets: 17, width: "10%", searchable: false, orderable: false },
+                          { targets: 18, width: "10%", searchable: false, orderable: false },
                       ],
                       columns: [
                           { data: "Id", name: "Id" },
                           { title: "Tên người dùng", data: "DisplayName", name: "DisplayName" },
                           { title: "Số điện thoại", data: "Mobile", name: "Mobile" },
                           { title: "Mã đơn hàng", data: "Code", name: "Code" },
-                          { title: "Trạng thái", data: "Status", name: "Status" },
+                          { data: "Status", name: "Status" },
+                          { title: "Trạng thái", data: "StrStatus", name: "StrStatus" },
                           { title: "Địa chỉ giao hàng", data: "DeliveryAddress", name: "DeliveryAddress" },
                           { title: "Sản phẩm", data: "Product", name: "Product" },
                           { title: "Số lượng", data: "Quantity", name: "Quantity" },
@@ -163,7 +171,7 @@
                           { title: "Voucher", data: "Voucher", name: "Voucher" },
                           { title: "Tổng giá", data: "TotalPrice", name: "TotalPrice" },
                           { title: "Thời gian đặt", data: "TimeOrder", name: "TimeOrder" },
-                          { title: "Thời gian ship", data: "TimeDeliveryStart", name: "TimeDeliveryStart" },
+                          { title: "Thời gian ship", data: "StartDeliveryTime", name: "StartDeliveryTime" },
                           { title: "Dự tính giao hàng", data: "EstimateDeliveryTime", name: "EstimateDeliveryTime" },
                           { title: "Giao hàng thành công", data: "SuccessfulDeliveryTime", name: "SuccessfulDeliveryTime" },
                           { title: "Thời gian hủy", data: "CancellationTime", name: "CancellationTime" },
@@ -171,7 +179,7 @@
                           {
                               title: "Thao tác", searchable: false, orderable: false, render: function (data, type, full, meta) {
                                   var render = '';
-                                  render += '<button type="button" class="custom-btn-mdc-button" style="" title="Xử lý" onclick="handleWithOrders(\'' + full.Id + '\')"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>';
+                                  render += '<button type="button" class="custom-btn-mdc-button" style="" title="Xử lý" onclick="handleWithOrders(\'' + full.Id + '/' + full.Status + '\')"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>';
                                   return render;
                               }
                           }
@@ -186,12 +194,66 @@
                 .draw();
         }
 
-        function handleWithOrders(idTbl) {
+        function handleWithOrders(infoRow) {
+            var index = infoRow.indexOf('/');
+            let status = infoRow.substring(index + 1);
+            idTbl = infoRow.substring(0,index);
+            var selId = document.getElementById("onchage_status");
+            selId.value = status;
+            if (selId.value == @((int)StatusOrderEnum.DangVanChuyen)) {
+                document.getElementById("box_datetimepicker").style.display = "block";
+            }
+            else {
+                document.getElementById("box_datetimepicker").style.display = "none";
+            }
             modal.style.display = "flex";
         }
         function CloseModalHandleOrder() {
             modal.style.display = "none";
         }
+        $('.btn-core-cancle').click(function (e) {
+            modal.style.display = "none";
+        });
+        function selectStatusOnchage() {
+            var status = document.getElementById("onchage_status").value;
+            if (status == @((int)StatusOrderEnum.DangVanChuyen)) {
+                document.getElementById("box_datetimepicker").style.display = "block";
+            }
+            else {
+                document.getElementById("box_datetimepicker").style.display = "none";
+            }
+        }
+        $('.btn-core-accept').click(function (e) {
+            var status = document.getElementById("onchage_status").value;
+            var datetime = $('#datetimepicker').val();
+            var note = $('#note_order').val();
+             ShowOverlay(true);
+                $.ajax
+                ({
+                    type: "POST",
+                    data: {
+                        idTbl: idTbl,
+                        status: status,
+                        datetime: datetime,
+                        note: note,
+                        "__RequestVerificationToken": $('input[name="__RequestVerificationToken"]')[0].value,
+                    },
+                    url: "@Url.Action("ExecuteOnChangeOrder", "Order")",
+                    success: function (data) {
+                        hideOverlay();
+                        modal.style.display = "none";
+                        if (data.Success)
+                        {
+                            showToasinette_Success_Top_Right(data.Message);
+                            $('#tbl-orders').DataTable().ajax.reload();
+                        }
+                        else
+                        {
+                            showToasinette_Error_Top_Right(data.Message);
+                        }
+                    }
+                })
+        });
     </script>
 </body>
 </html>

@@ -165,6 +165,8 @@
     <Content Include="assets\css\demo\style.css" />
     <Content Include="assets\css\login.css" />
     <Content Include="assets\helpers\awesome-alert-main\awesomeAlert.js" />
+    <Content Include="assets\helpers\datetimepicker-master\jquery.datetimepicker.css" />
+    <Content Include="assets\helpers\datetimepicker-master\jquery.datetimepicker.full.min.js" />
     <Content Include="assets\helpers\lib\select2\select2-spinner.gif" />
     <Content Include="assets\helpers\lib\select2\select2.css" />
     <Content Include="assets\helpers\lib\select2\select2.min.js" />
@@ -259,6 +261,7 @@
     <Content Include="assets\helpers\tui.pagination-3.4.0\tuidoc.config.json" />
     <Content Include="assets\helpers\awesome-alert-main\LICENSE" />
     <Content Include="assets\helpers\awesome-alert-main\README.md" />
+    <Content Include="assets\css\order.css" />
     <Compile Include="Common\Constant.cs" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\OrderController.cs" />

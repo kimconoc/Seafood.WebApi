@@ -11,6 +11,7 @@ using static Admin.Common.Constant;
 using Seafood.Domain.Common.Extentions;
 using Seafood.Domain.Common.Constant;
 using Seafood.Domain.Common.Enum;
+using System.Globalization;
 
 namespace Admin.Controllers
 {
@@ -77,7 +78,7 @@ namespace Admin.Controllers
                                 TypeVoucher = resOrder.TypeVoucher,
                                 TotalPrice = resOrder.TotalPrice,
                                 TimeOrder = resOrder.TimeOrder,
-                                TimeDeliveryStart = resOrder.TimeDeliveryStart,
+                                StartDeliveryTime = resOrder.StartDeliveryTime,
                                 EstimateDeliveryTime = resOrder.EstimateDeliveryTime,
                                 SuccessfulDeliveryTime = resOrder.SuccessfulDeliveryTime,
                                 CancellationTime = resOrder.CancellationTime,
@@ -93,7 +94,8 @@ namespace Admin.Controllers
                   Code = x.Code,
                   DeliveryAddress = GetInfoDeliveryAddress(x.AddressId, x.TypeAddress),
                   Mobile = x.Mobile,
-                  Status = GetStatusNameOrder(x.Status),
+                  Status = x.Status,
+                  StrStatus = GetStatusNameOrder(x.Status),
                   Product = x.Product,
                   Quantity = x.Quantity,
                   ProdProcessingsName = x.ProdProcessingsName,
@@ -101,7 +103,7 @@ namespace Admin.Controllers
                   Voucher = x.CodeVoucher == null && x.TypeVoucher == null ? "" : GetInfoVoucher(x.CodeVoucher, x.TypeVoucher),
                   TotalPrice = Helper.FomatToTypeMoney(x.TotalPrice),
                   TimeOrder = x.TimeOrder.FormatDatetimeToHourMinDayMonthYear(),
-                  TimeDeliveryStart = x.TimeDeliveryStart != null ? StringExtension.FormatDatetimeToHourMinDayMonthYear(x.TimeDeliveryStart.Value) : null,
+                  StartDeliveryTime = x.StartDeliveryTime != null ? StringExtension.FormatDatetimeToHourMinDayMonthYear(x.StartDeliveryTime.Value) : null,
                   EstimateDeliveryTime = x.EstimateDeliveryTime != null ? StringExtension.FormatDatetimeToHourMinDayMonthYear(x.EstimateDeliveryTime.Value) : null,
                   SuccessfulDeliveryTime = x.SuccessfulDeliveryTime != null ? StringExtension.FormatDatetimeToHourMinDayMonthYear(x.SuccessfulDeliveryTime.Value) : null,
                   CancellationTime = x.CancellationTime != null ? StringExtension.FormatDatetimeToHourMinDayMonthYear(x.CancellationTime.Value) : null,
@@ -132,7 +134,6 @@ namespace Admin.Controllers
 
             return info;
         }
-
         private string GetInfoDeliveryAddress(Guid addressId, int typeAddress)
         {
             string info = string.Empty;
@@ -162,6 +163,46 @@ namespace Admin.Controllers
             }
 
             return info;
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult ExecuteOnChangeOrder(Guid idTbl, int status, string datetime, string note)
+        {
+            if(idTbl == null || idTbl == Guid.Empty)
+                return Json(Bad_Request());
+
+            var order = unitOfWork.OrderRepository.FirstOrDefault(x => !x.IsDeleted && x.Id == idTbl);
+            if(order == null)
+                return Json(Bad_Request());
+
+            order.Status = status;
+            order.Note = note;
+
+            switch(status)
+            {
+                case (int)StatusOrderEnum.DangXuLy:
+                    break;
+                case (int)StatusOrderEnum.DangVanChuyen:
+                    order.StartDeliveryTime = DateTime.Now;
+                    if (!string.IsNullOrEmpty(datetime))
+                    {
+                        datetime = datetime + ":00.000";
+                        IFormatProvider culture = new CultureInfo("en-US", true);
+                        DateTime estimateDeliveryTime = DateTime.ParseExact(datetime, "dd/MM/yyyy HH:mm:ss.fff", culture);
+                        order.EstimateDeliveryTime = estimateDeliveryTime;
+                    }
+                    break;
+                case (int)StatusOrderEnum.DonDaGiao:
+                    order.SuccessfulDeliveryTime = DateTime.Now;
+                    break;
+                case (int)StatusOrderEnum.DonDaHuy:
+                    order.CancellationTime = DateTime.Now;
+                    break;
+            }
+            unitOfWork.OrderRepository.Update(order);
+            unitOfWork.Commit();
+
+            return Json(Success_Request());
         }
     }
 }
